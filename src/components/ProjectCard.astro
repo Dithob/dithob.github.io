@@ -9,14 +9,23 @@ const status = lang === 'zh' ? project.status : project.statusEn;
 const summary = lang === 'zh' ? project.summary : project.summaryEn;
 const detailPath = lang === 'zh' ? `/projects/${project.slug}/` : `/en/projects/${project.slug}/`;
 ---
-<article class="project-card">
-  <div class="project-meta"><span>{category}</span><span>{status}</span></div>
+<article class={`project-card project-card-${project.accent}`}>
+  <div class="project-meta">
+    <span class="project-code">{project.code} / {lang === 'zh' ? '精选项目' : 'SELECTED'}</span>
+    <span class={`project-accent accent-${project.accent}`} aria-hidden="true"></span>
+    <span class="project-status">{status}</span>
+  </div>
   <div>
     <h3><a href={detailPath}>{title}</a></h3>
+    <div class="project-category">{category}</div>
     <p>{summary}</p>
   </div>
   <div class="stack">
     {project.stack.map((item) => <span class="tag">{item}</span>)}
+  </div>
+  <div class="project-proof">
+    <span>{lang === 'zh' ? '证据优先' : 'EVIDENCE-LED'}</span>
+    <span>{lang === 'zh' ? '边界明确' : 'LIMITS SHOWN'}</span>
   </div>
   <div class="card-links">
     <a href={project.repository} target="_blank" rel="noreferrer">{lang === 'zh' ? '源码' : 'Source'} ↗</a>

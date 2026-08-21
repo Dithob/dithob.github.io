@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { brand } from '../data';
 ---
 <BaseLayout title="About — Dithob" description="关于 wujue / Dithob。" path="/about/">
   <div class="page-intro shell"><div class="eyebrow">About</div><h1>关于我</h1><p>我喜欢把模糊的问题拆成可执行的系统，再用文档、测试和证据说明系统真实能做到什么。</p></div>
-  <section class="section shell content-grid"><div class="prose"><h2>关注方向</h2><p>AI 应用、Agent 工具、RAG/OCR、文档与论文理解、测试工程和开发者生产力。</p><h2>工程原则</h2><ul><li>先区分已验证事实、推断和待确认状态。</li><li>把快速开始、验证证据和当前限制放在项目入口。</li><li>不把静态检查写成线上服务成功，也不把 fork 写成原创。</li><li>凭据不进入代码、日志、仓库、构建产物或公开主页。</li></ul></div><dl class="facts"><dt>身份</dt><dd>CS student / AI tooling builder</dd><dt>位置</dt><dd>Chongqing, China</dd><dt>入口</dt><dd><a href="https://github.com/Dithob" target="_blank" rel="noreferrer">GitHub Profile ↗</a></dd></dl></section>
+  <section class="section shell content-grid"><div class="prose"><h2>关注方向</h2><p>AI 应用、Agent 工具、RAG/OCR、文档与论文理解、测试工程和开发者生产力。</p><h2>工程原则</h2><ul><li>先区分已验证事实、推断和待确认状态。</li><li>把快速开始、验证证据和当前限制放在项目入口。</li><li>不把静态检查写成线上服务成功，也不把 fork 写成原创。</li><li>凭据不进入代码、日志、仓库、构建产物或公开主页。</li></ul><h2>主页使用方式</h2><p>这个站点把同一套项目数据、能力方向和工程原则映射到五种视觉主题中。主题改变的是表达方式，不改变项目事实和证据。</p></div><dl class="facts"><dt>身份</dt><dd>CS student / AI tooling builder</dd><dt>位置</dt><dd>Chongqing, China</dd><dt>展示重点</dt><dd>Projects · Resume · Notes</dd><dt>个人定位</dt><dd>{brand.role}</dd><dt>入口</dt><dd><a href="https://github.com/Dithob" target="_blank" rel="noreferrer">GitHub Profile ↗</a></dd></dl></section>
 </BaseLayout>

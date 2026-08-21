@@ -12,6 +12,12 @@ A computer science student building **AI applications, agent tools, RAG/OCR syst
 - **Agent & Developer Tools**: skills, CLIs, OCR, media processing, and automation
 - **Engineering Quality**: testing, validation, CI, observability, and safety boundaries
 
+## How I work
+
+1. **Verify first**: separate inputs, current state, and public evidence.
+2. **Shape the system**: turn the problem into a runnable, reviewable workflow.
+3. **State the boundary**: ship tests, limitations, and the next step together.
+
 ## Selected projects
 
 - [DeepResume](https://github.com/Dithob/DeepResume) — A workspace connecting resumes, target JDs, learning plans, and career evidence.
@@ -36,7 +42,7 @@ A computer science student building **AI applications, agent tools, RAG/OCR syst
 
 ## Links
 
-- Website: `https://dithob.github.io`
+- Website: <https://dithob.github.io> (with five switchable visual themes)
 - GitHub: <https://github.com/Dithob>
 - Resume: `/resume/` on the personal website
 - Notes: `/notes/` on the personal website

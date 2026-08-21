@@ -12,6 +12,12 @@
 - **Agent & Developer Tools**：Skill、CLI、OCR、媒体处理与自动化
 - **Engineering Quality**：测试、验证、CI、可观测性与安全边界
 
+## 我如何工作
+
+1. **先确认事实**：区分输入、现状和可公开证据。
+2. **再组织系统**：把问题拆成可以运行、可以回看的工作流。
+3. **最后说明边界**：把测试、限制和下一步一起交付。
+
 ## 精选项目
 
 - [DeepResume](https://github.com/Dithob/DeepResume) — 把简历、JD、学习计划与职业证据连接起来的求职学习工作台。
@@ -36,7 +42,7 @@
 
 ## 链接
 
-- 个人网页：`https://dithob.github.io`
+- 个人网页：<https://dithob.github.io>（支持五种视觉主题切换）
 - GitHub：<https://github.com/Dithob>
 - 简历：个人网页 `/resume/`
 - 笔记：个人网页 `/notes/`

@@ -1,37 +1,48 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { projects } from '../data';
+import { brand, capabilities, focusItems, projects, signals, workflowSteps } from '../data';
 const featuredProjects = projects.filter((project) => project.featured);
 ---
 <BaseLayout title="wujue / Dithob — AI tools and engineering" description="构建可运行、可解释、可核验的 AI 工具。" path="/">
   <section class="hero shell">
-    <div>
-      <div class="eyebrow">wujue / Dithob</div>
+    <div class="hero-content">
+      <div class="hero-kicker"><span>01</span> PERSONAL SYSTEM / 2026</div>
       <h1>构建可运行、可解释、可核验的 AI 工具。</h1>
-      <p class="lead">我关注 AI 应用、Agent 工具、RAG/OCR 与测试工程，把想法变成能够运行、能够解释、也能够诚实说明边界的系统。</p>
+      <p class="lead">{brand.positioning}</p>
       <div class="actions"><a class="button primary" href="/projects/">查看项目 →</a><a class="button" href="/resume/">在线简历</a><a class="button" href="/notes/">笔记索引</a></div>
     </div>
-    <aside class="hero-aside"><strong>当前主线</strong><p>PaperQAAgent · DeepResume · reusable agent skills</p><strong>工作方式</strong><p>先确认事实，再组织证据；把验证、边界和回滚一起写进交付物。</p></aside>
+    <aside class="hero-aside">
+      <div class="hero-stamp" aria-hidden="true">D/</div>
+      <div class="hero-aside-block"><span class="mini-label">NOW BUILDING</span><p>PaperQAAgent · DeepResume · reusable agent skills</p></div>
+      <div class="hero-aside-block"><span class="mini-label">HOW I WORK</span><p>先确认事实，再组织证据；把验证、边界和回滚一起写进交付物。</p></div>
+      <div class="hero-aside-code">OPEN SOURCE<br />LOCAL FIRST<br />EVIDENCE LED</div>
+    </aside>
+    <div class="hero-corner" aria-hidden="true">AI / AGENT / QA</div>
+  </section>
+  <section class="signal-strip shell" aria-label="个人品牌信号">
+    {signals.map((signal) => <div class={`signal signal-${signal.tone}`}><strong>{signal.number}</strong><span>{signal.label}</span><small>{signal.detail}</small></div>)}
   </section>
   <section class="section shell" id="projects">
-    <div class="section-heading"><div><div class="eyebrow">Selected work</div><h2>精选项目</h2></div><p>四个最能代表当前能力方向的项目。每个项目都保留源码、验证证据和当前限制。</p></div>
+    <div class="section-heading"><div><div class="section-code">02 / SELECTED WORK</div><h2>精选项目</h2></div><p>四个最能代表当前能力方向的项目。每个项目都保留源码、验证证据和当前限制。</p></div>
     <div class="project-grid">{featuredProjects.map((project) => <ProjectCard project={project} />)}</div>
   </section>
   <section class="section shell">
-    <div class="section-heading"><div><div class="eyebrow">Capabilities</div><h2>我在做什么</h2></div><p>不是技能徽章墙，而是由公开项目支撑的能力分组。</p></div>
+    <div class="section-heading"><div><div class="section-code">03 / CAPABILITIES</div><h2>我在做什么</h2></div><p>不是技能徽章墙，而是由公开项目支撑的能力分组。</p></div>
     <div class="capability-grid">
-      <article class="capability"><h3>AI Applications</h3><p>RAG / PDF / Paper / Resume / Agent</p></article>
-      <article class="capability"><h3>Agent & Developer Tools</h3><p>Skills / CLI / OCR / Media / Automation</p></article>
-      <article class="capability"><h3>Engineering Quality</h3><p>Testing / Validation / CI / Observability / Safety</p></article>
+      {capabilities.map((capability) => <article class={`capability capability-${capability.tone}`}><span class="capability-number">{capability.number}</span><h3>{capability.title}</h3><p>{capability.detail}</p></article>)}
     </div>
   </section>
   <section class="section shell">
-    <div class="section-heading"><div><div class="eyebrow">Current focus</div><h2>现在正在推进</h2></div></div>
-    <ul class="focus-list"><li><strong>PaperQAAgent</strong>页面级证据、论文阅读工作流与本地优先体验。</li><li><strong>DeepResume</strong>把简历、JD、学习计划和职业证据连接成闭环。</li><li><strong>Agent tooling</strong>可安装、可验证、边界清晰的 Skill 与 CLI。</li></ul>
+    <div class="section-heading"><div><div class="section-code">04 / CURRENT FOCUS</div><h2>现在正在推进</h2></div></div>
+    <ul class="focus-list">{focusItems.map((item) => <li><span class="focus-index">{item.number}</span><div><strong>{item.title}</strong>{item.detail}</div></li>)}</ul>
   </section>
   <section class="section shell">
-    <div class="section-heading"><div><div class="eyebrow">Notes</div><h2>技术笔记索引</h2></div><p>把项目背后的判断、验证和边界留下来。</p></div>
-    <div class="actions"><a class="button" href="/notes/">浏览笔记索引 →</a><a class="button" href="https://github.com/Dithob" target="_blank" rel="noreferrer">访问 GitHub ↗</a></div>
+    <div class="section-heading"><div><div class="section-code">05 / WORKFLOW</div><h2>我如何把想法交付出来</h2></div><p>从事实到系统，再到可核验的交付物。</p></div>
+    <div class="workflow-grid">{workflowSteps.map((step) => <article class={`workflow-step workflow-${step.tone}`}><span class="workflow-number">{step.number}</span><h3>{step.title}</h3><p>{step.detail}</p></article>)}</div>
+  </section>
+  <section class="section shell">
+    <div class="section-heading"><div><div class="section-code">06 / NOTES</div><h2>技术笔记索引</h2></div><p>把项目背后的判断、验证和边界留下来。</p></div>
+    <div class="note-banner"><div><span class="mini-label">FIELD NOTES</span><h3>把做过的事情，变成可回看的证据。</h3></div><div class="actions"><a class="button primary" href="/notes/">浏览笔记索引 →</a><a class="button" href="https://github.com/Dithob" target="_blank" rel="noreferrer">访问 GitHub ↗</a></div></div>
   </section>
 </BaseLayout>

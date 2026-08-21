@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f5f7fa"/>
+  <circle cx="1030" cy="90" r="260" fill="#dff5ff"/>
+  <circle cx="1100" cy="570" r="180" fill="#fff0da"/>
+  <rect x="78" y="78" width="1044" height="474" rx="28" fill="none" stroke="#d9e2ec"/>
+  <text x="130" y="220" font-family="Arial, sans-serif" font-size="56" font-weight="700" fill="#101828">wujue / Dithob</text>
+  <text x="130" y="300" font-family="Arial, sans-serif" font-size="32" fill="#52606d">Building runnable, explainable, and verifiable AI tools.</text>
+  <text x="130" y="380" font-family="Arial, sans-serif" font-size="24" fill="#1677a8">AI Applications · Agent Tooling · Engineering Quality</text>
+  <text x="130" y="482" font-family="monospace" font-size="22" fill="#627d98">dithob.github.io</text>
+</svg>

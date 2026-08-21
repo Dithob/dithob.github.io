@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Dithob">
+  <rect width="64" height="64" rx="16" fill="#101828"/>
+  <path d="M18 15h11c11 0 18 6 18 17s-7 17-18 17H18V15Zm10 25c6 0 9-3 9-8s-3-8-9-8h-1v16h1Z" fill="#f5f7fa"/>
+  <circle cx="47" cy="17" r="5" fill="#7dd3fc"/>
+</svg>

@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { projects } from '../../data';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+---
+<BaseLayout title={`${project.title} — Dithob`} description={project.summary} path={`/projects/${project.slug}/`}>
+  <div class="page-intro shell">
+    <div class="eyebrow">{project.category}</div>
+    <h1>{project.title}</h1>
+    <p>{project.summary}</p>
+    <div class="actions"><a class="button primary" href={project.repository} target="_blank" rel="noreferrer">查看源码 ↗</a><a class="button" href="/projects/">返回项目列表</a></div>
+  </div>
+  <section class="section shell content-grid">
+    <div class="prose">
+      <h2>项目定位</h2><p>{project.summary}</p>
+      <h2>核心能力</h2><p>这个项目强调把一个明确问题落成可运行的工作流，并将输入、处理、输出和验证边界写进公开文档。</p>
+      <h2>验证证据</h2><ul>{project.evidence.map((item) => <li>{item}</li>)}</ul>
+      <h2>当前限制</h2><p>{project.limitations}</p>
+    </div>
+    <dl class="facts"><dt>状态</dt><dd>{project.status}</dd><dt>技术栈</dt><dd>{project.stack.join(' · ')}</dd><dt>源码</dt><dd><a href={project.repository} target="_blank" rel="noreferrer">github.com/Dithob/{project.title}</a></dd></dl>
+  </section>
+</BaseLayout>

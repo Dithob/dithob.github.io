@@ -1,0 +1,5 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { notes } from '../../data';
+---
+<BaseLayout title="Notes — Dithob" description="Dithob's notes on AI, agents, RAG/OCR, and engineering quality." lang="en" path="/en/notes/"><div class="page-intro shell"><div class="eyebrow">Notes</div><h1>Engineering notes</h1><p>The first version publishes only confirmed-public indexes and source links; internal or unverified material stays out of the site.</p></div><section class="section shell"><div class="list-grid">{notes.map((note) => <article class="note-card"><small>{note.categoryEn}</small><h3><a href={note.href} target="_blank" rel="noreferrer">{note.titleEn}</a></h3><p>{note.descriptionEn}</p></article>)}</div></section></BaseLayout>

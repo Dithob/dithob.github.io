@@ -1,0 +1,10 @@
+# Dithob personal profile and website
+
+This workspace contains the implementation source for the Dithob GitHub Profile and personal website plan.
+
+- Profile content: `profile/README.md`, `profile/README.en.md`
+- Personal website: Astro source under `src/`
+- GitHub Pages workflow: `.github/workflows/deploy.yml`
+- Default preview URL: `https://dithob.github.io`
+
+Before publishing, replace `YOUR_PUBLIC_EMAIL`, review the resume content, and replace the placeholder custom-domain configuration in `public/CNAME` with the verified domain.

@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { projects } from '../../data';
+---
+<BaseLayout title="Projects — Dithob" description="Dithob 的精选项目与工程能力证据。" path="/projects/">
+  <div class="page-intro shell"><div class="eyebrow">Projects</div><h1>项目与证据</h1><p>我不只展示技术栈，也展示问题、实现、验证结果和没有做什么。</p></div>
+  <section class="section shell"><div class="project-grid">{projects.map((project) => <ProjectCard project={project} />)}</div></section>
+</BaseLayout>

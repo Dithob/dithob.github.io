@@ -1,0 +1,25 @@
+---
+import type { Project } from '../data';
+
+interface Props { project: Project; lang?: 'zh' | 'en'; }
+const { project, lang = 'zh' } = Astro.props;
+const title = lang === 'zh' ? project.title : project.titleEn;
+const category = lang === 'zh' ? project.category : project.categoryEn;
+const status = lang === 'zh' ? project.status : project.statusEn;
+const summary = lang === 'zh' ? project.summary : project.summaryEn;
+const detailPath = lang === 'zh' ? `/projects/${project.slug}/` : `/en/projects/${project.slug}/`;
+---
+<article class="project-card">
+  <div class="project-meta"><span>{category}</span><span>{status}</span></div>
+  <div>
+    <h3><a href={detailPath}>{title}</a></h3>
+    <p>{summary}</p>
+  </div>
+  <div class="stack">
+    {project.stack.map((item) => <span class="tag">{item}</span>)}
+  </div>
+  <div class="card-links">
+    <a href={project.repository} target="_blank" rel="noreferrer">{lang === 'zh' ? '源码' : 'Source'} ↗</a>
+    <a href={detailPath}>{lang === 'zh' ? '项目详情' : 'Details'} →</a>
+  </div>
+</article>

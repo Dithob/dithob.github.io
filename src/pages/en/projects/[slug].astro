@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { projects } from '../../../data';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+---
+<BaseLayout title={`${project.titleEn} — Dithob`} description={project.summaryEn} lang="en" path={`/en/projects/${project.slug}/`}>
+  <div class="page-intro shell">
+    <div class="eyebrow">{project.categoryEn}</div>
+    <h1>{project.titleEn}</h1>
+    <p>{project.summaryEn}</p>
+    <div class="actions"><a class="button primary" href={project.repository} target="_blank" rel="noreferrer">View source ↗</a><a class="button" href="/en/projects/">Back to projects</a></div>
+  </div>
+  <section class="section shell content-grid">
+    <div class="prose">
+      <h2>Positioning</h2><p>{project.summaryEn}</p>
+      <h2>What it demonstrates</h2><p>The project turns a clear problem into a runnable workflow and documents its inputs, processing, outputs, and verification boundaries.</p>
+      <h2>Evidence</h2><ul>{project.evidence.map((item) => <li>{item}</li>)}</ul>
+      <h2>Limitations</h2><p>{project.limitationsEn}</p>
+    </div>
+    <dl class="facts"><dt>Status</dt><dd>{project.statusEn}</dd><dt>Stack</dt><dd>{project.stack.join(' · ')}</dd><dt>Source</dt><dd><a href={project.repository} target="_blank" rel="noreferrer">github.com/Dithob/{project.titleEn}</a></dd></dl>
+  </section>
+</BaseLayout>

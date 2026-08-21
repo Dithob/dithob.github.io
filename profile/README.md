@@ -40,7 +40,7 @@
 - GitHub：<https://github.com/Dithob>
 - 简历：个人网页 `/resume/`
 - 笔记：个人网页 `/notes/`
-- 公开邮箱：`YOUR_PUBLIC_EMAIL`
+- 联系方式：请通过 GitHub Profile 联系
 
 ## Research / Academic
 

@@ -22,7 +22,6 @@ export const site = {
   shortName: 'Dithob',
   github: 'https://github.com/Dithob',
   website: 'https://dithob.github.io',
-  email: 'YOUR_PUBLIC_EMAIL',
 };
 
 export const projects: Project[] = [

@@ -7,4 +7,4 @@ This workspace contains the implementation source for the Dithob GitHub Profile 
 - GitHub Pages workflow: `.github/workflows/deploy.yml`
 - Default preview URL: `https://dithob.github.io`
 
-Before publishing, replace `YOUR_PUBLIC_EMAIL`, review the resume content, and replace the placeholder custom-domain configuration in `public/CNAME` with the verified domain.
+Before publishing, replace `YOUR_PUBLIC_EMAIL`, review the resume content, and replace the placeholder custom-domain configuration in `public/CNAME.example` with the verified domain, then rename it to `public/CNAME`.

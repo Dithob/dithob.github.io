@@ -14,3 +14,14 @@ A real custom domain is intentionally not written into `public/CNAME` because th
 4. Configure DNS at the provider and enable HTTPS in GitHub Pages.
 
 Do not commit a placeholder such as `YOUR_DOMAIN` as an active `CNAME` file.
+
+## Publishing the Profile README
+
+The `profile/` directory is a reviewable source copy. To publish it as the actual GitHub Profile README, copy its two files into the root of the public `Dithob/Dithob` repository:
+
+```text
+README.md
+README.en.md
+```
+
+GitHub's profile renderer uses the non-empty root `README.md`; `README.en.md` is the manual language-switch target.

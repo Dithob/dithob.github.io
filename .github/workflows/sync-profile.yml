@@ -1,0 +1,40 @@
+name: Sync GitHub Profile README
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'profile/README.md'
+      - 'profile/README.en.md'
+      - 'scripts/sync-profile.mjs'
+      - '.github/workflows/sync-profile.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-profile
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout website source
+        uses: actions/checkout@v4
+
+      - name: Validate profile sources
+        run: node scripts/sync-profile.mjs --check
+
+      - name: Publish profile README
+        if: ${{ secrets.PROFILE_REPO_TOKEN != '' }}
+        env:
+          PROFILE_REPO_TOKEN: ${{ secrets.PROFILE_REPO_TOKEN }}
+        run: node scripts/sync-profile.mjs --publish
+
+      - name: Explain missing token
+        if: ${{ secrets.PROFILE_REPO_TOKEN == '' }}
+        run: |
+          echo 'PROFILE_REPO_TOKEN is not configured; profile publication was skipped.'
+          echo 'Add a fine-grained token with Contents: Read and write for Dithob/Dithob.'

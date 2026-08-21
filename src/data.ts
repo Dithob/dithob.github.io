@@ -66,8 +66,8 @@ export const themes: Array<{
   { id: 'neo-brutalist', label: '新野兽派', labelEn: 'Neo-Brutalist', short: '野兽派', shortEn: 'NEO' },
   { id: 'editorial', label: '编辑杂志风', labelEn: 'Editorial', short: '杂志', shortEn: 'EDITORIAL' },
   { id: 'minimalist-flat', label: '极简扁平', labelEn: '极简', short: '极简', shortEn: 'FLAT' },
-  { id: 'bento-grid', label: 'Bento 网格', labelEn: 'Bento Grid', short: 'BENTO', shortEn: 'BENTO' },
-  { id: 'geometric-bold', label: '几何大胆风', labelEn: 'Geometric Bold', short: '几何', shortEn: 'GEO' },
+  { id: 'bento-grid', label: '白色模式', labelEn: 'White Mode', short: '白色', shortEn: 'WHITE' },
+  { id: 'geometric-bold', label: '黑色模式', labelEn: 'Black Mode', short: '黑色', shortEn: 'BLACK' },
 ];
 
 export const site = {

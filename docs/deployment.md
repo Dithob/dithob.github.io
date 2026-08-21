@@ -6,6 +6,12 @@ The site is configured for the default GitHub Pages URL:
 https://dithob.github.io
 ```
 
+GitHub Pages uses the `GitHub Actions` publishing source. The Astro workflow
+builds `dist/`, uploads the Pages artifact, and deploys it to the
+`github-pages` environment. Do not switch the source back to `Deploy from a
+branch`, or GitHub may start the default Jekyll `pages-build-deployment`
+workflow and try to parse `.astro` files as YAML front matter.
+
 A real custom domain is intentionally not written into `public/CNAME` because the domain value has not been supplied yet. Before binding a custom domain:
 
 1. Verify the domain in GitHub account settings.

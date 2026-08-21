@@ -27,14 +27,13 @@ jobs:
       - name: Validate profile sources
         run: node scripts/sync-profile.mjs --check
 
-      - name: Publish profile README
-        if: ${{ secrets.PROFILE_REPO_TOKEN != '' }}
+      - name: Publish profile README when token is configured
         env:
           PROFILE_REPO_TOKEN: ${{ secrets.PROFILE_REPO_TOKEN }}
-        run: node scripts/sync-profile.mjs --publish
-
-      - name: Explain missing token
-        if: ${{ secrets.PROFILE_REPO_TOKEN == '' }}
         run: |
-          echo 'PROFILE_REPO_TOKEN is not configured; profile publication was skipped.'
-          echo 'Add a fine-grained token with Contents: Read and write for Dithob/Dithob.'
+          if [ -z "$PROFILE_REPO_TOKEN" ]; then
+            echo 'PROFILE_REPO_TOKEN is not configured; profile publication was skipped.'
+            echo 'Add a fine-grained token with Contents: Read and write for Dithob/Dithob.'
+            exit 0
+          fi
+          node scripts/sync-profile.mjs --publish

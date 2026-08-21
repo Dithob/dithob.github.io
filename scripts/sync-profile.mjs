@@ -1,6 +1,7 @@
-import { readFile, writeFile } from 'node:fs/promises';
+import { chmod, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
-import { resolve } from 'node:path';
+import { join, resolve } from 'node:path';
+import { tmpdir } from 'node:os';
 
 const root = resolve(new URL('..', import.meta.url).pathname);
 const sourceFiles = ['profile/README.md', 'profile/README.en.md'];
@@ -29,30 +30,49 @@ if (mode !== '--publish') {
 
 if (!process.env.PROFILE_REPO_TOKEN) throw new Error('PROFILE_REPO_TOKEN is required for --publish');
 
-const remoteUrl = `https://x-access-token:${encodeURIComponent(process.env.PROFILE_REPO_TOKEN)}@github.com/${targetRepo}.git`;
-const tempDir = resolve('/tmp', `dithob-profile-sync-${process.pid}`);
-run('git', ['clone', '--depth', '1', remoteUrl, tempDir]);
+const tempRoot = await mkdtemp(join(tmpdir(), 'dithob-profile-sync-'));
+const tempDir = join(tempRoot, 'profile-repo');
+const askpass = join(tempRoot, 'git-askpass.sh');
 
-for (const [index, file] of targetFiles.entries()) {
-  await writeFile(resolve(tempDir, file), sourceContents[index]);
-}
+await writeFile(
+  askpass,
+  '#!/bin/sh\ncase "$1" in\n  *Username*) printf "%s\\n" "x-access-token" ;;\n  *) printf "%s\\n" "$PROFILE_REPO_TOKEN" ;;\nesac\n',
+  { mode: 0o700 },
+);
+await chmod(askpass, 0o700);
 
-run('git', ['-C', tempDir, 'config', 'user.name', 'github-actions[bot]']);
-run('git', ['-C', tempDir, 'config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com']);
+const gitEnv = {
+  ...process.env,
+  GIT_ASKPASS: askpass,
+  GIT_TERMINAL_PROMPT: '1',
+};
+const runGit = (args, options = {}) => run('git', args, { ...options, env: gitEnv });
 
-let changed = false;
 try {
-  run('git', ['-C', tempDir, 'diff', '--quiet', '--', ...targetFiles]);
-} catch {
-  changed = true;
-}
+  runGit(['clone', '--depth', '1', `https://github.com/${targetRepo}.git`, tempDir]);
 
-if (!changed) {
-  console.log('PROFILE_SYNC_NOOP Profile repository already matches source');
-  process.exit(0);
-}
+  for (const [index, file] of targetFiles.entries()) {
+    await writeFile(resolve(tempDir, file), sourceContents[index]);
+  }
 
-run('git', ['-C', tempDir, 'add', ...targetFiles]);
-run('git', ['-C', tempDir, 'commit', '-m', 'docs: sync profile README from website source']);
-run('git', ['-C', tempDir, 'push', 'origin', 'HEAD:main']);
-console.log(`PROFILE_SYNC_OK ${targetRepo}`);
+  runGit(['-C', tempDir, 'config', 'user.name', 'github-actions[bot]']);
+  runGit(['-C', tempDir, 'config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com']);
+
+  let changed = false;
+  try {
+    runGit(['-C', tempDir, 'diff', '--quiet', '--', ...targetFiles]);
+  } catch {
+    changed = true;
+  }
+
+  if (!changed) {
+    console.log('PROFILE_SYNC_NOOP Profile repository already matches source');
+  } else {
+    runGit(['-C', tempDir, 'add', ...targetFiles]);
+    runGit(['-C', tempDir, 'commit', '-m', 'docs: sync profile README from website source']);
+    runGit(['-C', tempDir, 'push', 'origin', 'HEAD:main']);
+    console.log(`PROFILE_SYNC_OK ${targetRepo}`);
+  }
+} finally {
+  await rm(tempRoot, { recursive: true, force: true });
+}

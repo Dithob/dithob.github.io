@@ -84,10 +84,12 @@ const themeOptions = themes;
       </div>
     </footer>
     <script is:inline>
-      const key = 'dithob-visual-theme';
+      const key = 'dithob-visual-theme-v2';
+      const legacyKey = 'dithob-visual-theme';
       const root = document.documentElement;
       const defaultTheme = 'neo-brutalist';
       const validThemes = ['neo-brutalist', 'editorial', 'minimalist-flat', 'bento-grid', 'geometric-bold'];
+      localStorage.removeItem(legacyKey);
       const saved = localStorage.getItem(key);
       const setTheme = (theme) => {
         const next = validThemes.includes(theme) ? theme : defaultTheme;

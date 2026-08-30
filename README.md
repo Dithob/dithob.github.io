@@ -8,95 +8,48 @@
 - **GitHub Profile**：`profile/README*.md` 是 `Dithob/Dithob` Profile README 的源副本，二者由 CI（可选）自动同步。
 - 定位是**求职导向的证据优先主页**：项目、简历、笔记三者闭环，每个项目都带源码、验证证据和明确限制。
 
----
-
-## 一、架构总览
-
-### 目录结构
-
-```text
-dithob.github.io/
-├── .github/workflows/
-│   ├── deploy.yml           # Pages 部署：push main 时 check + build + 上传 artifact
-│   └── sync-profile.yml     # （可选）把 profile/README*.md 同步到 Dithob/Dithob 仓库
-├── docs/                    # 设计与维护文档（见下文「文档索引」）
-├── profile/                 # GitHub Profile README 源文件（中英，与本仓库其他内容同仓库管理）
-│   ├── README.md
-│   └── README.en.md
-├── public/                  # 静态资源，构建时原样拷入 dist 根目录
-│   ├── CNAME.example        # 自定义域名占位（配好域名后改名为 CNAME）
-│   ├── downloads/
-│   │   └── resume-testdevelop.pdf   # 简历 PDF（AiDeveloperResume 编译产物）
-│   ├── favicon.svg
-│   ├── images/og.png        # 社交分享图 1200×630（SVG 不渲染，勿换回 svg）
-│   └── robots.txt           # 指向 /sitemap-index.xml
-├── scripts/
-│   ├── verify-site.mjs      # 结构检查（存在性 + 内容红线），发布前本地运行
-│   └── sync-profile.mjs     # profile 同步脚本（--check / --publish）
-├── src/
-│   ├── components/
-│   │   └── ProjectCard.astro        # 项目卡片组件（zh/en 复用）
-│   ├── content.config.ts            # 内容集合定义：notes collection + zod schema
-│   ├── content/
-│   │   └── notes/                   # 笔记正文（由 mediareport 发布脚本生成，勿手改）
-│   │       ├── pi-usage-manual.md
-│   │       └── superpowers-harness-engineering.md
-│   ├── data.ts                      # ★ 单一事实源：site / brand / projects / themes / signals ...
-│   ├── layouts/
-│   │   └── BaseLayout.astro         # ★ 公共布局：head(SEO/JSON-LD/og)、导航、主题菜单、footer、全部全局样式
-│   └── pages/
-│       ├── index.astro              # 首页（zh）
-│       ├── about.astro              # 关于（zh）
-│       ├── resume.astro             # 在线简历（zh）
-│       ├── 404.astro                # 404（zh）
-│       ├── notes/
-│       │   ├── index.astro          # 笔记墙：按主题分组（主题数 < 2 退化为时间倒序）+ 延伸阅读
-│       │   └── [...slug].astro      # 笔记正文页（渲染 markdown + 来源 facts）
-│       ├── projects/
-│       │   ├── index.astro          # 项目列表
-│       │   └── [slug].astro         # 项目详情页（由 data.ts 自动生成）
-│       ├── 404.astro                # 404（zh）
-│       └── en/                      # 英文镜像：与上层一一对应（index/about/resume/404/notes/projects）
-├── astro.config.mjs         # Astro 配置：site URL、trailingSlash、@astrojs/sitemap、Shiki css-variables
-├── package.json
-├── tsconfig.json
-└── .nvmrc                   # Node 22
-```
-
-> `public/` 里的 `CNAME.example` 只有在绑定自定义域名时才启用；`og.svg` 已删除（社交平台不渲染 SVG），请保持 `og.png`。
-
-### 核心设计
-
-| 机制 | 说明 |
-| --- | --- |
-| **数据驱动项目** | 全部项目在 `src/data.ts` 的 `projects` 数组中定义；首页精选、项目列表、`/projects/<slug>/` 详情页（中英 6×2 = 12 页）全部由它生成，不存在第二份项目数据 |
-| **双语镜像** | 每个页面有 `src/pages/`（zh）与 `src/pages/en/`（en）两个版本；`BaseLayout` 根据 `path`/`lang` 自动生成 canonical + `hreflang` alternate。笔记正文只有中文，详情页通过 `alternatePath="/en/notes/"` 把 alternate 指向英文摘要墙，避免 404 |
-| **笔记单向同步** | `src/content/notes/*.md` 是**转换产物**：由 `mediareport` 仓库的 `scripts/publish-notes.mjs --write` 生成（剥离副产物导航、slug 化、附 frontmatter）。改正文请改源仓库再重新生成，勿直接编辑站点里的 md |
-| **主题系统** | 5 套主题由 CSS 变量驱动（`--bg/--surface/--accent/--shadow...`）；用户选择存 `localStorage('dithob-visual-theme-v2')`，初始化脚本位于 `<head>` 内联执行，避免首屏闪变；深色 `geometric-bold` 通过 `color-scheme: dark` + 变量切换 |
-| **SEO 自动生成** | `@astrojs/sitemap` 构建时生成 `/sitemap-index.xml`（自动含全部 collection 与项目详情页，filter 掉 `/404/`）；首页内联 JSON-LD Person（name/url/sameAs/email）；所有页面共用 `og.png`（1200×630） |
-| **可访问性约定** | 导航当前项 `aria-current="page"`；≤430px 时导航文字用视觉隐藏（clip）+ `aria-label`，以图标呈现（不用 `font-size:0`）；主题菜单为 `ul > li > button`；editorial 主题正文小字对比度 ≥ 4.5:1 |
-| **Profile 同步** | `profile/README*.md` 为事实源，`sync-profile.yml` 在 push 时用 `scripts/sync-profile.mjs --publish` 推送到 `Dithob/Dithob`（无需 token 时自动跳过发布只做校验），详见 `docs/profile-maintenance.md` |
+> 架构细节与设计思路（目录结构、主题系统、SEO 策略、可访问性约定等）见 **[DESIGN.md](DESIGN.md)**。
 
 ---
 
-## 二、本地开发
+## 一、快速开始
 
 前置要求：[Node 22](https://nodejs.org/)（见 `.nvmrc`）、npm。
 
 ```bash
 npm ci                # 安装依赖（用 ci 而不是 install，保证 lockfile 一致）
 npm run dev           # 开发服务器，默认 http://localhost:4321
-npm run check         # astro check：类型与内容 schema 校验（笔记 frontmatter 不匹配会在这里报）
-npm run build         # 构建到 dist/
-npm run preview       # 本地预览构建产物
-node scripts/verify-site.mjs   # 结构门禁：必需文件、笔记数量、og.png、简历 mailto/PDF
 ```
 
-发布（推送到 main 即自动触发）前最小检查链：
+## 二、本地调试
+
+### 2.1 常用命令
 
 ```bash
-npm run check && npm run build && node scripts/verify-site.mjs
+npm run dev           # 开发模式：改代码即时热更新（HMR），日常调试首选
+npm run check         # astro check：类型 + 内容 schema 校验（笔记 frontmatter 不符会在这里报）
+npm run build         # 构建到 dist/
+npm run preview       # 本地预览构建产物（验证「最终产物」而不是开发态）
+node scripts/verify-site.mjs   # 结构门禁：必需页面、笔记数量、og.png、简历 mailto/PDF
 ```
+
+### 2.2 工作流
+
+| 场景 | 做法 |
+| --- | --- |
+| 改样式/组件/页面 | `npm run dev`，浏览器访问 `http://localhost:4321`，保存即刷新 |
+| 改笔记 frontmatter 或 schema | `npm run check`，报错会指出文件与字段 |
+| 验证构建产物 | `npm run build && npm run preview`，再访问 `http://localhost:4321`（`preview` 按 `Ctrl+C` 停止） |
+| 发布前全量门禁 | `npm run check && npm run build && node scripts/verify-site.mjs` |
+| 抽查单页 | preview 运行中访问 `http://localhost:4321/notes/pi-usage-manual/`、`/resume/`、`/projects/<slug>/` 等 |
+
+### 2.3 调试技巧
+
+- **响应式**：Chrome DevTools 的 Devices 模式（F12 → 切换设备工具栏）验证 ≤430px 导航图标形态；注意 Windows 下 headless 截图窗口最小宽度 ~500px 会「吃掉」窄断点，真机与 DevTools 设备模拟不受影响；
+- **主题切换**：DevTools → Application → Local Storage 可查看/清除 `dithob-visual-theme-v2`，强制刷新验证初始化脚本（防闪变）；
+- **sitemap/SEO**：preview 后访问 `/sitemap-index.xml`、`/robots.txt`；查看页面源码确认 `<link rel="canonical">` 与 `hreflang` alternate；
+- **端口冲突**：`npm run dev -- --port 4322` 换端口；
+- **前端脚本断点**：主题初始化等内联脚本在 DevTools → Sources → 页面内联 `<script>` 中打断点。
 
 ---
 
@@ -183,7 +136,7 @@ draft: false
 1. 复制一份 `src/pages/` 页面到 `src/pages/en/` 对应位置，反向改写链接（`/projects/` → `/en/projects/`）；
 2. `<BaseLayout title=... description=... path="/xxx/">`，`path` 必须是带尾斜杠的站内路径（`trailingSlash: 'always'`）；英文页加 `lang="en" path="/en/xxx/"`；
 3. 若详情页无英文版，给 zh 页面传 `alternatePath="/en/xxx/"` 指向英文墙（参考 `src/pages/notes/[...slug].astro`）；
-4. 如需纳入 CI 门禁，把新路径加进 `scripts/verify-site.mjs` 的 `required` 数组。
+4. 如需纳入结构门禁，把新路径加进 `scripts/verify-site.mjs` 的 `required` 数组。
 
 ### 5. 视觉主题改造（可选）
 
@@ -208,22 +161,13 @@ draft: false
 - 需要跨仓库写权限时配置 Secret `PROFILE_REPO_TOKEN`（fine-grained token，仅目标仓库、Contents Read/Write）；不配置则只执行 `--check` 校验，Profile 仓库需手动复制。
 - 完整说明与 token 创建步骤：`docs/profile-maintenance.md`。
 
-### 8. 常见坑
-
-| 坑 | 处理 |
-| --- | --- |
-| 移动端导航断了主题切换/折叠 | `BaseLayout` 的 430px 断点用 clip 隐藏文字、图标由 `::after` 提供；新导航项要同步加 nth-child 图标规则 |
-| 手写 sitemap 漏页 | 已用 `@astrojs/sitemap`，不要再添加 `public/sitemap.xml` |
-| 笔记正文改了被覆盖 | 站点内 `src/content/notes/` 是生成物，改 mediareport 源后重跑脚本 |
-| `og:image` 不显示 | 用光栅图（PNG/JPG），`og.png` 已被引用；换图保持 1200×630 |
-| 拼音/中文锚点跳不动 | Astro 默认 github-slugger；升级 Astro 后实测一次笔记内锚点（`#附录-aasr-还原对照表` 这类） |
-
 ---
 
 ## 四、文档索引
 
 | 文档 | 内容 |
 | --- | --- |
+| `DESIGN.md` | 架构设计、目录结构、核心设计机制、已知坑与演进方向 |
 | `docs/deployment.md` | 部署方式与自定义域名步骤 |
 | `docs/profile-maintenance.md` | Profile README 的单一事实源与自动/手动同步 |
 | `docs/site-notes-publishing.md` | 笔记单向发布方案（mediareport → 站点） |

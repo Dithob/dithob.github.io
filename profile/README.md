@@ -46,7 +46,7 @@
 - GitHub：<https://github.com/Dithob>
 - 简历：个人网页 `/resume/`
 - 笔记：个人网页 `/notes/`
-- 联系方式：请通过 GitHub Profile 联系
+- 联系方式：<mailto:2508807574@qq.com>（简历应聘请注明来源渠道）
 
 ## Research / Academic
 

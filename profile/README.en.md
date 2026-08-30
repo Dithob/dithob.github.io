@@ -46,7 +46,7 @@ A computer science student building **AI applications, agent tools, RAG/OCR syst
 - GitHub: <https://github.com/Dithob>
 - Resume: `/resume/` on the personal website
 - Notes: `/notes/` on the personal website
-- Contact: please reach out through GitHub Profile
+- Contact: <mailto:2508807574@qq.com> (mention the channel when applying)
 
 ## Research / Academic
 

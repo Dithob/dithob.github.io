@@ -1,8 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data';
-
-const resumePdf = '/downloads/resume-testdevelop.pdf';
 ---
 <BaseLayout title="Resume — wujue / Dithob" description="wujue / Dithob 的在线简历：AI 应用与测试开发方向，含实习、项目与可验证证据。" path="/resume/">
   <div class="page-intro shell">
@@ -10,7 +8,6 @@ const resumePdf = '/downloads/resume-testdevelop.pdf';
     <h1>在线简历</h1>
     <p>计算机技术硕士在读，专注于 AI 应用、Agent 工具与测试开发方向。以下经历与项目均可回溯到公开仓库或可核验来源。</p>
     <div class="actions">
-      <a class="button primary" href={resumePdf} target="_blank" rel="noreferrer">下载 PDF 简历 ↓</a>
       <a class="button" href={`mailto:${site.mail}`}>邮箱联系 ↗</a>
     </div>
   </div>
@@ -73,7 +70,6 @@ const resumePdf = '/downloads/resume-testdevelop.pdf';
     <dl class="facts">
       <dt>GitHub</dt><dd><a href={site.github} target="_blank" rel="noreferrer">github.com/Dithob</a></dd>
       <dt>邮箱</dt><dd><a href={`mailto:${site.mail}`}>{site.mail}</a></dd>
-      <dt>PDF 简历</dt><dd><a href={resumePdf} target="_blank" rel="noreferrer">resume-testdevelop.pdf ↓</a></dd>
       <dt>教育背景</dt><dd>重庆邮电大学 · 计算机技术（硕士在读）</dd>
       <dt>方向</dt><dd>AI 应用 / Agent 工具 / 测试开发</dd>
       <dt>公开入口</dt><dd><a href="/projects/">项目与证据 →</a> · <a href="/notes/">技术笔记 →</a></dd>

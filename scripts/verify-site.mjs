@@ -34,8 +34,8 @@ for (const [name, text] of [['README.md', zh], ['README.en.md', en]]) {
 
 // Contact mail must be wired across key pages.
 const resume = readFileSync(resolve('src/pages/resume.astro'), 'utf8');
-if (!resume.includes('mailto:') || !resume.includes('resume-testdevelop.pdf')) {
-  console.error('src/pages/resume.astro must expose mailto: contact and the PDF resume link'); process.exit(1);
+if (!resume.includes('mailto:')) {
+  console.error('src/pages/resume.astro must expose the mailto: contact'); process.exit(1);
 }
 
 console.log('VERIFY_SITE_OK');

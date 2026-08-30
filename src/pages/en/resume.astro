@@ -1,8 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { site } from '../../data';
-
-const resumePdf = '/downloads/resume-testdevelop.pdf';
 ---
 <BaseLayout title="Resume — wujue / Dithob" description="wujue / Dithob online resume: AI applications, agent tooling, and test development, with verifiable evidence." lang="en" path="/en/resume/">
   <div class="page-intro shell">
@@ -10,7 +8,6 @@ const resumePdf = '/downloads/resume-testdevelop.pdf';
     <h1>Online resume</h1>
     <p>CS graduate student focused on AI applications, agent tooling, and test development. Every item below traces back to a public repository or verifiable source.</p>
     <div class="actions">
-      <a class="button primary" href={resumePdf} target="_blank" rel="noreferrer">Download PDF resume ↓</a>
       <a class="button" href={`mailto:${site.mail}`}>Email me ↗</a>
     </div>
   </div>
@@ -73,7 +70,6 @@ const resumePdf = '/downloads/resume-testdevelop.pdf';
     <dl class="facts">
       <dt>GitHub</dt><dd><a href={site.github} target="_blank" rel="noreferrer">github.com/Dithob</a></dd>
       <dt>Email</dt><dd><a href={`mailto:${site.mail}`}>{site.mail}</a></dd>
-      <dt>PDF resume</dt><dd><a href={resumePdf} target="_blank" rel="noreferrer">resume-testdevelop.pdf ↓</a></dd>
       <dt>Education</dt><dd>Chongqing University of Posts and Telecommunications · Computer Technology (M.Sc.)</dd>
       <dt>Focus</dt><dd>AI Applications / Agent Tooling / Test Development</dd>
       <dt>Public entry</dt><dd><a href="/en/projects/">Projects and evidence →</a> · <a href="/en/notes/">Notes →</a></dd>

@@ -77,7 +77,7 @@ npm run dev
 | Favicon | `public/favicon.svg` |
 | robots / sitemap URL | `public/robots.txt` (only when using a custom domain) |
 | Profile copy | `profile/README.md` + `profile/README.en.md` |
-| Resume content | `src/pages/resume.astro` + `src/pages/en/resume.astro` + `public/downloads/*.pdf` |
+| Resume content | `src/pages/resume.astro` + `src/pages/en/resume.astro` (web version; if you want a PDF, de-identify it first, then put it in `public/` and add the link yourself) |
 | Domain | `public/CNAME.example` → `public/CNAME` (domain only) + `site` in `astro.config.mjs` |
 
 Then run `npm run check && npm run build && node scripts/verify-site.mjs`.
@@ -178,4 +178,4 @@ Dark themes additionally need `color-scheme: dark` with inverted `--bg/--text`; 
 ## 5. License and content boundaries
 
 - The code and architecture are free to reuse (personal project; no License is declared, so rights are reserved by default — add a LICENSE file if you want to nominate one).
-- **Do not copy the personal content** in this repo (real name, email, internship experience, resume PDF, project evidence). When reusing, replace it with your own information and make sure anything published publicly is de-identified.
+- **Do not copy the personal content** in this repo (real name, email, internship experience, non-de-identified resume files, project evidence). When reusing, replace it with your own information and make sure anything published publicly is de-identified.

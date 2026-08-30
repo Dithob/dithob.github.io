@@ -77,7 +77,7 @@ npm run dev
 | 站点图标 | `public/favicon.svg` |
 | robots/sitemap URL | `public/robots.txt`（若自定义域名） |
 | profile 文案 | `profile/README.md` + `profile/README.en.md` |
-| 简历内容 | `src/pages/resume.astro` + `src/pages/en/resume.astro` + `public/downloads/*.pdf` |
+| 简历内容 | `src/pages/resume.astro` + `src/pages/en/resume.astro`（网页版；如需 PDF 请先脱敏再放入 `public/` 并自行加链接） |
 | 域名 | `public/CNAME.example` → `public/CNAME`（只含域名）+ `astro.config.mjs` 的 `site` |
 
 改完后跑一遍 `npm run check && npm run build && node scripts/verify-site.mjs`。
@@ -178,4 +178,4 @@ draft: false
 ## 五、License 与内容边界
 
 - 代码/架构可直接复用（个人项目，未指定 License 时默认保留权利；如需声明请补充 LICENSE 文件）。
-- **请勿直接复制本仓库中的个人内容**（真实姓名、邮箱、实习经历、简历 PDF、项目证据）；复用时应替换为自己的真实信息，且注意：公开网站上的任何内容都必须已脱敏。
+- **请勿直接复制本仓库中的个人内容**（真实姓名、邮箱、实习经历、未脱敏的简历文件、项目证据）；复用时应替换为自己的真实信息，且注意：公开网站上的任何内容都必须已脱敏。

@@ -117,7 +117,7 @@
 | 可访问性 | ≤430px 导航改用视觉隐藏文本 + `aria-label`（去掉 `font-size:0`）；主题菜单改 `ul > li > button`（移除 `role=listitem`）；`aria-current` 标当前位置；editorial `--subtle` 改为 `#6b6054`（AA 5.4:1）；主题初始化脚本移入 head 防闪变 |
 | 正文样式 | 表格/引用/行内代码/代码块/hr/标题 `scroll-margin` 全量补齐；Shiki `css-variables` + 全局 `--astro-code-*` 深色卡片适配全部皮肤 |
 | 联系方式 | `site.mail = 2508807574@qq.com`（取自 git config 与 AiDeveloperResume `profile.tex`），footer / about / resume（中英）均展示 mailto |
-| 简历页 | 占位文案移除，改为真实内容（腾讯实习、智能持续测试平台、腾讯地图 Agent、在校成果、教育背景、技能），入口 `public/downloads/resume-testdevelop.pdf`（由 AiDeveloperResume `build.bat main_testdevelop.tex` 编译产出） |
+| 简历页 | 占位文案移除，改为真实内容（腾讯实习、智能持续测试平台、腾讯地图 Agent、在校成果、教育背景、技能），网页版简历 + PDF 下载 |
 | 验收 | `npm run check` 0 错误、`npm run build` 26 页、`npm run preview` 各关键路径 200、`verify-site.mjs` 输出 `VERIFY_SITE_OK` |
 
-**提醒**：简历 PDF 与邮箱含真实个人信息（姓名洪波、邮箱、电话 19823825660——电话只见于 PDF 内部，网页仅公开邮箱）。若不想公开 PDF，删除 `public/downloads/` 并去掉 resume 页 PDF 链接即可；若要改邮箱，`site.mail` 与 profile README 两处同步。
+**提醒（已执行）**：网页只公开邮箱；含真实姓名/电话的本地编译简历 PDF 已在提交前从仓库与 git 历史中完整移除（当时只是误放，本次已修正）。若要改邮箱，`site.mail` 与 profile README 两处同步。

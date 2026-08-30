@@ -25,8 +25,6 @@ dithob.github.io/
 │   └── README.en.md
 ├── public/                  # 静态资源，构建时原样拷入 dist 根目录
 │   ├── CNAME.example        # 自定义域名占位（配好域名后改名为 CNAME）
-│   ├── downloads/
-│   │   └── resume-testdevelop.pdf   # 简历 PDF（AiDeveloperResume 编译产物）
 │   ├── favicon.svg
 │   ├── images/og.png        # 社交分享图 1200×630（SVG 不渲染，勿换回 svg）
 │   └── robots.txt           # 指向 /sitemap-index.xml
@@ -114,10 +112,9 @@ dithob.github.io/
 
 ### 3.7 简历与联系方式
 
-- 简历页（`resume.astro` / `en/resume.astro`）承载**真实内容**（腾讯云智测开实习、智能持续测试平台、腾讯地图 Agent、在校成果、教育背景、技能），替代原占位文案；
-- PDF 下载 `public/downloads/resume-testdevelop.pdf`：由 AiDeveloperResume 仓库 `build.bat main_testdevelop.tex`（xelatex/MiKTeX）编译复制，网页与 PDF 双形态；
-- 邮箱 `site.mail`（2508807574@qq.com）在 footer / about / resume（中英）统一以 `mailto:` 呈现——联系方式只维护一处；
-- **注意**：PDF 内含真实姓名与电话，若不想公开，删除 `public/downloads/` 并去掉 resume 页 PDF 链接即可。
+- 简历页（`resume.astro` / `en/resume.astro`）承载**网页版真实内容**（腾讯云智测开实习、智能持续测试平台、腾讯地图 Agent、在校成果、教育背景、技能），替代原占位文案；
+- **脱敏边界**：含真实姓名/电话的简历 PDF 由 AiDeveloperResume 仓库本地编译，**不提交到公开仓库**；如需对外提供 PDF，请先脱敏再放入 `public/` 并自行添加链接，切勿把本地编译产物直接传 git；
+- 邮箱 `site.mail`（2508807574@qq.com）在 footer / about / resume（中英）统一以 `mailto:` 呈现——联系方式只维护一处。
 
 ### 3.8 GitHub Profile 同步
 
@@ -130,7 +127,7 @@ dithob.github.io/
 ```text
 npm run check   →  astro check：类型 + content schema（frontmatter 不符在这里报）
 npm run build   →  dist/（26 页 + sitemap-index.xml + 静态资源）
-node scripts/verify-site.mjs → 结构门禁：必需页面/笔记数量/og.png/mailto/简历 PDF
+node scripts/verify-site.mjs → 结构门禁：必需页面/笔记数量/og.png/mailto 联系方式
 ```
 
 发布前最小链：`npm run check && npm run build && node scripts/verify-site.mjs`；push main 后 deploy.yml 自动部署。

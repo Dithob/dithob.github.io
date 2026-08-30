@@ -1,8 +1,0 @@
----
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { notes } from '../data';
----
-<BaseLayout title="Notes — Dithob" description="Dithob 的 AI、Agent、RAG/OCR 与工程质量笔记索引。" path="/notes/">
-  <div class="page-intro shell"><div class="eyebrow">Notes</div><h1>技术笔记索引</h1><p>首版只发布已经确认可公开的索引和来源入口，不把内部资料或未核验内容直接放到个人网站。</p></div>
-  <section class="section shell"><div class="list-grid">{notes.map((note) => <article class="note-card"><small>{note.category}</small><h3><a href={note.href} target="_blank" rel="noreferrer">{note.title}</a></h3><p>{note.description}</p></article>)}</div></section>
-</BaseLayout>

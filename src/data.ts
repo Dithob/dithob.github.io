@@ -75,6 +75,7 @@ export const site = {
   shortName: 'Dithob',
   github: 'https://github.com/Dithob',
   website: 'https://dithob.github.io',
+  mail: '2508807574@qq.com',
 };
 
 export const brand = {
@@ -284,10 +285,4 @@ export const projects: Project[] = [
     limitations: '不同业务环境的认证、数据库和服务依赖需要按项目配置，仓库本身不代表某个生产系统。',
     limitationsEn: 'Authentication, database, and service dependencies vary by environment; the repository is not presented as a specific production system.',
   },
-];
-
-export const notes = [
-  { category: 'AI / Agent', categoryEn: 'AI / Agent', title: 'Building tools with explicit evidence boundaries', titleEn: 'Building tools with explicit evidence boundaries', description: '记录如何区分已验证事实、推断和外部服务状态。', descriptionEn: 'How to separate verified facts, inference, and external-service state.', href: 'https://github.com/Dithob' },
-  { category: 'RAG / OCR / Document Processing', categoryEn: 'RAG / OCR / Document Processing', title: 'From documents to evidence-linked workflows', titleEn: 'From documents to evidence-linked workflows', description: '围绕论文、PDF、OCR 和可回查证据的工程笔记索引。', descriptionEn: 'Engineering notes on papers, PDFs, OCR, and traceable evidence.', href: 'https://github.com/Dithob/PaperQAAgent' },
-  { category: 'Testing / Engineering', categoryEn: 'Testing / Engineering', title: 'Validation is part of the product surface', titleEn: 'Validation is part of the product surface', description: '测试、诊断、边界与回滚如何成为工具可信度的一部分。', descriptionEn: 'How tests, diagnostics, boundaries, and rollback support trust.', href: 'https://github.com/Dithob/autotest-framework' },
 ];

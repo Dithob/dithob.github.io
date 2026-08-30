@@ -1,8 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
 import { brand, capabilities, focusItems, projects, signals, workflowSteps } from '../data';
 const featuredProjects = projects.filter((project) => project.featured);
+const latestNotes = (await getCollection('notes', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
 ---
 <BaseLayout title="wujue / Dithob — AI tools and engineering" description="构建可运行、可解释、可核验的 AI 工具。" path="/">
   <section class="hero shell">
@@ -42,7 +46,19 @@ const featuredProjects = projects.filter((project) => project.featured);
     <div class="workflow-grid">{workflowSteps.map((step) => <article class={`workflow-step workflow-${step.tone}`}><span class="workflow-number">{step.number}</span><h3>{step.title}</h3><p>{step.detail}</p></article>)}</div>
   </section>
   <section class="section shell">
-    <div class="section-heading"><div><div class="section-code">06 / NOTES</div><h2>技术笔记索引</h2></div><p>把项目背后的判断、验证和边界留下来。</p></div>
+    <div class="section-heading"><div><div class="section-code">06 / LATEST NOTES</div><h2>最新笔记</h2></div><p>最近整理的公开笔记：来源、证据与存疑清单一起保留。</p></div>
+    <div class="list-grid">
+      {latestNotes.map((note) => (
+        <article class="note-card">
+          <small>{note.data.category} · {note.data.date.toISOString().slice(0, 10)}</small>
+          <h3 class="note-card-title"><a href={`/notes/${note.id}/`}>{note.data.title}</a></h3>
+          <p>{note.data.summary}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+  <section class="section shell">
+    <div class="section-heading"><div><div class="section-code">07 / NOTES</div><h2>技术笔记索引</h2></div><p>把项目背后的判断、验证和边界留下来。</p></div>
     <div class="note-banner"><div><span class="mini-label">FIELD NOTES</span><h3>把做过的事情，变成可回看的证据。</h3></div><div class="actions"><a class="button primary" href="/notes/">浏览笔记索引 →</a><a class="button" href="https://github.com/Dithob" target="_blank" rel="noreferrer">访问 GitHub ↗</a></div></div>
   </section>
 </BaseLayout>

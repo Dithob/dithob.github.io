@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+// 按主题分组：主题数 >= 2 时分组展示，否则退化到时间倒序列表。
+const categories = [...new Set(notes.map((note) => note.data.category))];
+const grouped = categories.length >= 2
+  ? categories.map((category) => ({
+      category,
+      notes: notes.filter((note) => note.data.category === category),
+    }))
+  : null;
+
+// 延伸阅读：性质是「相关仓库」而不是笔记正文，保留外链入口。
+const reading = [
+  {
+    category: 'AI / Agent',
+    title: 'Building tools with explicit evidence boundaries',
+    description: '记录如何区分已验证事实、推断和外部服务状态。',
+    href: 'https://github.com/Dithob',
+  },
+  {
+    category: 'RAG / OCR / Document Processing',
+    title: 'From documents to evidence-linked workflows',
+    description: '围绕论文、PDF、OCR 和可回查证据的工程笔记索引。',
+    href: 'https://github.com/Dithob/PaperQAAgent',
+  },
+  {
+    category: 'Testing / Engineering',
+    title: 'Validation is part of the product surface',
+    description: '测试、诊断、边界与回滚如何成为工具可信度的一部分。',
+    href: 'https://github.com/Dithob/autotest-framework',
+  },
+];
+---
+<BaseLayout title="Notes — Dithob" description="Dithob 的 AI、Agent、RAG/OCR 与工程质量笔记，按主题分类，附来源与原文链接。" path="/notes/">
+  <div class="page-intro shell">
+    <div class="eyebrow">Notes</div>
+    <h1>技术笔记</h1>
+    <p>来自公开视频与文档的整理笔记：标注来源、链接原始出处，保留正文里的事实、边界与存疑清单。</p>
+  </div>
+  <section class="section shell">
+    <div class="section-heading"><div><div class="section-code">01 / ALL NOTES</div><h2>{grouped ? '按主题' : '全部笔记'}</h2></div><p>共 {notes.length} 篇，按整理日期倒序。</p></div>
+    {grouped ? (
+      grouped.map((group) => (
+        <div class="note-group">
+          <h3 class="note-group-title">{group.category}</h3>
+          <div class="list-grid">
+            {group.notes.map((note) => (
+              <article class="note-card">
+                <small>{note.data.typeLabel} · {note.data.date.toISOString().slice(0, 10)}</small>
+                <h3 class="note-card-title"><a href={`/notes/${note.id}/`}>{note.data.title}</a></h3>
+                <p>{note.data.summary}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      ))
+    ) : (
+      <div class="list-grid">
+        {notes.map((note) => (
+          <article class="note-card">
+            <small>{note.data.typeLabel} · {note.data.date.toISOString().slice(0, 10)}</small>
+            <h3 class="note-card-title"><a href={`/notes/${note.id}/`}>{note.data.title}</a></h3>
+            <p>{note.data.summary}</p>
+          </article>
+        ))}
+      </div>
+    )}
+  </section>
+  <section class="section shell">
+    <div class="section-heading"><div><div class="section-code">02 / FURTHER READING</div><h2>延伸阅读</h2></div><p>是相关仓库而非笔记正文，按需访问。</p></div>
+    <div class="list-grid">
+      {reading.map((item) => (
+        <article class="note-card note-card-plain">
+          <small>{item.category}</small>
+          <h3 class="note-card-title"><a href={item.href} target="_blank" rel="noreferrer">{item.title} ↗</a></h3>
+          <p>{item.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

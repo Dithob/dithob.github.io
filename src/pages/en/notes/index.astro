@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+<BaseLayout title="Notes — Dithob" description="Dithob's engineering notes on AI, agents, RAG/OCR, and engineering quality." lang="en" path="/en/notes/">
+  <div class="page-intro shell">
+    <div class="eyebrow">Notes</div>
+    <h1>Engineering notes</h1>
+    <p>These notes are written in Chinese. The list below links to the original Chinese text, with source links preserved.</p>
+  </div>
+  <section class="section shell">
+    <div class="section-heading"><div><div class="section-code">01 / ALL NOTES</div><h2>Latest notes</h2></div><p>{notes.length} notes, newest first.</p></div>
+    <div class="list-grid">
+      {notes.map((note) => (
+        <article class="note-card">
+          <small>{note.data.categoryEn} · {note.data.date.toISOString().slice(0, 10)}</small>
+          <h3 class="note-card-title"><a href={`/notes/${note.id}/`}>{note.data.titleEn}</a></h3>
+          <p>{note.data.summaryEn}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

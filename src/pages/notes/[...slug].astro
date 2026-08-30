@@ -1,0 +1,40 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes', ({ data }) => !data.draft);
+  return notes.map((note) => ({ params: { slug: note.id }, props: { note } }));
+}
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+const date = note.data.date.toISOString().slice(0, 10);
+---
+<BaseLayout
+  title={`${note.data.title} — Dithob`}
+  description={note.data.summary}
+  path={`/notes/${note.id}/`}
+  alternatePath="/en/notes/"
+>
+  <article class="page-intro shell">
+    <div class="eyebrow">{note.data.typeLabel} · {note.data.source}</div>
+    <h1>{note.data.title}</h1>
+    <p>{note.data.summary}</p>
+    <div class="actions">
+      <a class="button" href="/notes/">← 返回笔记列表</a>
+      {note.data.sourceUrl && (
+        <a class="button primary" href={note.data.sourceUrl} target="_blank" rel="noreferrer">查看原始来源 ↗</a>
+      )}
+    </div>
+    <dl class="facts">
+      <dt>来源</dt><dd><a href={note.data.sourceUrl} target="_blank" rel="noreferrer">{note.data.sourceTitle || note.data.source}</a></dd>
+      {note.data.author && <dt>作者</dt><dd>{note.data.author}</dd>}
+      {note.data.duration && <dt>时长</dt><dd>{note.data.duration}</dd>}
+      <dt>整理日期</dt><dd>{date}</dd>
+    </dl>
+  </article>
+  <div class="section shell prose">
+    <Content />
+  </div>
+</BaseLayout>

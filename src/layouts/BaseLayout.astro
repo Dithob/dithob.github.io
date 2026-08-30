@@ -113,7 +113,6 @@ const personJsonLd = JSON.stringify({
       <div><strong>Dithob</strong><span> · </span>{lang === 'zh' ? '构建可运行、可解释、可核验的 AI 工具。' : 'Building runnable, explainable, and verifiable AI tools.'}</div>
       <div class="footer-links">
         <a href={site.github} rel="me">GitHub</a>
-        <a href={`mailto:${site.mail}`}>{lang === 'zh' ? 'Email' : 'Email'}</a>
         <a href={`mailto:${site.mail}`} class="footer-mail">{site.mail}</a>
         <span>© 2026</span>
       </div>
@@ -219,6 +218,7 @@ const personJsonLd = JSON.stringify({
   .hero { position: relative; padding: 6.8rem 0 4.8rem; display: grid; grid-template-columns: minmax(0, 1.32fr) minmax(280px, .68fr); gap: 3rem; align-items: end; border-bottom: 3px solid var(--line); }
   .hero::before { content: ''; position: absolute; inset: 2rem 0 auto; height: 1.2rem; border-block: 3px dashed var(--line); opacity: .9; }
   .hero-content { position: relative; z-index: 1; }
+  .hero-content h1 { font-size: clamp(2.4rem, 5.2vw, 5rem); max-width: 16ch; }
   .hero-kicker, .section-code, .mini-label { color: var(--text); font-size: .78rem; font-weight: 950; letter-spacing: .1em; text-transform: uppercase; }
   .hero-kicker { display: inline-flex; gap: .75rem; align-items: center; padding: .55rem .8rem; background: var(--lime); border: 3px solid var(--line); box-shadow: var(--shadow-small); }
   .hero-kicker span { color: var(--pink); }

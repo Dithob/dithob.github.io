@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { getCollection } from 'astro:content';
-import { brand, capabilities, focusItems, projects, signals, workflowSteps } from '../data';
+import { brand, capabilities, focusItems, projects, signals, site, workflowSteps } from '../data';
 const featuredProjects = projects.filter((project) => project.featured);
 const latestNotes = (await getCollection('notes', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -12,14 +12,16 @@ const latestNotes = (await getCollection('notes', ({ data }) => !data.draft))
   <section class="hero shell">
     <div class="hero-content">
       <div class="hero-kicker"><span>01</span> PERSONAL SYSTEM / 2026</div>
-      <h1>构建可运行、可解释、可核验的 AI 工具。</h1>
+      <h1>{site.name} · AI 应用工程师</h1>
       <p class="lead">{brand.positioning}</p>
       <div class="actions"><a class="button primary" href="/projects/">查看项目 →</a><a class="button" href="/resume/">在线简历</a><a class="button" href="/notes/">笔记索引</a></div>
     </div>
     <aside class="hero-aside">
       <div class="hero-stamp" aria-hidden="true">D/</div>
+      <div class="hero-aside-block"><span class="mini-label">NAME</span><p>{site.name}</p></div>
       <div class="hero-aside-block"><span class="mini-label">NOW BUILDING</span><p>PaperQAAgent · DeepResume · reusable agent skills</p></div>
-      <div class="hero-aside-block"><span class="mini-label">HOW I WORK</span><p>先确认事实，再组织证据；把验证、边界和回滚一起写进交付物。</p></div>
+      <div class="hero-aside-block"><span class="mini-label">HOW I WORK</span><p>{brand.tagline}</p></div>
+      <div class="hero-aside-block"><span class="mini-label">SCHOOL</span><p>重庆邮电大学 · 计算机技术（硕士）</p></div>
       <div class="hero-aside-code">OPEN SOURCE<br />LOCAL FIRST<br />EVIDENCE LED</div>
     </aside>
     <div class="hero-corner" aria-hidden="true">AI / AGENT / QA</div>

@@ -7,7 +7,7 @@ const notes = defineCollection({
   schema: z.object({
     title: z.string(),
     titleEn: z.string(),
-    type: z.enum(['note', 'guide', 'manual']),
+    type: z.enum(['note', 'guide', 'manual', 'review']),
     typeLabel: z.string(),
     category: z.string(),
     categoryEn: z.string(),
@@ -15,7 +15,7 @@ const notes = defineCollection({
     summaryEn: z.string(),
     source: z.string(),
     sourceTitle: z.string().nullable(),
-    sourceUrl: z.string().url(),
+    sourceUrl: z.url(),
     author: z.string().nullable(),
     duration: z.string().nullable(),
     sourceId: z.string().nullable(),

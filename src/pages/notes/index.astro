@@ -6,12 +6,20 @@ const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 
-// 按主题分组：主题数 >= 2 时分组展示，否则退化到时间倒序列表。
-const categories = [...new Set(notes.map((note) => note.data.category))];
-const grouped = categories.length >= 2
-  ? categories.map((category) => ({
-      category,
-      notes: notes.filter((note) => note.data.category === category),
+// 按类型分面：分组顺序固定 note → guide → manual → review（项目阅读笔记）。
+// 与现有类型数 >= 2 才分组（否则退化为时间倒序列表）的判断保持兼容。
+const TYPE_ORDER = [
+  { type: 'note', label: '笔记' },
+  { type: 'guide', label: '指南' },
+  { type: 'manual', label: '手册' },
+  { type: 'review', label: '项目阅读笔记' },
+] as const;
+
+const presentTypes = TYPE_ORDER.filter(({ type }) => notes.some((note) => note.data.type === type));
+const grouped = presentTypes.length >= 2
+  ? presentTypes.map(({ type, label }) => ({
+      label,
+      notes: notes.filter((note) => note.data.type === type),
     }))
   : null;
 
@@ -44,15 +52,15 @@ const reading = [
     <p>来自公开视频与文档的整理笔记：标注来源、链接原始出处，保留正文里的事实、边界与存疑清单。</p>
   </div>
   <section class="section shell">
-    <div class="section-heading"><div><div class="section-code">01 / ALL NOTES</div><h2>{grouped ? '按主题' : '全部笔记'}</h2></div><p>共 {notes.length} 篇，按整理日期倒序。</p></div>
+    <div class="section-heading"><div><div class="section-code">01 / ALL NOTES</div><h2>{grouped ? '按类型' : '全部笔记'}</h2></div><p>共 {notes.length} 篇，按整理日期倒序。</p></div>
     {grouped ? (
       grouped.map((group) => (
         <div class="note-group">
-          <h3 class="note-group-title">{group.category}</h3>
+          <h3 class="note-group-title">{group.label}</h3>
           <div class="list-grid">
             {group.notes.map((note) => (
               <article class="note-card">
-                <small>{note.data.typeLabel} · {note.data.date.toISOString().slice(0, 10)}</small>
+                <small>{note.data.category} · {note.data.date.toISOString().slice(0, 10)}</small>
                 <h3 class="note-card-title"><a href={`/notes/${note.id}/`}>{note.data.title}</a></h3>
                 <p>{note.data.summary}</p>
               </article>
@@ -64,7 +72,7 @@ const reading = [
       <div class="list-grid">
         {notes.map((note) => (
           <article class="note-card">
-            <small>{note.data.typeLabel} · {note.data.date.toISOString().slice(0, 10)}</small>
+            <small>{note.data.category} · {note.data.date.toISOString().slice(0, 10)}</small>
             <h3 class="note-card-title"><a href={`/notes/${note.id}/`}>{note.data.title}</a></h3>
             <p>{note.data.summary}</p>
           </article>

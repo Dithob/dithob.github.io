@@ -6,13 +6,29 @@ interface Props {
   description: string;
   lang?: 'zh' | 'en';
   path?: string;
+  alternatePath?: string;
 }
 
-const { title, description, lang = 'zh', path = '/' } = Astro.props;
+const { title, description, lang = 'zh', path = '/', alternatePath: alternateProp } = Astro.props;
 const canonical = new URL(path, Astro.site ?? site.website).toString();
-const alternatePath = lang === 'zh' ? `/en${path === '/' ? '/' : path}` : path.replace(/^\/en(?=\/|$)/, '') || '/';
+const alternatePath = alternateProp ?? (lang === 'zh' ? `/en${path === '/' ? '/' : path}` : path.replace(/^\/en(?=\/|$)/, '') || '/');
 const alternate = new URL(alternatePath, Astro.site ?? site.website).toString();
 const themeOptions = themes;
+const isHome = path === '/' || path === '/en/';
+const navItems = [
+  { key: 'projects', href: lang === 'zh' ? '/projects/' : '/en/projects/', label: lang === 'zh' ? '项目' : 'Projects' },
+  { key: 'resume', href: lang === 'zh' ? '/resume/' : '/en/resume/', label: lang === 'zh' ? '简历' : 'Resume' },
+  { key: 'notes', href: lang === 'zh' ? '/notes/' : '/en/notes/', label: lang === 'zh' ? '笔记' : 'Notes' },
+  { key: 'about', href: lang === 'zh' ? '/about/' : '/en/about/', label: lang === 'zh' ? '关于' : 'About' },
+];
+const personJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'wujue / Dithob',
+  url: site.website,
+  sameAs: [site.github],
+  email: `mailto:${site.mail}`,
+});
 ---
 <!doctype html>
 <html lang={lang === 'zh' ? 'zh-CN' : 'en'}>
@@ -28,8 +44,24 @@ const themeOptions = themes;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL('/images/og.svg', Astro.site ?? site.website).toString()} />
+    <meta property="og:image" content={new URL('/images/og.png', Astro.site ?? site.website).toString()} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {isHome && <script type="application/ld+json" set:html={personJsonLd} is:inline />}
     <title>{title}</title>
+    <script is:inline>
+      (() => {
+        const key = 'dithob-visual-theme-v2';
+        const root = document.documentElement;
+        const defaultTheme = 'neo-brutalist';
+        const validThemes = ['neo-brutalist', 'editorial', 'minimalist-flat', 'bento-grid', 'geometric-bold'];
+        const saved = localStorage.getItem(key);
+        const next = validThemes.includes(saved) ? saved : defaultTheme;
+        root.dataset.theme = next;
+        localStorage.setItem(key, next);
+      })();
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">{lang === 'zh' ? '跳转到主要内容' : 'Skip to main content'}</a>
@@ -37,10 +69,11 @@ const themeOptions = themes;
       <nav class="nav shell" aria-label={lang === 'zh' ? '主导航' : 'Primary navigation'}>
         <a class="brand" href={lang === 'zh' ? '/' : '/en/'}>D<span>/</span>wujue</a>
         <div class="nav-links">
-          <a href={lang === 'zh' ? '/projects/' : '/en/projects/'}>{lang === 'zh' ? '项目' : 'Projects'}</a>
-          <a href={lang === 'zh' ? '/resume/' : '/en/resume/'}>{lang === 'zh' ? '简历' : 'Resume'}</a>
-          <a href={lang === 'zh' ? '/notes/' : '/en/notes/'}>{lang === 'zh' ? '笔记' : 'Notes'}</a>
-          <a href={lang === 'zh' ? '/about/' : '/en/about/'}>{lang === 'zh' ? '关于' : 'About'}</a>
+          {navItems.map((item) => (
+            <a href={item.href} aria-label={item.label} aria-current={path.startsWith(item.href) ? 'page' : undefined}>
+              <span class="nav-text">{item.label}</span>
+            </a>
+          ))}
           <a class="language-toggle" href={alternatePath}>{lang === 'zh' ? 'EN' : '中'}</a>
           <button class="theme-toggle" type="button" aria-label={lang === 'zh' ? '打开风格切换' : 'Open style switcher'} aria-expanded="false" aria-controls="theme-menu" data-theme-toggle>◐</button>
         </div>
@@ -53,23 +86,24 @@ const themeOptions = themes;
           </div>
           <span class="theme-current" data-theme-current></span>
         </div>
-        <div class="theme-options" role="list">
+        <ul class="theme-options">
           {themeOptions.map((theme) => (
-            <button
-              class={`theme-option theme-option-${theme.id}`}
-              type="button"
-              data-theme-option={theme.id}
-              role="listitem"
-              aria-pressed="false"
-            >
-              <span class="theme-option-mark">{lang === 'zh' ? theme.short : theme.shortEn}</span>
-              <span>
-                <strong>{lang === 'zh' ? theme.label : theme.labelEn}</strong>
-                <small>{lang === 'zh' ? theme.labelEn : theme.label}</small>
-              </span>
-            </button>
+            <li>
+              <button
+                class={`theme-option theme-option-${theme.id}`}
+                type="button"
+                data-theme-option={theme.id}
+                aria-pressed="false"
+              >
+                <span class="theme-option-mark">{lang === 'zh' ? theme.short : theme.shortEn}</span>
+                <span>
+                  <strong>{lang === 'zh' ? theme.label : theme.labelEn}</strong>
+                  <small>{lang === 'zh' ? theme.labelEn : theme.label}</small>
+                </span>
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </header>
     <main id="main-content">
@@ -79,19 +113,21 @@ const themeOptions = themes;
       <div><strong>Dithob</strong><span> · </span>{lang === 'zh' ? '构建可运行、可解释、可核验的 AI 工具。' : 'Building runnable, explainable, and verifiable AI tools.'}</div>
       <div class="footer-links">
         <a href={site.github} rel="me">GitHub</a>
-        <a href="https://github.com/Dithob" target="_blank" rel="noreferrer">Contact</a>
+        <a href={`mailto:${site.mail}`}>{lang === 'zh' ? 'Email' : 'Email'}</a>
+        <a href={`mailto:${site.mail}`} class="footer-mail">{site.mail}</a>
         <span>© 2026</span>
       </div>
     </footer>
     <script is:inline>
-      const key = 'dithob-visual-theme-v2';
-      const legacyKey = 'dithob-visual-theme';
-      const root = document.documentElement;
-      const defaultTheme = 'neo-brutalist';
-      const validThemes = ['neo-brutalist', 'editorial', 'minimalist-flat', 'bento-grid', 'geometric-bold'];
-      localStorage.removeItem(legacyKey);
-      const saved = localStorage.getItem(key);
-      const setTheme = (theme) => {
+      (() => {
+        const key = 'dithob-visual-theme-v2';
+        const legacyKey = 'dithob-visual-theme';
+        const root = document.documentElement;
+        const defaultTheme = 'neo-brutalist';
+        const validThemes = ['neo-brutalist', 'editorial', 'minimalist-flat', 'bento-grid', 'geometric-bold'];
+        if (legacyKey) localStorage.removeItem(legacyKey);
+        const saved = localStorage.getItem(key);
+        const setTheme = (theme) => {
         const next = validThemes.includes(theme) ? theme : defaultTheme;
         root.dataset.theme = next;
         localStorage.setItem(key, next);
@@ -127,12 +163,13 @@ const themeOptions = themes;
           toggle?.setAttribute('aria-expanded', 'false');
         }
       });
+      })();
     </script>
   </body>
 </html>
 <style is:global>
   :root { color-scheme: light; --bg: #fffdf7; --surface: #ffffff; --surface-soft: #f4f0e6; --text: #080808; --muted: #313131; --subtle: #646464; --line: #080808; --accent: #ff006e; --accent-soft: #ff006e; --warm: #ff9500; --pink: #ff006e; --lime: #ccff00; --blue: #00d9ff; --orange: #ff9500; --purple: #a78bfa; --red: #ff4d4d; --shadow: 8px 8px 0 #080808; --shadow-small: 4px 4px 0 #080808; --heading-font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; --body-font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
-  :root[data-theme='editorial'] { --bg: #f5f0e8; --surface: #fbf8f2; --surface-soft: #e4ddd0; --text: #17130f; --muted: #625a50; --subtle: #8d8173; --line: #17130f; --accent: #a43b28; --accent-soft: #a43b28; --warm: #c8a05a; --pink: #a43b28; --lime: #d6c29a; --blue: #38536c; --orange: #c47b3c; --purple: #6d586f; --red: #a43b28; --shadow: 8px 8px 0 #17130f; --shadow-small: 3px 3px 0 #17130f; --heading-font: Georgia, "Times New Roman", serif; --body-font: Arial, Helvetica, sans-serif; }
+  :root[data-theme='editorial'] { --bg: #f5f0e8; --surface: #fbf8f2; --surface-soft: #e4ddd0; --text: #17130f; --muted: #625a50; --subtle: #6b6054; --line: #17130f; --accent: #a43b28; --accent-soft: #a43b28; --warm: #c8a05a; --pink: #a43b28; --lime: #d6c29a; --blue: #38536c; --orange: #c47b3c; --purple: #6d586f; --red: #a43b28; --shadow: 8px 8px 0 #17130f; --shadow-small: 3px 3px 0 #17130f; --heading-font: Georgia, "Times New Roman", serif; --body-font: Arial, Helvetica, sans-serif; }
   :root[data-theme='minimalist-flat'] { --bg: #ffffff; --surface: #ffffff; --surface-soft: #f2f2f2; --text: #050505; --muted: #3c3c3c; --subtle: #777777; --line: #050505; --accent: #ff3366; --accent-soft: #ff3366; --warm: #ffcc00; --pink: #ff3366; --lime: #ffcc00; --blue: #00d4aa; --orange: #ffcc00; --purple: #6557d2; --red: #ff3366; --shadow: none; --shadow-small: none; --heading-font: Arial, Helvetica, sans-serif; --body-font: Arial, Helvetica, sans-serif; }
   :root[data-theme='bento-grid'] { color-scheme: light; --bg: #ffffff; --surface: #ffffff; --surface-soft: #f7f8fa; --text: #151515; --muted: #5f6368; --subtle: #9298a1; --line: #e5e7eb; --accent: #2563eb; --accent-soft: #2563eb; --warm: #f59e0b; --pink: #2563eb; --lime: #e9eef7; --blue: #2563eb; --orange: #f59e0b; --purple: #7c3aed; --red: #dc2626; --shadow: 0 14px 30px rgba(17, 24, 39, .06); --shadow-small: 0 5px 14px rgba(17, 24, 39, .05); --heading-font: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; --body-font: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
   :root[data-theme='geometric-bold'] { color-scheme: dark; --bg: #090909; --surface: #111111; --surface-soft: #1a1a1a; --text: #f5f5f5; --muted: #b8b8b8; --subtle: #7c7c7c; --line: #eeeeee; --accent: #c8ff00; --accent-soft: #c8ff00; --warm: #ffb000; --pink: #c8ff00; --lime: #c8ff00; --blue: #8ee7ff; --orange: #ffb000; --purple: #b7a5ff; --red: #ff6b8a; --shadow: none; --shadow-small: none; --heading-font: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; --body-font: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
@@ -153,6 +190,7 @@ const themeOptions = themes;
   .nav-links a { text-decoration: none; }
   .nav-links > a { padding: .7rem .8rem; border-left: 3px solid var(--line); }
   .nav-links > a:hover { background: var(--lime); color: var(--text); }
+  .nav-links > a[aria-current='page'] { background: var(--surface-soft); text-decoration: underline; text-underline-offset: .25em; }
   .language-toggle { background: var(--pink); color: var(--text); }
   .theme-toggle { border: 3px solid var(--line); color: var(--text); background: var(--surface); width: 2.4rem; height: 2.4rem; cursor: pointer; margin-left: .8rem; box-shadow: var(--shadow-small); font-weight: 950; }
   .theme-toggle:active, .button:active { transform: translate(4px, 4px); box-shadow: none; }
@@ -161,7 +199,8 @@ const themeOptions = themes;
   .theme-menu-heading { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: 1rem; }
   .theme-menu-heading strong { display: block; margin-top: .35rem; font-family: var(--heading-font); font-size: 1.3rem; }
   .theme-current { color: var(--accent); font-size: .72rem; font-weight: 950; letter-spacing: .12em; text-transform: uppercase; }
-  .theme-options { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .7rem; }
+  .theme-options { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .7rem; margin: 0; padding: 0; list-style: none; }
+  .theme-options > li { display: grid; }
   .theme-option { display: grid; gap: .7rem; min-height: 112px; padding: .8rem; border: 3px solid var(--line); color: var(--text); background: var(--bg); text-align: left; cursor: pointer; box-shadow: var(--shadow-small); font-family: var(--body-font); transition: transform 150ms ease-out, box-shadow 150ms ease-out, background-color 150ms ease-out; }
   .theme-option:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--accent); }
   .theme-option[aria-pressed='true'] { outline: 4px solid var(--accent); outline-offset: 2px; }
@@ -269,12 +308,70 @@ const themeOptions = themes;
   .facts dt:first-child { margin-top: 0; }
   .facts dd { margin: .25rem 0 0; }
   .list-grid { display: grid; gap: 1rem; }
+  .note-group + .note-group { margin-top: 2.6rem; }
+  .note-group-title { font-size: 1.1rem; margin: 0 0 1rem; padding-bottom: .5rem; border-bottom: 3px solid var(--accent); }
   .note-card { padding: 1.25rem; border: 3px solid var(--line); box-shadow: var(--shadow-small); background: var(--surface); }
   .note-card:nth-child(1) { background: var(--pink); }
   .note-card:nth-child(2) { background: var(--blue); }
   .note-card:nth-child(3) { background: var(--lime); }
+  .note-card:nth-child(4) { background: var(--orange); }
   .note-card small { color: var(--text); font-weight: 950; }
   .note-card p { color: var(--text); margin-bottom: 0; font-weight: 700; }
+  .note-card-title { margin: .6rem 0 .5rem; }
+  .note-card-plain { background: var(--surface) !important; }
+
+  /* Resume entries (online resume page). */
+  .resume-entry { margin-top: 1.8rem; }
+  .resume-entry-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 1rem; align-items: baseline; }
+  .resume-entry-heading h3 { margin: 0; font-size: 1.15rem; }
+  .resume-entry-heading .resume-org { color: var(--muted); font-size: .95rem; }
+  .resume-entry-date { color: var(--subtle); font-size: .78rem; font-weight: 900; letter-spacing: .04em; white-space: nowrap; }
+  .resume-entry ul { margin: .7rem 0 0; }
+  .resume-contact-list { display: grid; gap: .5rem; }
+  .resume-contact-list .button { width: fit-content; }
+
+  /* Prose (notes + articles): tables, quotes, code, headings. */
+  .prose { overflow-wrap: anywhere; }
+  .prose h2 { margin-top: 2.4rem; scroll-margin-top: 6rem; }
+  .prose h3 { margin-top: 2rem; scroll-margin-top: 6rem; }
+  .prose h4 { margin-top: 1.6rem; scroll-margin-top: 6rem; }
+  .prose p, .prose li { color: var(--muted); }
+  .prose p { margin: 1rem 0; }
+  .prose ul, .prose ol { padding-left: 1.5rem; }
+  .prose li { margin: .4rem 0; }
+  .prose a { word-break: break-word; }
+  .prose blockquote { margin: 1.4rem 0; padding: 1rem 1.2rem; border-left: 6px solid var(--accent); background: var(--surface-soft); }
+  .prose blockquote p { margin: 0; color: var(--muted); }
+  .prose blockquote p + p { margin-top: .6rem; }
+  .prose :not(pre) > code { font-family: var(--heading-font); font-size: .85em; padding: .1em .35em; background: var(--surface-soft); border: 1px solid var(--line); }
+  .prose pre { margin: 1.4rem 0; padding: 1rem; border: 3px solid var(--line); box-shadow: var(--shadow-small); overflow-x: auto; }
+  .prose pre code { padding: 0; font-size: .85rem; }
+  .prose hr { border: 0; border-top: 3px solid var(--line); margin: 2.2rem 0; }
+  .prose table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin: 1.4rem 0; font-size: .9rem; }
+  .prose th, .prose td { border: 3px solid var(--line); padding: .5rem .7rem; text-align: left; }
+  .prose th { background: var(--surface-soft); }
+  .prose thead th { background: var(--text); color: var(--bg); }
+  .prose img { max-width: 100%; height: auto; border: 3px solid var(--line); }
+
+  /* Shiki css-variables theme: a dark code card that fits every skin. */
+  :root {
+    --astro-code-background: #101010;
+    --astro-code-foreground: #e8e8e8;
+    --astro-code-token-comment: #8b949e;
+    --astro-code-token-string: #a5d6ff;
+    --astro-code-token-keyword: #ff7b72;
+    --astro-code-token-function: #d2a8ff;
+    --astro-code-token-number: #79c0ff;
+    --astro-code-token-constant: #79c0ff;
+    --astro-code-token-attribute: #79c0ff;
+    --astro-code-token-operator: #ff7b72;
+    --astro-code-token-tag: #7ee787;
+    --astro-code-token-property: #79c0ff;
+    --astro-code-token-regex: #a5d6ff;
+    --astro-code-token-parameter: #e8e8e8;
+    --astro-code-token-punctuation: #e8e8e8;
+    --astro-code-token-entity: #e8e8e8;
+  }
   .site-footer { padding: 2rem 0 3rem; display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); font-size: .8rem; font-weight: 700; }
   .footer-links { display: flex; gap: 1rem; flex-wrap: wrap; }
   .not-found { min-height: 65vh; display: grid; place-items: center; text-align: center; }
@@ -285,6 +382,7 @@ const themeOptions = themes;
   [data-theme='editorial'] .nav-links { font-family: var(--body-font); font-size: .72rem; letter-spacing: .14em; }
   [data-theme='editorial'] .nav-links > a { border-left: 0; padding: .45rem .7rem; }
   [data-theme='editorial'] .nav-links > a:hover { background: transparent; color: var(--accent); }
+  [data-theme='editorial'] .nav-links > a[aria-current='page'] { background: transparent; color: var(--accent); text-decoration: underline; }
   [data-theme='editorial'] .language-toggle { background: transparent; color: var(--accent); border-bottom: 1px solid var(--accent); }
   [data-theme='editorial'] .theme-toggle { border-width: 1px; box-shadow: none; background: transparent; }
   [data-theme='editorial'] .theme-menu { border-width: 1px; box-shadow: 6px 6px 0 var(--line); }
@@ -329,6 +427,7 @@ const themeOptions = themes;
   [data-theme='minimalist-flat'] .nav-links { font-family: var(--body-font); }
   [data-theme='minimalist-flat'] .nav-links > a { border-left: 0; padding-inline: .7rem; }
   [data-theme='minimalist-flat'] .nav-links > a:hover { background: transparent; color: var(--accent); }
+  [data-theme='minimalist-flat'] .nav-links > a[aria-current='page'] { background: transparent; color: var(--accent); text-decoration: underline; }
   [data-theme='minimalist-flat'] .language-toggle { background: var(--accent); color: #fff; }
   [data-theme='minimalist-flat'] .theme-toggle { border-width: 1px; box-shadow: none; }
   [data-theme='minimalist-flat'] .theme-menu { border-width: 1px; box-shadow: none; }
@@ -370,6 +469,7 @@ const themeOptions = themes;
   [data-theme='bento-grid'] .nav-links { font-family: var(--body-font); text-transform: none; letter-spacing: 0; }
   [data-theme='bento-grid'] .nav-links > a { border: 0; padding-inline: .7rem; }
   [data-theme='bento-grid'] .nav-links > a:hover { background: var(--surface); color: var(--accent); }
+  [data-theme='bento-grid'] .nav-links > a[aria-current='page'] { background: var(--surface-soft); color: var(--accent); text-decoration: underline; text-underline-offset: .3em; }
   [data-theme='bento-grid'] .language-toggle { background: var(--surface); border-radius: 999px; }
   [data-theme='bento-grid'] .theme-toggle { border-width: 1px; border-radius: 999px; box-shadow: none; }
   [data-theme='bento-grid'] .theme-menu { border: 0; border-radius: 1.4rem; box-shadow: var(--shadow); }
@@ -415,6 +515,7 @@ const themeOptions = themes;
   /* Black Mode: dark canvas, bright linework, and a restrained lime signal. */
   [data-theme='geometric-bold'] .site-header { background: var(--bg); }
   [data-theme='geometric-bold'] .language-toggle { background: var(--accent); color: #090909; }
+  [data-theme='geometric-bold'] .nav-links > a[aria-current='page'] { background: var(--surface-soft); }
   [data-theme='geometric-bold'] .theme-toggle { background: var(--surface); color: var(--text); }
   [data-theme='geometric-bold'] .theme-menu { background: var(--surface); }
   [data-theme='geometric-bold'] .hero::before { border-style: solid; border-color: var(--line); }
@@ -447,7 +548,14 @@ const themeOptions = themes;
   [data-theme='geometric-bold'] .workflow-lime { background: var(--surface-soft); }
   [data-theme='geometric-bold'] .workflow-blue { background: var(--surface); }
 
-  @media (max-width: 780px) { .shell { width: min(100% - 28px, 680px); } .nav { min-height: 62px; gap: .5rem; } .nav-links { gap: 0; min-width: 0; font-size: .68rem; } .nav-links > a { padding: .55rem .45rem; } .theme-toggle { margin-left: .45rem; width: 2rem; height: 2rem; flex: 0 0 auto; } .theme-menu { width: calc(100% - 28px); top: calc(100% + .7rem); } .theme-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } .theme-option:last-child { grid-column: span 2; } .hero { padding: 5.5rem 0 3.5rem; grid-template-columns: 1fr; gap: 2rem; } .hero::before { top: 1.5rem; } .hero-aside { margin-right: .5rem; } .hero-corner { display: none; } .signal-strip { grid-template-columns: repeat(2, 1fr); } .signal:nth-child(2) { border-right: 0; } .signal:nth-child(-n+2) { border-bottom: 3px solid var(--line); } .section { padding: 3.5rem 0; } .section-heading { display: block; } .project-grid, .capability-grid, .focus-list, .workflow-grid, .content-grid { grid-template-columns: 1fr; } [data-theme='bento-grid'] .project-grid { grid-template-columns: 1fr; } [data-theme='bento-grid'] .project-card:first-child, [data-theme='bento-grid'] .project-card:nth-child(4) { grid-column: auto; } .note-banner { display: block; } .note-banner .actions { margin-top: 1.2rem; } .site-footer { display: block; } .footer-links { margin-top: 1rem; } }
-  @media (max-width: 430px) { .brand { flex: 0 0 auto; font-size: .92rem; letter-spacing: -.1em; } .nav { gap: .35rem; } .nav-links { flex: 1 1 auto; justify-content: flex-end; font-size: .6rem; letter-spacing: 0; } .nav-links > a { flex: 0 1 auto; min-width: 0; padding-inline: .2rem; } .nav-links > a:nth-child(1) { font-size: 0; } .nav-links > a:nth-child(1)::after { content: '↗'; font-size: .8rem; } .nav-links > a:nth-child(2) { font-size: 0; } .nav-links > a:nth-child(2)::after { content: 'CV'; font-size: .6rem; } .nav-links > a:nth-child(3) { font-size: 0; } .nav-links > a:nth-child(3)::after { content: '✦'; font-size: .8rem; } .nav-links > a:nth-child(4) { font-size: 0; } .nav-links > a:nth-child(4)::after { content: '◎'; font-size: .8rem; } .theme-toggle { flex: 0 0 1.85rem; margin-left: .2rem; width: 1.85rem; height: 1.85rem; padding: 0; } .page-intro h1 { font-size: clamp(2.8rem, 14vw, 4.2rem); } [data-theme='bento-grid'] .hero-content { padding: 2rem; } }
+  @media (max-width: 780px) { .shell { width: min(100% - 28px, 680px); } .nav { min-height: 62px; gap: .5rem; } .nav-links { gap: 0; min-width: 0; font-size: .68rem; } .nav-links > a { padding: .55rem .45rem; } .theme-toggle { margin-left: .45rem; width: 2rem; height: 2rem; flex: 0 0 auto; } .theme-menu { width: calc(100% - 28px); top: calc(100% + .7rem); } .theme-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } .theme-options > li:last-child { grid-column: span 2; } .hero { padding: 5.5rem 0 3.5rem; grid-template-columns: 1fr; gap: 2rem; } .hero::before { top: 1.5rem; } .hero-aside { margin-right: .5rem; } .hero-corner { display: none; } .signal-strip { grid-template-columns: repeat(2, 1fr); } .signal:nth-child(2) { border-right: 0; } .signal:nth-child(-n+2) { border-bottom: 3px solid var(--line); } .section { padding: 3.5rem 0; } .section-heading { display: block; } .project-grid, .capability-grid, .focus-list, .workflow-grid, .content-grid { grid-template-columns: 1fr; } [data-theme='bento-grid'] .project-grid { grid-template-columns: 1fr; } [data-theme='bento-grid'] .project-card:first-child, [data-theme='bento-grid'] .project-card:nth-child(4) { grid-column: auto; } .note-banner { display: block; } .note-banner .actions { margin-top: 1.2rem; } .site-footer { display: block; } .footer-links { margin-top: 1rem; } }
+  @media (max-width: 430px) { .brand { flex: 0 0 auto; font-size: .92rem; letter-spacing: -.1em; } .nav { gap: .35rem; } .nav-links { flex: 1 1 auto; justify-content: flex-end; font-size: .6rem; letter-spacing: 0; } .nav-links > a { flex: 0 1 auto; min-width: 0; padding-inline: .2rem; }
+    /* Keep real text in the accessibility tree, show a compact glyph instead. */
+    .nav-links > a .nav-text { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    .nav-links > a:nth-child(1)::after { content: '↗'; font-size: .8rem; }
+    .nav-links > a:nth-child(2)::after { content: 'CV'; font-size: .6rem; }
+    .nav-links > a:nth-child(3)::after { content: '✦'; font-size: .8rem; }
+    .nav-links > a:nth-child(4)::after { content: '◎'; font-size: .8rem; }
+    .theme-toggle { flex: 0 0 1.85rem; margin-left: .2rem; width: 1.85rem; height: 1.85rem; padding: 0; } .page-intro h1 { font-size: clamp(2.8rem, 14vw, 4.2rem); } [data-theme='bento-grid'] .hero-content { padding: 2rem; } }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
 </style>

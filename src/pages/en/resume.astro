@@ -1,4 +1,82 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../data';
+
+const resumePdf = '/downloads/resume-testdevelop.pdf';
 ---
-<BaseLayout title="Resume — Dithob" description="wujue / Dithob online resume and project directions." lang="en" path="/en/resume/"><div class="page-intro shell"><div class="eyebrow">Resume</div><h1>Online resume</h1><p>An entry point for AI applications, agent tooling, and engineering-quality work. Personal facts and contact details will be replaced with the final confirmed version before publication.</p></div><section class="section shell content-grid"><div class="prose"><h2>Profile</h2><p>Computer science student focused on AI applications, agent tooling, RAG/OCR, document understanding, and engineering quality. I like turning ideas into tools that run, can be checked, and state their boundaries honestly.</p><h2>Project directions</h2><ul><li>AI applications: papers, PDFs, resumes, and knowledge workflows</li><li>Agent tooling: skills, CLIs, multimodal fallbacks, and content distillation</li><li>Engineering quality: test automation, validation, diagnostics, and safety boundaries</li></ul><h2>Verifiable project evidence</h2><p>The current showcase prioritizes DeepResume, PaperQAAgent, Youcansee, media-content-distiller, maodingAgent, and autotest-framework. Each detail page separates public sources, validation evidence, and current limitations.</p><h2>Resume files</h2><p>No confirmed public PDF is included in this workspace yet. The final reviewed file will be placed under <code>public/downloads/</code>.</p></div><dl class="facts"><dt>GitHub</dt><dd><a href="https://github.com/Dithob" target="_blank" rel="noreferrer">github.com/Dithob</a></dd><dt>Contact</dt><dd>Please reach out through GitHub Profile</dd><dt>Education</dt><dd>Chongqing University of Posts and Telecommunications · Computer Science</dd><dt>Public entry</dt><dd><a href="/en/projects/">Projects and evidence →</a></dd></dl></section></BaseLayout>
+<BaseLayout title="Resume — wujue / Dithob" description="wujue / Dithob online resume: AI applications, agent tooling, and test development, with verifiable evidence." lang="en" path="/en/resume/">
+  <div class="page-intro shell">
+    <div class="eyebrow">Resume</div>
+    <h1>Online resume</h1>
+    <p>CS graduate student focused on AI applications, agent tooling, and test development. Every item below traces back to a public repository or verifiable source.</p>
+    <div class="actions">
+      <a class="button primary" href={resumePdf} target="_blank" rel="noreferrer">Download PDF resume ↓</a>
+      <a class="button" href={`mailto:${site.mail}`}>Email me ↗</a>
+    </div>
+  </div>
+  <section class="section shell content-grid">
+    <div class="prose">
+      <h2>Profile</h2>
+      <p>CS student working on AI applications, agent tooling, RAG/OCR, document understanding, and engineering quality. I like turning ideas into tools that run, can be checked, and state their boundaries honestly — with hands-on experience shipping AI test agents from case generation to self-healing loops.</p>
+
+      <h2>Internship</h2>
+      <div class="resume-entry">
+        <div class="resume-entry-heading"><h3>Test Development Intern</h3><span class="resume-org">Tencent Cloud & Smart Industries</span><span class="resume-entry-date">2026.06 – 2026.09</span></div>
+        <ul>
+          <li><strong>Mobile Maps UI Automation Testing Agent</strong>: contributed to the Tencent Maps UI automation platform, owning agent orchestration plus Skill and MCP tool rollout across 17 business domains and 600+ test cases.</li>
+          <li><strong>Multi-agent cross-checking & Skill evaluation</strong>: produced 85 graded cases via independent multi-agent generation, cross-comparison, and merge, closed with human review in an "AI-generated + human-judged" loop; planned 120 evaluation cases for map-query and map-rendering Skills and codified the Agent/Skill evaluation methodology.</li>
+          <li><strong>Release requirement testing</strong>: drove test analysis for the "You use, we compensate" H5 release, identifying cross-day state machines, re-entry, out-of-app sharing, analytics, and compatibility risks into an R1–R8 risk register aligned with product and developers; authored cases per internal platform standards and built self-test plans for developers.</li>
+        </ul>
+      </div>
+
+      <h2>Projects</h2>
+      <div class="resume-entry">
+        <div class="resume-entry-heading"><h3>Intelligent Continuous Testing Platform</h3><span class="resume-org">Solo design & development</span><span class="resume-entry-date">2025.10 – 2026.02</span></div>
+        <ul>
+          <li><strong>Platform & framework design</strong>: built a five-layer API automation framework with Python/Pytest/Requests, auto-generated contract cases from OpenAPI validating status codes, response schemas, and business error codes; assembled a lightweight platform on Vue.js + FastAPI + MySQL + Redis + Docker to manage projects and cases.</li>
+          <li><strong>UI automation & performance testing</strong>: implemented Playwright PO-pattern business cases with Trace, screenshots, and recording for replay; designed ramp-up, stability, and peak load tests with JMeter/Locust, reporting QPS, P95, and error rates while locating slow endpoints.</li>
+          <li><strong>AI enhancement & quality loop</strong>: wrapped Pytest/Playwright/Locust execution as async Redis-queued platform tasks; introduced an LLM case-generation pipeline (draft → human review → Bad Case retention); report pages aggregate pass rates, failure reasons, and trends into a closed loop.</li>
+        </ul>
+      </div>
+      <div class="resume-entry">
+        <div class="resume-entry-heading"><h3>Tencent Maps UI Automation Testing Agent</h3><span class="resume-org">Framework team contributor</span><span class="resume-entry-date">2026.06 – 2026.09</span></div>
+        <ul>
+          <li><strong>Agent orchestration & case generation</strong>: co-built the agentic test system orchestrating 13 Skills and 3 in-house MCP services from requirement understanding to targeted regression across 17 business domains and 600+ cases; linked TAPD/Figma to auto-generate executable case.py, ~10–15 min per case versus 1–2 hours handwritten.</li>
+          <li><strong>MCP tooling & multimodal perception</strong>: developed device-control and failure-diagnosis MCP tools and integrated a maps MCP resolving coordinates; fused UIAutomator, OCR, OmniParser, and OpenCV with chained fallback for self-drawn widgets lacking resource-id; scrcpy projection cut screenshot latency from 1s to 30–100ms.</li>
+          <li><strong>Knowledge engineering & semantic retrieval</strong>: designed a file-based knowledge graph (Page/Component/Pitfall/Operation nodes) with static reasoning over UI indexes from 23 developer repos so the agent reads dev code before writing cases; AST-scanned 1500+ private helpers and reused them via jieba + BM25 semantic retrieval.</li>
+          <li><strong>Reliability & self-healing loop</strong>: guarded generation with intent locking, nine-dimension self-review, and human takeover; enforced Lint gates and step-wise assertions, pruned flaky cases via health backtest pass rates, and auto-regenerated patches from evidence packages after failures.</li>
+        </ul>
+      </div>
+
+      <h2>Academic highlights</h2>
+      <ul>
+        <li><strong>Competitions</strong>: Silver, 2025 "Internet+" Innovation & Entrepreneurship Competition; university second prize, China International College Students' Innovation Competition; provincial third prize, Chongqing AI Large Model Innovation Application Competition.</li>
+        <li><strong>Paper</strong>: "LHAF: A Lightweight Hierarchical Adaptive Framework for LLM-based Multimodal Emotion Recognition in Conversations" (submitted to SCI Q1).</li>
+      </ul>
+
+      <h2>Skills</h2>
+      <ul>
+        <li><strong>Test development</strong>: equivalence partitioning, boundary value, scenario, state-machine, and decision-table design; full test lifecycle from requirement review through regression; TAPD and internal case/defect platforms.</li>
+        <li><strong>Engineering & tooling</strong>: API automation with Python/Pytest/Requests; UI/mobile automation with Playwright, Selenium, uiautomator2, and ADB; load testing with JMeter and Locust; Linux, FastAPI, MySQL, Docker, Git.</li>
+        <li><strong>AI application & testing</strong>: understands RAG, Harness, and Memory agent mechanics; fluent in MCP, Skill, and Subagent frameworks; builds Golden Dataset and Bad Case feedback loops with hallucination, refusal, formatting, and multi-turn regression suites validated by keyword, JSON Schema, similarity, and rule assertions; production experience in auto-updating agent cases with human review.</li>
+      </ul>
+
+      <h2>Education</h2>
+      <div class="resume-entry">
+        <div class="resume-entry-heading"><h3>Chongqing University of Posts and Telecommunications · Computer Technology (M.Sc.)</h3><span class="resume-entry-date">2024.09 – 2027.06</span></div>
+        <ul><li>Top-tier academic scholarship ×1; second-tier ×1.</li></ul>
+        <div class="resume-entry-heading"><h3>Chongqing University of Posts and Telecommunications · Computer Science (B.Sc.)</h3><span class="resume-entry-date">2020.09 – 2024.07</span></div>
+        <ul><li>Third-tier academic scholarship; GPA 3.28/4.0 (top 25% of major).</li></ul>
+      </div>
+    </div>
+
+    <dl class="facts">
+      <dt>GitHub</dt><dd><a href={site.github} target="_blank" rel="noreferrer">github.com/Dithob</a></dd>
+      <dt>Email</dt><dd><a href={`mailto:${site.mail}`}>{site.mail}</a></dd>
+      <dt>PDF resume</dt><dd><a href={resumePdf} target="_blank" rel="noreferrer">resume-testdevelop.pdf ↓</a></dd>
+      <dt>Education</dt><dd>Chongqing University of Posts and Telecommunications · Computer Technology (M.Sc.)</dd>
+      <dt>Focus</dt><dd>AI Applications / Agent Tooling / Test Development</dd>
+      <dt>Public entry</dt><dd><a href="/en/projects/">Projects and evidence →</a> · <a href="/en/notes/">Notes →</a></dd>
+    </dl>
+  </section>
+</BaseLayout>

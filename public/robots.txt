@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dithob.github.io/sitemap.xml
+Sitemap: https://dithob.github.io/sitemap-index.xml

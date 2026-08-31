@@ -9,7 +9,7 @@ summary: "按阶段梳理从编程基础、测试基础到自动化、平台工�
 summaryEn: "A staged roadmap from programming and testing fundamentals to automation, platform engineering, and career preparation."
 source: "Bilibili / 配套路线资料"
 sourceTitle: "原始内容"
-sourceUrl: "<https://www.bilibili.com/video/BV1nS4y157Tv/>"
+sourceUrl: "https://www.bilibili.com/video/BV1nS4y157Tv/"
 author: ""
 duration: ""
 sourceId: "BV1nS4y157Tv"

@@ -9,7 +9,7 @@ summary: "从概念、目录结构和环境搭建，到编写、调试、复用 
 summaryEn: "A practical beginner manual covering Agent Skill concepts, structure, setup, authoring, debugging, and reuse."
 source: "Bilibili / Agent Skills 系列"
 sourceTitle: "原始内容"
-sourceUrl: "<https://www.bilibili.com/video/BV1ugdgBQED4>"
+sourceUrl: "https://www.bilibili.com/video/BV1ugdgBQED4"
 author: ""
 duration: ""
 sourceId: "BV1ugdgBQED4"

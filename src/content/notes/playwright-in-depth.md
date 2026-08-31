@@ -9,7 +9,7 @@ summary: "围绕页面导航、内容读取、动作、evaluate、元素操作�
 summaryEn: "A structured overview of Playwright APIs covering navigation, content, actions, evaluate, element operations, and assertions."
 source: "Bilibili / web自动化测试"
 sourceTitle: "原始内容"
-sourceUrl: "<https://www.bilibili.com/video/BV17wRQBLEZn?p=3>"
+sourceUrl: "https://www.bilibili.com/video/BV17wRQBLEZn?p=3"
 author: ""
 duration: ""
 sourceId: "BV17wRQBLEZn"

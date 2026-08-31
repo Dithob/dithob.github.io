@@ -9,7 +9,7 @@ summary: "梳理 Git 版本控制、GitHub 协作、分支、提交、合并与�
 summaryEn: "A structured guide to Git version control, GitHub collaboration, branches, commits, merges, and practical workflows."
 source: "Bilibili / 技术爬爬虾"
 sourceTitle: "原始内容"
-sourceUrl: "<https://www.bilibili.com/video/BV1ySLc6QEcB/>"
+sourceUrl: "https://www.bilibili.com/video/BV1ySLc6QEcB/"
 author: ""
 duration: ""
 sourceId: "BV1ySLc6QEcB"

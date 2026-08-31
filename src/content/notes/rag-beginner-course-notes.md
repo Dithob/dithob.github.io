@@ -9,7 +9,7 @@ summary: "从索引、检索、生成到评估和模块化 RAG，整理面向初
 summaryEn: "Beginner-friendly notes covering the full RAG path from indexing, retrieval, and generation to evaluation and modular RAG."
 source: "Bilibili / 费曼学徒冬瓜"
 sourceTitle: "原始内容"
-sourceUrl: "<https://www.bilibili.com/video/BV1hj5DzyE5d/>"
+sourceUrl: "https://www.bilibili.com/video/BV1hj5DzyE5d/"
 author: ""
 duration: ""
 sourceId: "BV1hj5DzyE5d"

@@ -9,7 +9,7 @@ summary: "介绍 Pi Agent 的极简设计、安装、插件、技能、Session �
 summaryEn: "A practical overview of Pi Agent: its minimal design, setup, plugins, skills, sessions, extensions, and security boundaries."
 source: "Bilibili / 第四种黑猩猩CHIMP"
 sourceTitle: "原始内容"
-sourceUrl: "<https://www.bilibili.com/video/BV15wGR6CEhY/>"
+sourceUrl: "https://www.bilibili.com/video/BV15wGR6CEhY/"
 author: ""
 duration: ""
 sourceId: "BV15wGR6CEhY"

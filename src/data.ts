@@ -83,8 +83,8 @@ export const brand = {
   roleEn: 'CS student building AI applications, agent tools, and test engineering, with a focus on RAG, OCR, and document understanding.',
   tagline: '把生成交给 AI，把判断留给人。',
   taglineEn: 'AI generates. Humans judge.',
-  positioning: '一名专注 AI 应用、Agent 工具与效率工程的程序员，热爱 A/C/G，也喜欢把模糊的想法做成能跑起来的系统。在这里记录项目、笔记与验证过程——方向不设限。',
-  positioningEn: 'A programmer focused on AI applications, agent tooling, and developer efficiency — also an A/C/G fan. I turn vague ideas into working systems and document projects, notes, and verification here. Open to directions beyond any single role.',
+  positioning: '一名专注 AI 应用、Agent 工具与效率工程的程序员，热爱ACG、跑步、健身和CTRL，也喜欢把模糊的想法做成能跑起来的系统。在这里记录项目、笔记与验证过程——方向不设限。',
+  positioningEn: 'A programmer focused on AI applications, agent tooling, and developer efficiency — also an ACG enthusiast who enjoys running, fitness, and CTRL. I turn vague ideas into working systems and document projects, notes, and verification here. Open to directions beyond any single role.',
 };
 
 export const signals: Signal[] = [

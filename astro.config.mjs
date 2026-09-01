@@ -10,7 +10,7 @@ export default defineConfig({
     '/en/resume/': '/en/about/',
   },
   integrations: [sitemap({
-    filter: (page) => !page.includes('/404/') && !page.includes('search-index'),
+    filter: (page) => !page.includes('/404/') && !page.includes('search-index') && !page.includes('rss.xml'),
   })],
   markdown: {
     syntaxHighlight: 'shiki',

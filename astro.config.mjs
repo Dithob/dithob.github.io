@@ -6,7 +6,7 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'always',
   integrations: [sitemap({
-    filter: (page) => !page.includes('/404/'),
+    filter: (page) => !page.includes('/404/') && !page.includes('search-index'),
   })],
   markdown: {
     syntaxHighlight: 'shiki',

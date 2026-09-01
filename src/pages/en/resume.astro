@@ -1,15 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { site } from '../../data';
+import StackIcons from '../../components/StackIcons.astro';
+import { site, techTools } from '../../data';
 ---
 <BaseLayout title="Resume — wujue / Dithob" description="wujue / Dithob online resume: AI applications, agent tooling, and test development, with verifiable evidence." lang="en" path="/en/resume/">
   <div class="page-intro shell">
     <div class="eyebrow">Resume</div>
     <h1>Online resume</h1>
     <p>CS graduate student focused on AI applications, agent tooling, and test development. Every item below traces back to a public repository or verifiable source.</p>
-    <div class="actions">
-      <a class="button" href={`mailto:${site.mail}`}>Email me ↗</a>
-    </div>
+    <div class="resume-tools"><span class="mini-label">TECH STACK</span><StackIcons stack={techTools} size={44} /></div>
   </div>
   <section class="section shell content-grid">
     <div class="prose">

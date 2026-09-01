@@ -1,0 +1,54 @@
+---
+import { stackIconSlugs } from '../data';
+
+interface Props {
+  stack: string[];
+  size?: number;
+}
+
+const { stack, size = 40 } = Astro.props;
+
+/**
+ * Renders skillicons.dev badges for stack labels that have a known slug;
+ * falls back to the plain text tag for the rest (OCR, CLI, Agent Skill, etc.).
+ */
+const items = stack.map((label) => ({ label, slug: stackIconSlugs[label] ?? null }));
+---
+<div class="stack-icon-row" role="list">
+  {items.map(({ label, slug }) =>
+    slug ? (
+      <img
+        class="stack-icon"
+        src={`https://skillicons.dev/icons?i=${slug}&theme=light`}
+        alt={label}
+        title={label}
+        width={size}
+        height={size}
+        loading="lazy"
+        decoding="async"
+        role="listitem"
+      />
+    ) : (
+      <span class="tag" role="listitem">{label}</span>
+    ),
+  )}
+</div>
+
+<style>
+  .stack-icon-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .stack-icon {
+    display: inline-block;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.5rem;
+  }
+  /* Dark theme (Black Mode): invert the light-theme badges so they stay legible. */
+  :global([data-theme='geometric-bold']) .stack-icon {
+    filter: invert(0.92) hue-rotate(180deg);
+  }
+</style>

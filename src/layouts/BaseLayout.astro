@@ -18,7 +18,7 @@ const isHome = path === '/' || path === '/en/';
 const navItems = [
   { key: 'projects', href: lang === 'zh' ? '/projects/' : '/en/projects/', label: lang === 'zh' ? '项目' : 'Projects' },
   { key: 'resume', href: lang === 'zh' ? '/resume/' : '/en/resume/', label: lang === 'zh' ? '简历' : 'Resume' },
-  { key: 'notes', href: lang === 'zh' ? '/notes/' : '/en/notes/', label: lang === 'zh' ? '笔记' : 'Notes' },
+  { key: 'notes', href: lang === 'zh' ? '/notes/' : '/en/notes/', label: lang === 'zh' ? '文章' : 'Articles' },
   { key: 'about', href: lang === 'zh' ? '/about/' : '/en/about/', label: lang === 'zh' ? '关于' : 'About' },
 ];
 const personJsonLd = JSON.stringify({
@@ -77,6 +77,19 @@ const personJsonLd = JSON.stringify({
           <a class="language-toggle" href={alternatePath}>{lang === 'zh' ? 'EN' : '中'}</a>
           <button class="theme-toggle" type="button" aria-label={lang === 'zh' ? '打开风格切换' : 'Open style switcher'} aria-expanded="false" aria-controls="theme-menu" data-theme-toggle>◐</button>
         </div>
+        <div class="nav-actions">
+          <button class="nav-search-button" type="button" data-search-open aria-label={lang === 'zh' ? '搜索（按 / 或 ⌘K）' : 'Search (press / or ⌘K)'}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+            <span class="nav-search-text">{lang === 'zh' ? '搜索' : 'Search'}</span>
+            <kbd class="nav-search-kbd">/</kbd>
+          </button>
+          <a class="nav-icon-link" href={site.github} target="_blank" rel="me noreferrer" aria-label="GitHub" title="GitHub">
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg>
+          </a>
+          <a class="nav-icon-link nav-icon-mail" href={`mailto:${site.mail}`} aria-label={site.mail} title={site.mail}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>
+          </a>
+        </div>
       </nav>
       <div class="theme-menu shell" id="theme-menu" data-theme-menu hidden>
         <div class="theme-menu-heading">
@@ -109,6 +122,17 @@ const personJsonLd = JSON.stringify({
     <main id="main-content">
       <slot />
     </main>
+    <div class="search-overlay" data-search-overlay hidden>
+      <div class="search-panel" role="dialog" aria-modal="true" aria-label={lang === 'zh' ? '站内搜索' : 'Site search'}>
+        <div class="search-input-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+          <input type="search" data-search-input placeholder={lang === 'zh' ? '搜索项目、文章、页面…' : 'Search projects, articles, pages…'} autocomplete="off" spellcheck="false" />
+          <kbd class="search-esc">ESC</kbd>
+        </div>
+        <ul class="search-results" data-search-results></ul>
+        <div class="search-empty" data-search-empty hidden>{lang === 'zh' ? '没有匹配的结果' : 'No matching results'}</div>
+      </div>
+    </div>
     <footer class="site-footer shell">
       <div><strong>Dithob</strong><span> · </span>{lang === 'zh' ? '构建可运行、可解释、可核验的 AI 工具。' : 'Building runnable, explainable, and verifiable AI tools.'}</div>
       <div class="footer-links">
@@ -164,6 +188,97 @@ const personJsonLd = JSON.stringify({
       });
       })();
     </script>
+    <script is:inline>
+      (() => {
+        const openBtn = document.querySelector('[data-search-open]');
+        const overlay = document.querySelector('[data-search-overlay]');
+        const input = overlay?.querySelector('[data-search-input]');
+        const results = overlay?.querySelector('[data-search-results]');
+        const empty = overlay?.querySelector('[data-search-empty]');
+        if (!openBtn || !overlay || !input || !results || !empty) return;
+        let indexPromise = null;
+        let matches = [];
+        let active = -1;
+        const loadIndex = () => (indexPromise ??= fetch('/search-index.json').then((r) => r.json()).catch(() => []));
+        const norm = (s) => String(s || '').toLowerCase().trim();
+        const search = (query) => {
+          const q = norm(query);
+          if (!q) return [];
+          return indexPromise ? indexPromise.then((entries) => {
+            matches = entries
+              .map((entry) => {
+                const hay = norm(`${entry.title} ${entry.description} ${entry.category}`);
+                if (!hay.includes(q)) return null;
+                const title = norm(entry.title);
+                const score = title.startsWith(q) ? 10 : title.includes(q) ? 6 : 3 + (norm(entry.category).includes(q) ? 1 : 0);
+                return { ...entry, score };
+              })
+              .filter(Boolean)
+              .sort((a, b) => b.score - a.score)
+              .slice(0, 8);
+            render();
+          }) : [];
+        };
+        const render = () => {
+          results.replaceChildren();
+          active = -1;
+          empty.hidden = matches.length > 0;
+          matches.forEach((entry, i) => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = entry.url;
+            const strong = document.createElement('strong');
+            strong.textContent = entry.title;
+            const small = document.createElement('small');
+            small.textContent = entry.category;
+            const p = document.createElement('p');
+            p.textContent = entry.description;
+            a.append(strong, small, p);
+            li.dataset.index = String(i);
+            li.append(a);
+            results.append(li);
+          });
+        };
+        const open = async () => {
+          overlay.hidden = false;
+          document.body.style.overflow = 'hidden';
+          input.value = '';
+          const entries = await loadIndex();
+          matches = entries.slice(0, 8);
+          render();
+          input.focus();
+        };
+        const close = () => {
+          overlay.hidden = true;
+          document.body.style.overflow = '';
+          if (input === document.activeElement) input.blur();
+        };
+        const setActive = (next) => {
+          active = (next + matches.length) % matches.length;
+          results.querySelectorAll('li').forEach((li, i) => li.classList.toggle('active', i === active));
+          results.querySelector('li.active a')?.focus();
+        };
+        openBtn.addEventListener('click', open);
+        input.addEventListener('input', () => search(input.value));
+        input.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowDown') { event.preventDefault(); setActive(active + 1); }
+          else if (event.key === 'ArrowUp') { event.preventDefault(); setActive(active - 1); }
+          else if (event.key === 'Enter') { const href = results.querySelector(`li[data-index="${active}"] a`)?.getAttribute('href'); if (href) window.location.href = href; }
+          else if (event.key === 'Escape') close();
+        });
+        results.addEventListener('click', (event) => { if (event.target.closest('a')) close(); });
+        overlay.addEventListener('click', (event) => { if (event.target === overlay) close(); });
+        document.addEventListener('keydown', (event) => {
+          const typing = ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName);
+          if ((event.key === '/' && !typing) || ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k')) {
+            event.preventDefault();
+            overlay.hidden ? open() : close();
+          } else if (event.key === 'Escape' && !overlay.hidden) {
+            close();
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
 <style is:global>
@@ -193,6 +308,29 @@ const personJsonLd = JSON.stringify({
   .language-toggle { background: var(--pink); color: var(--text); }
   .theme-toggle { border: 3px solid var(--line); color: var(--text); background: var(--surface); width: 2.4rem; height: 2.4rem; cursor: pointer; margin-left: .8rem; box-shadow: var(--shadow-small); font-weight: 950; }
   .theme-toggle:active, .button:active { transform: translate(4px, 4px); box-shadow: none; }
+  .nav-actions { display: flex; align-items: center; gap: .55rem; }
+  .nav-search-button { display: inline-flex; align-items: center; gap: .5rem; padding: .5rem .7rem; border: 3px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer; box-shadow: var(--shadow-small); font-family: var(--body-font); font-size: .78rem; font-weight: 900; }
+  .nav-search-button:hover { background: var(--lime); color: var(--text); }
+  .nav-search-button svg { width: .95rem; height: .95rem; }
+  .nav-search-button .nav-search-text { white-space: nowrap; }
+  .nav-search-kbd, .search-esc { font-family: var(--heading-font); font-size: .62rem; padding: .1rem .35rem; border: 2px solid var(--line); color: var(--subtle); background: var(--bg); }
+  .nav-icon-link { display: inline-flex; align-items: center; justify-content: center; width: 2.3rem; height: 2.3rem; border: 3px solid var(--line); color: var(--text); background: var(--surface); box-shadow: var(--shadow-small); text-decoration: none; }
+  .nav-icon-link:hover { background: var(--blue); color: var(--text); }
+  .nav-icon-link svg { width: 1.1rem; height: 1.1rem; }
+  .search-overlay { position: fixed; inset: 0; z-index: 30; display: flex; justify-content: center; align-items: flex-start; padding: clamp(4rem, 12vh, 8rem) 1rem 2rem; background: color-mix(in srgb, var(--bg) 78%, transparent); backdrop-filter: blur(6px); }
+  .search-overlay[hidden] { display: none; }
+  .search-panel { width: min(640px, 100%); max-height: min(72vh, 540px); display: flex; flex-direction: column; border: 3px solid var(--line); background: var(--surface); box-shadow: var(--shadow); }
+  .search-input-row { display: flex; align-items: center; gap: .6rem; padding: .9rem 1rem; border-bottom: 3px solid var(--line); }
+  .search-input-row svg { width: 1.15rem; height: 1.15rem; color: var(--muted); flex: 0 0 auto; }
+  .search-input-row input { flex: 1 1 auto; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text); font-family: var(--body-font); font-size: 1.05rem; font-weight: 750; }
+  .search-input-row input::placeholder { color: var(--subtle); font-weight: 600; }
+  .search-results { margin: 0; padding: .35rem; list-style: none; overflow-y: auto; }
+  .search-results a { display: block; padding: .55rem .7rem; text-decoration: none; }
+  .search-results a:hover, .search-results li.active a { background: var(--lime); color: var(--text); }
+  .search-results strong { display: block; font-weight: 950; }
+  .search-results small { display: inline-block; margin-top: .1rem; color: var(--pink); font-size: .66rem; font-weight: 950; letter-spacing: .1em; text-transform: uppercase; }
+  .search-results p { margin: .15rem 0 0; color: var(--muted); font-size: .82rem; font-weight: 700; }
+  .search-empty { padding: 1.2rem 1rem; color: var(--muted); text-align: center; font-weight: 700; }
   .theme-menu { position: absolute; top: calc(100% + 1rem); left: 50%; transform: translateX(-50%); z-index: 8; padding: 1rem; border: 3px solid var(--line); background: var(--surface); box-shadow: var(--shadow); }
   .theme-menu[hidden] { display: none; }
   .theme-menu-heading { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: 1rem; }
@@ -329,6 +467,9 @@ const personJsonLd = JSON.stringify({
   .resume-entry ul { margin: .7rem 0 0; }
   .resume-contact-list { display: grid; gap: .5rem; }
   .resume-contact-list .button { width: fit-content; }
+  .resume-tools { margin-top: 2.2rem; display: grid; gap: .8rem; }
+  .facts-stack { margin-top: .5rem; }
+  .facts-stack .stack-icon-row { gap: .45rem; }
 
   /* Prose (notes + articles): tables, quotes, code, headings. */
   .prose { overflow-wrap: anywhere; }
@@ -514,6 +655,32 @@ const personJsonLd = JSON.stringify({
   [data-theme='bento-grid'] .workflow-pink { background: #eef4ff; }
   [data-theme='bento-grid'] .workflow-lime { background: #f5f7fa; }
   [data-theme='bento-grid'] .workflow-blue { background: #e8f5ff; }
+  [data-theme='bento-grid'] .nav-search-button { border: 0; border-radius: 999px; background: var(--surface-soft); color: var(--muted); box-shadow: none; font-weight: 600; }
+  [data-theme='bento-grid'] .nav-search-button:hover { background: var(--surface); color: var(--accent); }
+  [data-theme='bento-grid'] .nav-search-kbd, [data-theme='bento-grid'] .search-esc { border: 0; border-radius: 999px; background: var(--surface); color: var(--subtle); }
+  [data-theme='bento-grid'] .nav-icon-link { border: 0; border-radius: 999px; background: var(--surface-soft); box-shadow: none; }
+  [data-theme='bento-grid'] .nav-icon-link:hover { background: var(--surface); color: var(--accent); }
+  [data-theme='bento-grid'] .search-panel { border: 0; border-radius: 1.4rem; box-shadow: var(--shadow); }
+  [data-theme='bento-grid'] .search-input-row { border-bottom: 1px solid var(--line); }
+  [data-theme='bento-grid'] .search-results a { border-radius: .8rem; }
+  [data-theme='bento-grid'] .search-results a:hover, [data-theme='bento-grid'] .search-results li.active a { background: var(--surface-soft); }
+  [data-theme='editorial'] .nav-search-button, [data-theme='editorial'] .nav-icon-link { border-width: 1px; box-shadow: none; background: transparent; font-family: var(--body-font); }
+  [data-theme='editorial'] .nav-search-button:hover { background: transparent; color: var(--accent); }
+  [data-theme='editorial'] .nav-icon-link:hover { background: transparent; color: var(--accent); }
+  [data-theme='editorial'] .nav-search-kbd, [data-theme='editorial'] .search-esc { border-width: 1px; }
+  [data-theme='editorial'] .search-panel { border-width: 1px; }
+  [data-theme='editorial'] .search-input-row { border-bottom-width: 1px; }
+  [data-theme='minimalist-flat'] .nav-search-button, [data-theme='minimalist-flat'] .nav-icon-link { border-width: 1px; box-shadow: none; font-family: var(--body-font); }
+  [data-theme='minimalist-flat'] .nav-search-button:hover { background: transparent; color: var(--accent); }
+  [data-theme='minimalist-flat'] .nav-icon-link:hover { background: transparent; color: var(--accent); }
+  [data-theme='minimalist-flat'] .nav-search-kbd, [data-theme='minimalist-flat'] .search-esc { border-width: 1px; }
+  [data-theme='minimalist-flat'] .search-panel { border-width: 1px; box-shadow: none; }
+  [data-theme='minimalist-flat'] .search-input-row { border-bottom-width: 1px; }
+  [data-theme='geometric-bold'] .nav-search-button { box-shadow: none; }
+  [data-theme='geometric-bold'] .nav-search-button:hover { background: var(--accent); color: #090909; }
+  [data-theme='geometric-bold'] .nav-icon-link { box-shadow: none; }
+  [data-theme='geometric-bold'] .nav-icon-link:hover { background: var(--accent); color: #090909; }
+  [data-theme='geometric-bold'] .search-panel { box-shadow: none; }
 
   /* Black Mode: dark canvas, bright linework, and a restrained lime signal. */
   [data-theme='geometric-bold'] h1, [data-theme='geometric-bold'] h2, [data-theme='geometric-bold'] h3 { font-weight: 800; letter-spacing: -.03em; line-height: 1.08; }
@@ -554,7 +721,7 @@ const personJsonLd = JSON.stringify({
   [data-theme='geometric-bold'] .workflow-lime { background: var(--surface-soft); }
   [data-theme='geometric-bold'] .workflow-blue { background: var(--surface); }
 
-  @media (max-width: 780px) { .shell { width: min(100% - 28px, 680px); } .nav { min-height: 62px; gap: .5rem; } .nav-links { gap: 0; min-width: 0; font-size: .68rem; } .nav-links > a { padding: .55rem .45rem; } .theme-toggle { margin-left: .45rem; width: 2rem; height: 2rem; flex: 0 0 auto; } .theme-menu { width: calc(100% - 28px); top: calc(100% + .7rem); } .theme-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } .theme-options > li:last-child { grid-column: span 2; } .hero { padding: 5.5rem 0 3.5rem; grid-template-columns: 1fr; gap: 2rem; } .hero::before { top: 1.5rem; } .hero-aside { margin-right: .5rem; } .hero-corner { display: none; } .signal-strip { grid-template-columns: repeat(2, 1fr); } .signal:nth-child(2) { border-right: 0; } .signal:nth-child(-n+2) { border-bottom: 3px solid var(--line); } .section { padding: 3.5rem 0; } .section-heading { display: block; } .project-grid, .capability-grid, .focus-list, .workflow-grid, .content-grid { grid-template-columns: 1fr; } [data-theme='bento-grid'] .project-grid { grid-template-columns: 1fr; } [data-theme='bento-grid'] .project-card:first-child, [data-theme='bento-grid'] .project-card:nth-child(4) { grid-column: auto; } .note-banner { display: block; } .note-banner .actions { margin-top: 1.2rem; } .site-footer { display: block; } .footer-links { margin-top: 1rem; } }
+  @media (max-width: 780px) { .shell { width: min(100% - 28px, 680px); } .nav { min-height: 62px; gap: .5rem; } .nav-links { gap: 0; min-width: 0; font-size: .68rem; } .nav-links > a { padding: .55rem .45rem; } .theme-toggle { margin-left: .45rem; width: 2rem; height: 2rem; flex: 0 0 auto; } .nav-actions { gap: .4rem; } .nav-search-button { padding: .45rem .55rem; } .nav-search-button .nav-search-text, .nav-search-button .nav-search-kbd { display: none; } .nav-search-button svg { width: 1rem; height: 1rem; } .nav-icon-link { width: 2rem; height: 2rem; } .nav-icon-mail { display: none; } .theme-menu { width: calc(100% - 28px); top: calc(100% + .7rem); } .theme-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } .theme-options > li:last-child { grid-column: span 2; } .hero { padding: 5.5rem 0 3.5rem; grid-template-columns: 1fr; gap: 2rem; } .hero::before { top: 1.5rem; } .hero-aside { margin-right: .5rem; } .hero-corner { display: none; } .signal-strip { grid-template-columns: repeat(2, 1fr); } .signal:nth-child(2) { border-right: 0; } .signal:nth-child(-n+2) { border-bottom: 3px solid var(--line); } .section { padding: 3.5rem 0; } .section-heading { display: block; } .project-grid, .capability-grid, .focus-list, .workflow-grid, .content-grid { grid-template-columns: 1fr; } [data-theme='bento-grid'] .project-grid { grid-template-columns: 1fr; } [data-theme='bento-grid'] .project-card:first-child, [data-theme='bento-grid'] .project-card:nth-child(4) { grid-column: auto; } .note-banner { display: block; } .note-banner .actions { margin-top: 1.2rem; } .site-footer { display: block; } .footer-links { margin-top: 1rem; } }
   @media (max-width: 430px) { .brand { flex: 0 0 auto; font-size: .92rem; letter-spacing: -.1em; } .nav { gap: .35rem; } .nav-links { flex: 1 1 auto; justify-content: flex-end; font-size: .6rem; letter-spacing: 0; } .nav-links > a { flex: 0 1 auto; min-width: 0; padding-inline: .2rem; }
     /* Keep real text in the accessibility tree, show a compact glyph instead. */
     .nav-links > a .nav-text { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
@@ -562,6 +729,6 @@ const personJsonLd = JSON.stringify({
     .nav-links > a:nth-child(2)::after { content: 'CV'; font-size: .6rem; }
     .nav-links > a:nth-child(3)::after { content: '✦'; font-size: .8rem; }
     .nav-links > a:nth-child(4)::after { content: '◎'; font-size: .8rem; }
-    .theme-toggle { flex: 0 0 1.85rem; margin-left: .2rem; width: 1.85rem; height: 1.85rem; padding: 0; } .page-intro h1 { font-size: clamp(2.8rem, 14vw, 4.2rem); } [data-theme='bento-grid'] .hero-content { padding: 2rem; } }
+    .theme-toggle { flex: 0 0 1.85rem; margin-left: .2rem; width: 1.85rem; height: 1.85rem; padding: 0; } .nav-actions { gap: .3rem; } .nav-search-button { width: 1.85rem; height: 1.85rem; padding: 0; justify-content: center; } .nav-icon-link { width: 1.85rem; height: 1.85rem; } .page-intro h1 { font-size: clamp(2.8rem, 14vw, 4.2rem); } [data-theme='bento-grid'] .hero-content { padding: 2rem; } }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
 </style>

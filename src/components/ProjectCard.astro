@@ -1,5 +1,6 @@
 ---
 import type { Project } from '../data';
+import StackIcons from './StackIcons.astro';
 
 interface Props { project: Project; lang?: 'zh' | 'en'; }
 const { project, lang = 'zh' } = Astro.props;
@@ -21,7 +22,7 @@ const detailPath = lang === 'zh' ? `/projects/${project.slug}/` : `/en/projects/
     <p>{summary}</p>
   </div>
   <div class="stack">
-    {project.stack.map((item) => <span class="tag">{item}</span>)}
+    <StackIcons stack={project.stack} />
   </div>
   <div class="project-proof">
     <span>{lang === 'zh' ? '证据优先' : 'EVIDENCE-LED'}</span>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import StackIcons from '../../components/StackIcons.astro';
 import { projects } from '../../data';
 
 export function getStaticPaths() {
@@ -22,6 +23,6 @@ const { project } = Astro.props;
       <h2>验证证据</h2><ul>{project.evidence.map((item) => <li>{item}</li>)}</ul>
       <h2>当前限制</h2><p>{project.limitations}</p>
     </div>
-    <dl class="facts"><dt>状态</dt><dd>{project.status}</dd><dt>技术栈</dt><dd>{project.stack.join(' · ')}</dd><dt>源码</dt><dd><a href={project.repository} target="_blank" rel="noreferrer">github.com/Dithob/{project.title}</a></dd></dl>
+    <dl class="facts"><dt>状态</dt><dd>{project.status}</dd><dt>技术栈</dt><dd class="facts-stack"><StackIcons stack={project.stack} /></dd><dt>源码</dt><dd><a href={project.repository} target="_blank" rel="noreferrer">github.com/Dithob/{project.title}</a></dd></dl>
   </section>
 </BaseLayout>

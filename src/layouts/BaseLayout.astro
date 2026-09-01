@@ -16,10 +16,9 @@ const alternate = new URL(alternatePath, Astro.site ?? site.website).toString();
 const themeOptions = themes;
 const isHome = path === '/' || path === '/en/';
 const navItems = [
-  { key: 'projects', href: lang === 'zh' ? '/projects/' : '/en/projects/', label: lang === 'zh' ? '项目' : 'Projects' },
-  { key: 'resume', href: lang === 'zh' ? '/resume/' : '/en/resume/', label: lang === 'zh' ? '简历' : 'Resume' },
-  { key: 'notes', href: lang === 'zh' ? '/notes/' : '/en/notes/', label: lang === 'zh' ? '文章' : 'Articles' },
-  { key: 'about', href: lang === 'zh' ? '/about/' : '/en/about/', label: lang === 'zh' ? '关于' : 'About' },
+  { key: 'projects', href: lang === 'zh' ? '/projects/' : '/en/projects/', label: lang === 'zh' ? '项目' : 'Projects', icon: '🧩' },
+  { key: 'notes', href: lang === 'zh' ? '/notes/' : '/en/notes/', label: lang === 'zh' ? '文章' : 'Articles', icon: '📚' },
+  { key: 'about', href: lang === 'zh' ? '/about/' : '/en/about/', label: lang === 'zh' ? '关于' : 'About', icon: '👤' },
 ];
 const personJsonLd = JSON.stringify({
   '@context': 'https://schema.org',
@@ -71,6 +70,7 @@ const personJsonLd = JSON.stringify({
         <div class="nav-links">
           {navItems.map((item) => (
             <a href={item.href} aria-label={item.label} aria-current={path.startsWith(item.href) ? 'page' : undefined}>
+              <span class="nav-icon" aria-hidden="true">{item.icon}</span>
               <span class="nav-text">{item.label}</span>
             </a>
           ))}
@@ -134,7 +134,7 @@ const personJsonLd = JSON.stringify({
       </div>
     </div>
     <footer class="site-footer shell">
-      <div><strong>Dithob</strong><span> · </span>{lang === 'zh' ? '构建可运行、可解释、可核验的 AI 工具。' : 'Building runnable, explainable, and verifiable AI tools.'}</div>
+      <div><strong>Dithob</strong><span> · </span>{lang === 'zh' ? '把生成交给 AI，把判断留给人。' : 'AI generates. Humans judge.'}</div>
       <div class="footer-links">
         <a href={site.github} rel="me">GitHub</a>
         <a href={`mailto:${site.mail}`} class="footer-mail">{site.mail}</a>
@@ -302,8 +302,9 @@ const personJsonLd = JSON.stringify({
   .brand span { color: var(--pink); }
   .nav-links { display: flex; align-items: center; gap: 0; color: var(--text); font-size: .82rem; font-weight: 900; text-transform: uppercase; letter-spacing: .04em; margin-left: auto; }
   .nav-links a { text-decoration: none; }
-  .nav-links > a { padding: .7rem .8rem; border-left: 3px solid var(--line); }
+  .nav-links > a { padding: .7rem .8rem; border-left: 3px solid var(--line); display: inline-flex; align-items: center; gap: .35rem; }
   .nav-links > a:hover { background: var(--lime); color: var(--text); }
+  .nav-icon { font-size: 1em; line-height: 1; }
   .nav-links > a[aria-current='page'] { background: var(--surface-soft); text-decoration: underline; text-underline-offset: .25em; }
   .language-toggle { background: var(--pink); color: var(--text); }
   .theme-toggle { border: 3px solid var(--line); color: var(--text); background: var(--surface); width: 2.4rem; height: 2.4rem; cursor: pointer; margin-left: .8rem; box-shadow: var(--shadow-small); font-weight: 950; }
@@ -721,12 +722,9 @@ const personJsonLd = JSON.stringify({
 
   @media (max-width: 780px) { .shell { width: min(100% - 28px, 680px); } .nav { min-height: 62px; gap: .5rem; } .nav-links { gap: 0; min-width: 0; font-size: .68rem; } .nav-links > a { padding: .55rem .45rem; } .theme-toggle { margin-left: .45rem; width: 2rem; height: 2rem; flex: 0 0 auto; } .nav-actions { gap: .4rem; } .nav-search-button { padding: .45rem .55rem; } .nav-search-button .nav-search-text, .nav-search-button .nav-search-kbd { display: none; } .nav-search-button svg { width: 1rem; height: 1rem; } .nav-icon-link { width: 2rem; height: 2rem; } .nav-icon-mail { display: none; } .theme-menu { width: calc(100% - 28px); top: calc(100% + .7rem); } .theme-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } .theme-options > li:last-child { grid-column: span 2; } .hero { padding: 5.5rem 0 3.5rem; grid-template-columns: 1fr; gap: 2rem; } .hero::before { top: 1.5rem; } .hero-aside { margin-right: .5rem; } .hero-corner { display: none; } .signal-strip { grid-template-columns: repeat(2, 1fr); } .signal:nth-child(2) { border-right: 0; } .signal:nth-child(-n+2) { border-bottom: 3px solid var(--line); } .section { padding: 3.5rem 0; } .section-heading { display: block; } .project-grid, .capability-grid, .focus-list, .workflow-grid, .content-grid { grid-template-columns: 1fr; } [data-theme='bento-grid'] .project-grid { grid-template-columns: 1fr; } [data-theme='bento-grid'] .project-card:first-child, [data-theme='bento-grid'] .project-card:nth-child(4) { grid-column: auto; } .note-banner { display: block; } .note-banner .actions { margin-top: 1.2rem; } .site-footer { display: block; } .footer-links { margin-top: 1rem; } }
   @media (max-width: 430px) { .brand { flex: 0 0 auto; font-size: .92rem; letter-spacing: -.1em; } .nav { gap: .35rem; } .nav-links { flex: 1 1 auto; justify-content: flex-end; font-size: .6rem; letter-spacing: 0; } .nav-links > a { flex: 0 1 auto; min-width: 0; padding-inline: .2rem; }
-    /* Keep real text in the accessibility tree, show a compact glyph instead. */
+    /* Keep real text in the accessibility tree, show only the emoji on tiny screens. */
     .nav-links > a .nav-text { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-    .nav-links > a:nth-child(1)::after { content: '↗'; font-size: .8rem; }
-    .nav-links > a:nth-child(2)::after { content: 'CV'; font-size: .6rem; }
-    .nav-links > a:nth-child(3)::after { content: '✦'; font-size: .8rem; }
-    .nav-links > a:nth-child(4)::after { content: '◎'; font-size: .8rem; }
+    .nav-links > a .nav-icon { font-size: .85rem; }
     .theme-toggle { flex: 0 0 1.85rem; margin-left: .2rem; width: 1.85rem; height: 1.85rem; padding: 0; } .nav-actions { gap: .3rem; } .nav-search-button { width: 1.85rem; height: 1.85rem; padding: 0; justify-content: center; } .nav-icon-link { width: 1.85rem; height: 1.85rem; } .page-intro h1 { font-size: clamp(2.8rem, 14vw, 4.2rem); } [data-theme='bento-grid'] .hero-content { padding: 2rem; } }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
 </style>

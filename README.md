@@ -41,7 +41,7 @@ node scripts/verify-site.mjs   # 结构门禁：必需页面、笔记数量、og
 | 改笔记 frontmatter 或 schema | `npm run check`，报错会指出文件与字段 |
 | 验证构建产物 | `npm run build && npm run preview`，再访问 `http://localhost:4321`（`preview` 按 `Ctrl+C` 停止） |
 | 发布前全量门禁 | `npm run check && npm run build && node scripts/verify-site.mjs` |
-| 抽查单页 | preview 运行中访问 `http://localhost:4321/notes/pi-usage-manual/`、`/resume/`、`/projects/<slug>/` 等 |
+| 抽查单页 | preview 运行中访问 `http://localhost:4321/notes/pi-usage-manual/`、`/about/`、`/projects/<slug>/` 等 |
 
 ### 2.3 调试技巧
 
@@ -77,7 +77,7 @@ npm run dev
 | 站点图标 | `public/favicon.svg` |
 | robots/sitemap URL | `public/robots.txt`（若自定义域名） |
 | profile 文案 | `profile/README.md` + `profile/README.en.md` |
-| 简历内容 | `src/pages/resume.astro` + `src/pages/en/resume.astro`（网页版；如需 PDF 请先脱敏再放入 `public/` 并自行加链接） |
+| 简历内容 | `src/pages/about.astro` + `src/pages/en/about.astro`（已合并进关于页；下载入口指向 `public/resume.pdf`，请先脱敏再放入该路径） |
 | 域名 | `public/CNAME.example` → `public/CNAME`（只含域名）+ `astro.config.mjs` 的 `site` |
 
 改完后跑一遍 `npm run check && npm run build && node scripts/verify-site.mjs`。

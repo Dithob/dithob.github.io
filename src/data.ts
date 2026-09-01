@@ -79,12 +79,12 @@ export const site = {
 };
 
 export const brand = {
-  role: '计算机科学与技术学生｜AI 应用、Agent 工具、RAG/OCR 与测试工程',
-  roleEn: 'CS student building AI applications, agent tools, RAG/OCR systems, and developer workflows.',
-  tagline: '构建可运行、可解释、可核验的 AI 工具。',
-  taglineEn: 'Building runnable, explainable, and verifiable AI tools.',
-  positioning: '让项目不仅能运行，还能说明证据、边界和下一步。',
-  positioningEn: 'Make projects runnable, explainable, and clear about evidence, limits, and next steps.',
+  role: '计算机科学与技术学生｜AI 应用、Agent 工具与测试工程，聚焦 RAG、OCR 与文档理解',
+  roleEn: 'CS student building AI applications, agent tools, and test engineering, with a focus on RAG, OCR, and document understanding.',
+  tagline: '把生成交给 AI，把判断留给人。',
+  taglineEn: 'AI generates. Humans judge.',
+  positioning: '一名专注 AI 应用、Agent 工具与效率工程的程序员，热爱 A/C/G，也喜欢把模糊的想法做成能跑起来的系统。在这里记录项目、笔记与验证过程——方向不设限。',
+  positioningEn: 'A programmer focused on AI applications, agent tooling, and developer efficiency — also an A/C/G fan. I turn vague ideas into working systems and document projects, notes, and verification here. Open to directions beyond any single role.',
 };
 
 export const signals: Signal[] = [
@@ -150,24 +150,24 @@ export const workflowSteps: WorkflowStep[] = [
     number: '01',
     title: '先确认事实',
     titleEn: 'Verify first',
-    detail: '先把输入、现状和可公开证据分开。',
-    detailEn: 'Separate inputs, current state, and public evidence.',
+    detail: '对照仓库与运行日志核验，分清已验证、推断、待确认。',
+    detailEn: 'Verify claims against repos, issues, and run logs; label conclusions by evidence.',
     tone: 'pink',
   },
   {
     number: '02',
     title: '再组织系统',
     titleEn: 'Shape the system',
-    detail: '把问题拆成可以运行和回看的工作流。',
-    detailEn: 'Turn the problem into a runnable, reviewable workflow.',
+    detail: '把重复流程沉淀成 Skill、CLI 与脚本，保留可回看产物。',
+    detailEn: 'Turn repeated work into reusable skills, CLIs, and scripts with reviewable artifacts.',
     tone: 'lime',
   },
   {
     number: '03',
     title: '最后说明边界',
     titleEn: 'State the boundary',
-    detail: '把测试、限制和下一步一起交付。',
-    detailEn: 'Ship tests, limitations, and the next step together.',
+    detail: '交付附上测试证据（pytest、Golden Dataset）、限制与下一步。',
+    detailEn: 'Ship test evidence (pytest, Golden Datasets), known limits, and next steps.',
     tone: 'blue',
   },
 ];

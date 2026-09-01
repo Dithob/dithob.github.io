@@ -5,6 +5,10 @@ export default defineConfig({
   site: 'https://dithob.github.io',
   output: 'static',
   trailingSlash: 'always',
+  redirects: {
+    '/resume/': '/about/',
+    '/en/resume/': '/en/about/',
+  },
   integrations: [sitemap({
     filter: (page) => !page.includes('/404/') && !page.includes('search-index'),
   })],

@@ -41,7 +41,7 @@ node scripts/verify-site.mjs   # Structural gate: required pages, note count, og
 | Edit note frontmatter or schema | `npm run check`; errors point to the file and field |
 | Validate the build artifact | `npm run build && npm run preview`, then open `http://localhost:4321` (`Ctrl+C` stops preview) |
 | Full gate before publishing | `npm run check && npm run build && node scripts/verify-site.mjs` |
-| Spot-check a single page | with preview running: `http://localhost:4321/notes/pi-usage-manual/`, `/resume/`, `/projects/<slug>/`, ... |
+| Spot-check a single page | with preview running: `http://localhost:4321/notes/pi-usage-manual/`, `/about/`, `/projects/<slug>/`, ... |
 
 ### 2.3 Tips
 
@@ -77,7 +77,7 @@ npm run dev
 | Favicon | `public/favicon.svg` |
 | robots / sitemap URL | `public/robots.txt` (only when using a custom domain) |
 | Profile copy | `profile/README.md` + `profile/README.en.md` |
-| Resume content | `src/pages/resume.astro` + `src/pages/en/resume.astro` (web version; if you want a PDF, de-identify it first, then put it in `public/` and add the link yourself) |
+| Resume content | `src/pages/about.astro` + `src/pages/en/about.astro` (merged into the about page; the download entry points at `public/resume.pdf` — de-identify the PDF first, then drop it there) |
 | Domain | `public/CNAME.example` → `public/CNAME` (domain only) + `site` in `astro.config.mjs` |
 
 Then run `npm run check && npm run build && node scripts/verify-site.mjs`.

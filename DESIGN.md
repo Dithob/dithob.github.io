@@ -54,7 +54,7 @@ dithob.github.io/
 │       │   ├── index.astro          # 项目列表
 │       │   └── [slug].astro         # 项目详情页（由 data.ts 自动生成）
 │       ├── 404.astro                # 404（zh）
-│       └── en/                      # 英文镜像：与上层一一对应（index/about/resume/404/notes/projects）
+│       └── en/                      # 英文镜像：与上层一一对应（index/about/404/notes/projects）
 ├── astro.config.mjs         # Astro 配置：site URL、trailingSlash、@astrojs/sitemap、Shiki css-variables
 ├── package.json
 ├── tsconfig.json
@@ -112,9 +112,9 @@ dithob.github.io/
 
 ### 3.7 简历与联系方式
 
-- 简历页（`resume.astro` / `en/resume.astro`）承载**网页版真实内容**（腾讯云智测开实习、智能持续测试平台、腾讯地图 Agent、在校成果、教育背景、技能），替代原占位文案；
-- **脱敏边界**：含真实姓名/电话的简历 PDF 由 AiDeveloperResume 仓库本地编译，**不提交到公开仓库**；如需对外提供 PDF，请先脱敏再放入 `public/` 并自行添加链接，切勿把本地编译产物直接传 git；
-- 邮箱 `site.mail`（2508807574@qq.com）在 footer / about / resume（中英）统一以 `mailto:` 呈现——联系方式只维护一处。
+- 网页版简历内容（腾讯云智测开实习、智能持续测试平台、腾讯地图 Agent、在校成果、教育背景、技能）已合并进关于页（`about.astro` / `en/about.astro` 的「简历 / Resume」区块），独立 `resume.astro` 页面已移除，旧路径 `/resume/` 经 `astro.config.mjs` 的 `redirects` 跳转到 `/about/`；
+- **脱敏边界**：含真实姓名/电话的简历 PDF 由 AiDeveloperResume 仓库本地编译，**不提交到公开仓库**；对外下载入口指向 `public/resume.pdf`——请先脱敏再放入该路径，切勿把本地编译产物直接传 git；
+- 邮箱 `site.mail`（2508807574@qq.com）在 footer / about（中英）统一以 `mailto:` 呈现——联系方式只维护一处。
 
 ### 3.8 GitHub Profile 同步
 

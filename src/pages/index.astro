@@ -8,20 +8,19 @@ const latestNotes = (await getCollection('notes', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 4);
 ---
-<BaseLayout title="wujue / Dithob — AI tools and engineering" description="构建可运行、可解释、可核验的 AI 工具。" path="/">
+<BaseLayout title="wujue / Dithob — AI tools and engineering" description="把生成交给 AI，把判断留给人。" path="/">
   <section class="hero shell">
     <div class="hero-content">
       <div class="hero-kicker"><span>01</span> PERSONAL SYSTEM / 2026</div>
-      <h1>{site.name} · AI 应用工程师</h1>
+      <h1>{site.name}</h1>
       <p class="lead">{brand.positioning}</p>
-      <div class="actions"><a class="button primary" href="/projects/">查看项目 →</a><a class="button" href="/resume/">在线简历</a><a class="button" href="/notes/">笔记索引</a></div>
+      <div class="actions"><a class="button primary" href="/projects/">查看项目 →</a><a class="button" href="/about/">关于我</a><a class="button" href="/notes/">文章索引</a></div>
     </div>
     <aside class="hero-aside">
       <div class="hero-stamp" aria-hidden="true">D/</div>
       <div class="hero-aside-block"><span class="mini-label">NAME</span><p>{site.name}</p></div>
       <div class="hero-aside-block"><span class="mini-label">NOW BUILDING</span><p>PaperQAAgent · DeepResume · reusable agent skills</p></div>
       <div class="hero-aside-block"><span class="mini-label">HOW I WORK</span><p>{brand.tagline}</p></div>
-      <div class="hero-aside-block"><span class="mini-label">SCHOOL</span><p>重庆邮电大学 · 计算机技术（硕士）</p></div>
       <div class="hero-aside-code">OPEN SOURCE<br />LOCAL FIRST<br />EVIDENCE LED</div>
     </aside>
     <div class="hero-corner" aria-hidden="true">AI / AGENT / QA</div>
@@ -44,7 +43,7 @@ const latestNotes = (await getCollection('notes', ({ data }) => !data.draft))
     <ul class="focus-list">{focusItems.map((item) => <li><span class="focus-index">{item.number}</span><div><strong>{item.title}</strong>{item.detail}</div></li>)}</ul>
   </section>
   <section class="section shell">
-    <div class="section-heading"><div><div class="section-code">05 / WORKFLOW</div><h2>我如何把想法交付出来</h2></div><p>从事实到系统，再到可核验的交付物。</p></div>
+    <div class="section-heading"><div><div class="section-code">05 / WORKFLOW</div><h2>我的工作流</h2></div><p>从事实到系统，再到可核验的交付物。</p></div>
     <div class="workflow-grid">{workflowSteps.map((step) => <article class={`workflow-step workflow-${step.tone}`}><span class="workflow-number">{step.number}</span><h3>{step.title}</h3><p>{step.detail}</p></article>)}</div>
   </section>
   <section class="section shell">
@@ -60,7 +59,7 @@ const latestNotes = (await getCollection('notes', ({ data }) => !data.draft))
     </div>
   </section>
   <section class="section shell">
-    <div class="section-heading"><div><div class="section-code">07 / NOTES</div><h2>技术笔记索引</h2></div><p>把项目背后的判断、验证和边界留下来。</p></div>
+    <div class="section-heading"><div><div class="section-code">07 / NOTES</div><h2>文章索引</h2></div><p>把项目背后的判断、验证和边界留下来。</p></div>
     <div class="note-banner"><div><span class="mini-label">FIELD NOTES</span><h3>把做过的事情，变成可回看的证据。</h3></div><div class="actions"><a class="button primary" href="/notes/">浏览笔记索引 →</a><a class="button" href="https://github.com/Dithob" target="_blank" rel="noreferrer">访问 GitHub ↗</a></div></div>
   </section>
 </BaseLayout>

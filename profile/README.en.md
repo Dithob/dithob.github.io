@@ -18,6 +18,12 @@ A computer science student building **AI applications, agent tools, RAG/OCR syst
 2. **Shape the system**: turn the problem into a runnable, reviewable workflow.
 3. **State the boundary**: ship tests, limitations, and the next step together.
 
+## Tech stack
+
+![tech](https://skillicons.dev/icons?i=python,ts,vue,fastapi,nextjs,nodejs,md,git,github,linux,docker,mysql,redis,swift,vite,vscode)
+
+> Icons from [skillicons.dev](https://skillicons.dev/). Capabilities not listed here (OCR, agent skills, testing engineering, etc.) are documented per project and repository.
+
 ## Selected projects
 
 - [DeepResume](https://github.com/Dithob/DeepResume) — A workspace connecting resumes, target JDs, learning plans, and career evidence.

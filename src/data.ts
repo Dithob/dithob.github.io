@@ -286,29 +286,3 @@ export const projects: Project[] = [
     limitationsEn: 'Authentication, database, and service dependencies vary by environment; the repository is not presented as a specific production system.',
   },
 ];
-
-/** Stack label -> skillicons.dev slug. Labels without a valid slug keep the plain text tag. */
-export const stackIconSlugs: Record<string, string> = {
-  'Next.js': 'nextjs',
-  'TypeScript': 'ts',
-  'Python': 'python',
-  'FastAPI': 'fastapi',
-  'Node.js': 'nodejs',
-  'Markdown': 'md',
-  'Swift': 'swift',
-  'Vue.js': 'vue',
-  'MySQL': 'mysql',
-  'Redis': 'redis',
-  'Docker': 'docker',
-  'Git': 'git',
-  'GitHub': 'github',
-  'Linux': 'linux',
-  'OpenCV': 'opencv',
-  'Vite': 'vite',
-  'VS Code': 'vscode',
-};
-
-/** Curated toolchain for the resume tech strip (all slugs verified against skillicons.dev). */
-export const techTools: string[] = [
-  'Python', 'TypeScript', 'Vue.js', 'FastAPI', 'Next.js', 'Node.js', 'MySQL', 'Redis', 'Docker', 'Git', 'Linux', 'Markdown',
-];

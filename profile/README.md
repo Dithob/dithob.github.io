@@ -18,6 +18,12 @@
 2. **再组织系统**：把问题拆成可以运行、可以回看的工作流。
 3. **最后说明边界**：把测试、限制和下一步一起交付。
 
+## 技术栈
+
+![tech](https://skillicons.dev/icons?i=python,ts,vue,fastapi,nextjs,nodejs,md,git,github,linux,docker,mysql,redis,swift,vite,vscode)
+
+> 图标来自 [skillicons.dev](https://skillicons.dev/)。未列出的能力（OCR、Agent Skill、测试工程等）以项目和仓库内文档为准。
+
 ## 精选项目
 
 - [DeepResume](https://github.com/Dithob/DeepResume) — 把简历、JD、学习计划与职业证据连接起来的求职学习工作台。

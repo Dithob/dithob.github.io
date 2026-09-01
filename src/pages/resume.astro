@@ -1,14 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import StackIcons from '../components/StackIcons.astro';
-import { site, techTools } from '../data';
+import { site } from '../data';
 ---
 <BaseLayout title="Resume — wujue / Dithob" description="wujue / Dithob 的在线简历：AI 应用与测试开发方向，含实习、项目与可验证证据。" path="/resume/">
   <div class="page-intro shell">
     <div class="eyebrow">Resume</div>
     <h1>在线简历</h1>
     <p>计算机技术硕士在读，专注于 AI 应用、Agent 工具与测试开发方向。以下经历与项目均可回溯到公开仓库或可核验来源。</p>
-    <div class="resume-tools"><span class="mini-label">TECH STACK</span><StackIcons stack={techTools} size={44} /></div>
+    <div class="actions">
+      <a class="button" href={`mailto:${site.mail}`}>邮箱联系 ↗</a>
+    </div>
   </div>
   <section class="section shell content-grid">
     <div class="prose">

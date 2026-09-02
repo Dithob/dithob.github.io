@@ -469,6 +469,11 @@ const personJsonLd = JSON.stringify({
   .note-card p { color: var(--text); margin-bottom: 0; font-weight: 700; }
   .note-card-title { margin: .6rem 0 .5rem; }
   .note-card-plain { background: var(--surface) !important; }
+  .detail-card { margin-bottom: 1.4rem; padding: 1.4rem 1.5rem; border: 3px solid var(--line); background: var(--surface); box-shadow: var(--shadow-small); }
+  .detail-card > h3 { margin: 0 0 .9rem; }
+  .detail-card .resume-entry { margin-top: 1.2rem; }
+  .detail-card > ul, .detail-card .resume-entry ul { margin-top: .7rem; }
+  .detail-card-soft { background: var(--surface-soft); }
 
   /* Resume entries (online resume page). */
   .resume-entry { margin-top: 1.8rem; }
@@ -570,6 +575,8 @@ const personJsonLd = JSON.stringify({
   [data-theme='editorial'] .workflow-number { color: var(--accent); }
   [data-theme='editorial'] .note-banner { border-inline: 0; border-top-width: 1px; border-bottom-width: 1px; background: transparent; box-shadow: none; }
   [data-theme='editorial'] .note-card { border: 0; border-top: 1px solid var(--line); background: transparent !important; box-shadow: none; }
+  [data-theme='editorial'] .detail-card { border: 0; border-top: 1px solid var(--line); background: transparent !important; box-shadow: none; padding: 1.2rem 0; }
+  [data-theme='editorial'] .detail-card > h3 { color: var(--accent); }
   [data-theme='editorial'] .facts { border-width: 1px; background: transparent; box-shadow: none; }
 
   /* Minimalist Flat: reduction, one accent at a time, no depth effects. */
@@ -607,6 +614,8 @@ const personJsonLd = JSON.stringify({
   [data-theme='minimalist-flat'] .capability-blue { border-top: 4px solid var(--blue); }
   [data-theme='minimalist-flat'] .note-banner { border-width: 1px; box-shadow: none; background: var(--surface-soft); }
   [data-theme='minimalist-flat'] .note-card { border-width: 1px; box-shadow: none; background: transparent !important; }
+  [data-theme='minimalist-flat'] .detail-card { border-width: 1px; box-shadow: none; background: transparent !important; }
+  [data-theme='minimalist-flat'] .detail-card-soft { background: transparent !important; }
   [data-theme='minimalist-flat'] .facts { border-width: 1px; box-shadow: none; }
   [data-theme='minimalist-flat'] .workflow-step { border-width: 1px; box-shadow: none; }
   [data-theme='minimalist-flat'] .workflow-pink, [data-theme='minimalist-flat'] .workflow-lime, [data-theme='minimalist-flat'] .workflow-blue { background: transparent; }
@@ -659,6 +668,8 @@ const personJsonLd = JSON.stringify({
   [data-theme='bento-grid'] .focus-list li { padding: 1.4rem; border: 0; border-radius: 1.25rem; background: var(--surface); box-shadow: var(--shadow-small); }
   [data-theme='bento-grid'] .note-banner { border: 0; border-radius: 1.4rem; box-shadow: var(--shadow); }
   [data-theme='bento-grid'] .note-card { border: 0; border-radius: 1.2rem; box-shadow: var(--shadow-small); }
+  [data-theme='bento-grid'] .detail-card { border: 0; border-radius: 1.2rem; box-shadow: var(--shadow-small); }
+  [data-theme='bento-grid'] .detail-card-soft { background: var(--surface-soft); }
   [data-theme='bento-grid'] .facts { border: 0; border-radius: 1.4rem; box-shadow: var(--shadow); }
   [data-theme='bento-grid'] .workflow-step { border: 0; border-radius: 1.4rem; box-shadow: var(--shadow); }
   [data-theme='bento-grid'] .workflow-pink { background: #eef4ff; }
@@ -729,6 +740,9 @@ const personJsonLd = JSON.stringify({
   [data-theme='geometric-bold'] .workflow-pink { background: var(--accent); color: #090909; }
   [data-theme='geometric-bold'] .workflow-lime { background: var(--surface-soft); }
   [data-theme='geometric-bold'] .workflow-blue { background: var(--surface); }
+  [data-theme='geometric-bold'] .detail-card { border: 0; border-left: 3px solid var(--accent); box-shadow: none; }
+  [data-theme='geometric-bold'] .detail-card-soft { background: var(--surface-soft); }
+  [data-theme='geometric-bold'] .detail-card > h3 { color: var(--accent); }
 
   @media (max-width: 780px) { .shell { width: min(100% - 28px, 680px); } .nav { min-height: 62px; gap: .5rem; } .nav-links { gap: 0; min-width: 0; font-size: .68rem; } .nav-links > a { padding: .55rem .45rem; } .theme-toggle { margin-left: .45rem; width: 2rem; height: 2rem; flex: 0 0 auto; } .nav-actions { gap: .4rem; } .nav-search-button { padding: .45rem .55rem; } .nav-search-button .nav-search-text, .nav-search-button .nav-search-kbd { display: none; } .nav-search-button svg { width: 1rem; height: 1rem; } .nav-icon-link { width: 2rem; height: 2rem; } .nav-icon-mail { display: none; } .theme-menu { width: calc(100% - 28px); top: calc(100% + .7rem); } .theme-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } .theme-options > li:last-child { grid-column: span 2; } .hero { padding: 5.5rem 0 3.5rem; grid-template-columns: 1fr; gap: 2rem; } .hero::before { top: 1.5rem; } .hero-aside { margin-right: .5rem; } .hero-corner { display: none; } .signal-strip { grid-template-columns: repeat(2, 1fr); } .signal:nth-child(2) { border-right: 0; } .signal:nth-child(-n+2) { border-bottom: 3px solid var(--line); } .section { padding: 3.5rem 0; } .section-heading { display: block; } .project-grid, .capability-grid, .focus-list, .workflow-grid, .content-grid { grid-template-columns: 1fr; } [data-theme='bento-grid'] .project-grid { grid-template-columns: 1fr; } [data-theme='bento-grid'] .project-card:first-child, [data-theme='bento-grid'] .project-card:nth-child(4) { grid-column: auto; } .note-banner { display: block; } .note-banner .actions { margin-top: 1.2rem; } .site-footer { display: block; } .footer-links { margin-top: 1rem; } }
   @media (max-width: 430px) { .brand { flex: 0 0 auto; font-size: .92rem; letter-spacing: -.1em; } .nav { gap: .35rem; } .nav-links { flex: 1 1 auto; justify-content: flex-end; font-size: .6rem; letter-spacing: 0; } .nav-links > a { flex: 0 1 auto; min-width: 0; padding-inline: .2rem; }

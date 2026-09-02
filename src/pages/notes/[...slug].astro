@@ -17,7 +17,7 @@ const date = note.data.date.toISOString().slice(0, 10);
   path={`/notes/${note.id}/`}
   alternatePath="/en/notes/"
 >
-  <article class="page-intro shell">
+  <article class="page-intro shell note-intro">
     <div class="eyebrow">{note.data.typeLabel} · {note.data.source}</div>
     <h1>{note.data.title}</h1>
     <p>{note.data.summary}</p>

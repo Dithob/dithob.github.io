@@ -8,7 +8,7 @@ import { brand, site } from '../../data';
     <h1>About me</h1>
     <p>I like turning ambiguous problems into executable systems, then using documentation, tests, and evidence to explain what the system really does.</p>
     <div class="actions">
-      <a class="button primary" href="/resume.pdf" download>Download resume (PDF) ↓</a>
+      <a class="button primary" href="/resume.md" download>Download resume (Markdown) ↓</a>
       <a class="button" href={`mailto:${site.mail}`}>Email me ↗</a>
     </div>
   </div>
@@ -42,10 +42,9 @@ import { brand, site } from '../../data';
   <section class="section shell">
     <div class="section-heading"><div><div class="section-code">03 / RESUME</div><h2>Resume</h2></div><p>CS student working on AI applications, agent tooling, and test engineering, focused on RAG, OCR, and document understanding — with hands-on experience shipping AI test agents from case generation to self-healing loops.</p></div>
     <div class="workflow-grid">
-      <article class="workflow-step workflow-pink"><span class="workflow-number">01</span><h3>Internship</h3><p>Test Development Intern at Tencent Cloud &amp; Smart Industries (2026.06 – 2026.09): Maps UI automation agent, multi-agent cross-checking &amp; Skill evaluation, release requirement testing.</p></article>
-      <article class="workflow-step workflow-lime"><span class="workflow-number">02</span><h3>Projects</h3><p>Intelligent Continuous Testing Platform (solo design &amp; development); Tencent Maps UI Automation Testing Agent (framework team contributor).</p></article>
-      <article class="workflow-step workflow-blue"><span class="workflow-number">03</span><h3>Academic highlights</h3><p>Silver in "Internet+" provincial competition, university second prize, provincial third prize in the Chongqing AI model competition; SCI Q1 paper under review.</p></article>
-      <article class="workflow-step workflow-blue"><span class="workflow-number">04</span><h3>Skills</h3><p>Python / Pytest / Playwright / FastAPI / MySQL / Docker / Git / Linux; agent mechanics and evaluation methodology.</p></article>
+      <article class="workflow-step workflow-pink"><span class="workflow-number">01</span><h3>Projects</h3><p>Tencent Maps UI Automation Testing Agent (framework team contributor); RAG-based Pharma Data Analysis Q&amp;A Assistant (key contributor); Intelligent Continuous Testing Platform (solo design &amp; development).</p></article>
+      <article class="workflow-step workflow-lime"><span class="workflow-number">02</span><h3>Academic highlights</h3><p>Silver in "Internet+" provincial competition, university second prize, provincial third prize in the Chongqing AI model competition; SCI Q1 paper under review.</p></article>
+      <article class="workflow-step workflow-blue"><span class="workflow-number">03</span><h3>Skills</h3><p>Python / Pytest / Playwright / FastAPI / MySQL / Docker / Git / Linux; agent mechanics and evaluation methodology.</p></article>
     </div>
   </section>
 
@@ -53,34 +52,31 @@ import { brand, site } from '../../data';
     <div class="prose">
       <h2>Details</h2>
       <div class="detail-card detail-card-soft">
-      <h3>Internship</h3>
+      <h3>Projects</h3>
       <div class="resume-entry">
-        <div class="resume-entry-heading"><h3>Test Development Intern</h3><span class="resume-org">Tencent Cloud &amp; Smart Industries</span><span class="resume-entry-date">2026.06 – 2026.09</span></div>
+        <div class="resume-entry-heading"><h3>Tencent Maps UI Automation Testing Agent</h3><span class="resume-org">Framework team contributor</span><span class="resume-entry-date">2026.06 – 2026.09</span></div>
         <ul>
-          <li><strong>Mobile Maps UI Automation Testing Agent</strong>: contributed to the Tencent Maps UI automation platform, owning agent orchestration plus Skill and MCP tool rollout across 17 business domains and 600+ test cases.</li>
-          <li><strong>Multi-agent cross-checking &amp; Skill evaluation</strong>: produced 85 graded cases via independent multi-agent generation, cross-comparison, and merge, closed with human review in an "AI-generated + human-judged" loop; planned 120 evaluation cases for map-query and map-rendering Skills and codified the Agent/Skill evaluation methodology.</li>
-          <li><strong>Release requirement testing</strong>: drove test analysis for the "You use, we compensate" H5 release, identifying cross-day state machines, re-entry, out-of-app sharing, analytics, and compatibility risks into an R1–R8 risk register aligned with product and developers; authored cases per internal platform standards and built self-test plans for developers.</li>
+          <li><strong>Agent orchestration &amp; case generation</strong>: built an LLM-agent quality &amp; efficiency system layered into five roles orchestrating 13 Skills and 3 in-house MCP services, closing the "natural-language requirement → automated case → knowledge retention" loop; linked TAPD/Figma to auto-generate executable case.py from requirements, ~10–15 min per case versus 1–2 hours handwritten, covering 17 business domains and 600+ generated code units.</li>
+          <li><strong>MCP tooling &amp; multimodal perception</strong>: built device-control and online-diagnosis MCP tools, integrating the Tencent Maps MCP to resolve coordinates and construct test data; fused UIAutomator, OCR, OmniParser, and OpenCV with chained fallback to locate self-drawn widgets lacking resource-id; scrcpy long-lived projection cut screenshot latency from ~1s to 30–100ms.</li>
+          <li><strong>Knowledge engineering &amp; semantic retrieval</strong>: designed a file-based knowledge graph with same-source static reasoning over UI indexes from 23 developer repos so the agent reads dev code before generating; AST three-stage filtering over 1500+ private helpers, with jieba + BM25 semantic retrieval to reuse common methods and avoid reinventing wheels at scale.</li>
+          <li><strong>Reliability &amp; self-healing loop</strong>: guarded generation with intent locking, gated exploration, and nine-dimension self-review; enforced Lint gates and step-wise assertions for stable code, pruned flaky cases via health backtest pass rates, and auto-regenerated patches from evidence packages into a self-heal loop.</li>
         </ul>
       </div>
+      <div class="resume-entry">
+        <div class="resume-entry-heading"><h3>RAG-based Pharma Data Analysis Q&amp;A Assistant</h3><span class="resume-org">Key contributor</span><span class="resume-entry-date">2025.10 – 2026.02</span></div>
+        <ul>
+          <li><strong>Goal</strong>: built an LLM data-analysis Q&amp;A assistant over full-chain pharma data (procurement, retail, inventory) and 800+ business tables on Dify, LangChain, Milvus, and MySQL, turning sales questions into executable SQL and readable insights.</li>
+          <li><strong>Application architecture</strong>: owned the core LLM chain design, workflow orchestration, and model integration on Dify, shipping "question understanding – schema retrieval – SQL generation – result interpretation – human feedback" to lower the barrier of understanding complex table schemas.</li>
+          <li><strong>Schema understanding &amp; field recall</strong>: enriched the data dictionary with metadata, vectorizing table names, field names, meanings, and common enum values as rich text; combined business-rule filtering, question-type classification, sample pairs, and CoT to steer the model toward relevant tables and fields, stabilizing SQL generation.</li>
+          <li><strong>Evaluation &amp; self-correction loop</strong>: added SQL pre-execution with self-correction, feeding MySQL errors back to the LLM for rewrite; built ~200 Golden Dataset entries and assessed retrieval/SQL quality with RAGAS metrics, execution accuracy, and Bad Case feedback — execution success rate up from ~70% to 90%+.</li>
+        </ul>
       </div>
-
-      <div class="detail-card detail-card-soft">
-      <h3>Projects</h3>
       <div class="resume-entry">
         <div class="resume-entry-heading"><h3>Intelligent Continuous Testing Platform</h3><span class="resume-org">Solo design &amp; development</span><span class="resume-entry-date">2025.10 – 2026.02</span></div>
         <ul>
           <li><strong>Platform &amp; framework design</strong>: built a five-layer API automation framework with Python/Pytest/Requests, auto-generated contract cases from OpenAPI validating status codes, response schemas, and business error codes; assembled a lightweight platform on Vue.js + FastAPI + MySQL + Redis + Docker to manage projects and cases.</li>
           <li><strong>UI automation &amp; performance testing</strong>: implemented Playwright PO-pattern business cases with Trace, screenshots, and recording for replay; designed ramp-up, stability, and peak load tests with JMeter/Locust, reporting QPS, P95, and error rates while locating slow endpoints.</li>
           <li><strong>AI enhancement &amp; quality loop</strong>: wrapped Pytest/Playwright/Locust execution as async Redis-queued platform tasks; introduced an LLM case-generation pipeline (draft → human review → Bad Case retention); report pages aggregate pass rates, failure reasons, and trends into a closed loop.</li>
-        </ul>
-      </div>
-      <div class="resume-entry">
-        <div class="resume-entry-heading"><h3>Tencent Maps UI Automation Testing Agent</h3><span class="resume-org">Framework team contributor</span><span class="resume-entry-date">2026.06 – 2026.09</span></div>
-        <ul>
-          <li><strong>Agent orchestration &amp; case generation</strong>: co-built the agentic test system orchestrating 13 Skills and 3 in-house MCP services from requirement understanding to targeted regression across 17 business domains and 600+ cases; linked TAPD/Figma to auto-generate executable case.py, ~10–15 min per case versus 1–2 hours handwritten.</li>
-          <li><strong>MCP tooling &amp; multimodal perception</strong>: developed device-control and failure-diagnosis MCP tools and integrated a maps MCP resolving coordinates; fused UIAutomator, OCR, OmniParser, and OpenCV with chained fallback for self-drawn widgets lacking resource-id; scrcpy projection cut screenshot latency from 1s to 30–100ms.</li>
-          <li><strong>Knowledge engineering &amp; semantic retrieval</strong>: designed a file-based knowledge graph (Page/Component/Pitfall/Operation nodes) with static reasoning over UI indexes from 23 developer repos so the agent reads dev code before writing cases; AST-scanned 1500+ private helpers and reused them via jieba + BM25 semantic retrieval.</li>
-          <li><strong>Reliability &amp; self-healing loop</strong>: guarded generation with intent locking, nine-dimension self-review, and human takeover; enforced Lint gates and step-wise assertions, pruned flaky cases via health backtest pass rates, and auto-regenerated patches from evidence packages after failures.</li>
         </ul>
       </div>
       </div>
@@ -106,7 +102,7 @@ import { brand, site } from '../../data';
       <dt>Identity</dt><dd>CS student / AI tooling builder</dd>
       <dt>Location</dt><dd>Chongqing, China</dd>
       <dt>Focus</dt><dd>Projects · Articles · Notes</dd>
-      <dt>Resume</dt><dd><a href="/resume.pdf" download>resume.pdf ↓</a></dd>
+      <dt>Resume</dt><dd><a href="/resume.md" download>resume.md ↓</a></dd>
       <dt>Positioning</dt><dd>{brand.roleEn}</dd>
       <dt>Email</dt><dd><a href={`mailto:${site.mail}`}>{site.mail}</a></dd>
       <dt>Entry</dt><dd><a href="https://github.com/Dithob" target="_blank" rel="noreferrer">GitHub Profile ↗</a></dd>

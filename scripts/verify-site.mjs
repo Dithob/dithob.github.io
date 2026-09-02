@@ -37,9 +37,12 @@ if (!about.includes('mailto:')) {
   console.error('src/pages/about.astro must expose the mailto: contact'); process.exit(1);
 }
 
-// The resume download entry must point at the public PDF.
-if (!about.includes('/resume.pdf')) {
-  console.error('src/pages/about.astro must link the resume PDF download'); process.exit(1);
+// The resume download entry must point at the public Markdown resume.
+if (!about.includes('/resume.md')) {
+  console.error('src/pages/about.astro must link the resume Markdown download'); process.exit(1);
+}
+if (!existsSync(resolve('public/resume.md'))) {
+  console.error('public/resume.md is required'); process.exit(1);
 }
 
 console.log('VERIFY_SITE_OK');

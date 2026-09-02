@@ -8,7 +8,7 @@ import { brand, site } from '../data';
     <h1>关于我</h1>
     <p>我喜欢把模糊的问题拆成可执行的系统，再用文档、测试和证据说明系统真实能做到什么。</p>
     <div class="actions">
-      <a class="button primary" href="/resume.pdf" download>下载简历（PDF）↓</a>
+      <a class="button primary" href="/resume.md" download>下载简历（Markdown）↓</a>
       <a class="button" href={`mailto:${site.mail}`}>邮箱联系 ↗</a>
     </div>
   </div>
@@ -42,10 +42,9 @@ import { brand, site } from '../data';
   <section class="section shell">
     <div class="section-heading"><div><div class="section-code">03 / RESUME</div><h2>简历</h2></div><p>计算机科学与技术方向学生，关注 AI 应用、Agent 工具与测试工程，聚焦 RAG、OCR 与文档理解。倾向于把想法落成可运行、可验证、能明确说明边界的工具，并有 AI 测试 Agent 从用例生成到自愈回流的落地经验。</p></div>
     <div class="workflow-grid">
-      <article class="workflow-step workflow-pink"><span class="workflow-number">01</span><h3>实习经历</h3><p>腾讯云与智慧产业研发公司 · 测开实习生（2026.06 – 2026.09）：地图 UI 自动化测试 Agent、多 Agent 交叉检查与 Skill 评测、发版需求测试。</p></article>
-      <article class="workflow-step workflow-lime"><span class="workflow-number">02</span><h3>项目经历</h3><p>智能持续测试平台（独立设计与开发）、腾讯地图 UI 自动化测试 Agent（参与框架建设）。</p></article>
-      <article class="workflow-step workflow-blue"><span class="workflow-number">03</span><h3>在校成果</h3><p>「互联网+」省赛银奖、校级二等奖、AI 大模型创新应用大赛省级三等奖；SCI I 区论文在投。</p></article>
-      <article class="workflow-step workflow-blue"><span class="workflow-number">04</span><h3>专业技能</h3><p>Python / Pytest / Playwright / FastAPI / MySQL / Docker / Git / Linux；Agent 机制与评测方法。</p></article>
+      <article class="workflow-step workflow-pink"><span class="workflow-number">01</span><h3>项目经历</h3><p>腾讯地图 UI 自动化测试 Agent（参与框架建设）、基于 RAG 的医药数据分析问答助手（项目主要成员）、智能持续测试平台（独立设计与开发）。</p></article>
+      <article class="workflow-step workflow-lime"><span class="workflow-number">02</span><h3>在校成果</h3><p>「互联网+」省赛银奖、校级二等奖、AI 大模型创新应用大赛省级三等奖；SCI I 区论文在投。</p></article>
+      <article class="workflow-step workflow-blue"><span class="workflow-number">03</span><h3>专业技能</h3><p>Python / Pytest / Playwright / FastAPI / MySQL / Docker / Git / Linux；Agent 机制与评测方法。</p></article>
     </div>
   </section>
 
@@ -53,34 +52,31 @@ import { brand, site } from '../data';
     <div class="prose">
       <h2>细节</h2>
       <div class="detail-card detail-card-soft">
-      <h3>实习经历</h3>
+      <h3>项目经历</h3>
       <div class="resume-entry">
-        <div class="resume-entry-heading"><h3>测开实习生</h3><span class="resume-org">腾讯云与智慧产业研发公司</span><span class="resume-entry-date">2026.06 – 2026.09</span></div>
+        <div class="resume-entry-heading"><h3>腾讯地图 UI 自动化测试 Agent</h3><span class="resume-org">参与框架建设</span><span class="resume-entry-date">2026.06 – 2026.09</span></div>
         <ul>
-          <li><strong>手机地图 UI 自动化测试 Agent</strong>：参与腾讯地图 UI 自动化测试平台建设，负责 Agent 编排、Skill 与 MCP 工具落地，覆盖 17 个业务域、600+ 用例。</li>
-          <li><strong>多 Agent 交叉检查与 Skill 评测</strong>：以多智能体独立生成、交叉比对合并产出 85 条分级用例，结合人工复核形成「AI 生成 + 人工判断」闭环；为地图数据查询、地图渲染两类 Skill 规划 120 条评测用例，沉淀 Agent/Skill 评测方法论。</li>
-          <li><strong>腾讯地图发版需求测试</strong>：完成「你用我赔 H5」发版需求测试分析，识别跨天状态机、重复进入、端外分享、埋点与兼容性风险，建立 R1–R8 风险清单并与产品/研发逐项对齐；按智研平台规范编写用例、为研发创建自测计划。</li>
+          <li><strong>智能体编排与用例生成</strong>：构建 LLM Agent 质量效能体系，按职责分五层编排 13 个 Skill 与 3 个自研 MCP 服务，打通「自然语言需求→自动化用例→知识沉淀」闭环；联动 TAPD/Figma 从需求自动生成可执行 case.py，单用例生成约 10–15 分钟（手写需 1–2 小时），覆盖 17 个业务域、600+ 生成代码单元。</li>
+          <li><strong>MCP 工具开发与多模态感知</strong>：自研设备控制与线上诊断 MCP，接入腾讯地图 MCP 解析坐标构造测试数据；融合 UIAutomator、OCR、OmniParser、OpenCV 四层 UI 感知，链式降级解决自绘控件无 resource-id 的定位问题；scrcpy 长连接投屏将截图耗时从约 1s 降至 30–100ms。</li>
+          <li><strong>知识工程与语义检索</strong>：设计纯文件知识图谱，基于 23 个研发仓库的 UI 索引做同源静态推理，让 Agent 生成前先读懂研发代码；以 AST 三级过滤扫描 1500+ 私有 helper，结合 jieba + BM25 实现公共方法语义检索与经验回流复用，避免规模化生成时重复造轮子。</li>
+          <li><strong>可靠性工程与自愈闭环</strong>：以意图锁定、门禁探索、九维度自审等护栏机制保障生成质量；通过 Lint 门禁与逐步断言保证代码稳定，以 health 回测通过率淘汰 flaky 用例；失败后基于证据包自动再生成补丁，形成 Self-heal 闭环。</li>
         </ul>
       </div>
+      <div class="resume-entry">
+        <div class="resume-entry-heading"><h3>基于 RAG 的医药数据分析问答助手</h3><span class="resume-org">项目主要成员</span><span class="resume-entry-date">2025.10 – 2026.02</span></div>
+        <ul>
+          <li><strong>项目目标</strong>：面向药品采购、零售、库存等全链路数据及 800 余张业务表，基于 Dify、LangChain、Milvus 与 MySQL 建设 LLM 数据分析问答助手，将销售人员的自然语言问题转化为可执行 SQL 与可读分析结论。</li>
+          <li><strong>应用架构设计</strong>：负责 LLM 应用核心链路设计，基于 Dify 完成工作流编排与模型接入，落地「问题理解–Schema 检索–SQL 生成–结果解释–人工反馈」业务链路，降低业务人员理解复杂库表结构的门槛。</li>
+          <li><strong>表结构理解与字段召回</strong>：对数据字典做元数据增强，将表名、字段名、字段含义与常见枚举值拼接为富文本后向量化；结合业务规则过滤、问题类型判断、样例对与 CoT，引导模型优先选择相关表和字段，提高 SQL 生成稳定性。</li>
+          <li><strong>评估与自修正闭环</strong>：引入 SQL 预执行与自纠错机制，捕获 MySQL Error 后回传 LLM 重写；构建约 200 条 Golden Dataset，以 RAGAS 指标、执行准确率与 Bad Case 回流评估检索与 SQL 质量，执行成功率由约 70% 提升至 90%+。</li>
+        </ul>
       </div>
-
-      <div class="detail-card">
-      <h3>项目经历</h3>
       <div class="resume-entry">
         <div class="resume-entry-heading"><h3>智能持续测试平台</h3><span class="resume-org">独立设计与开发</span><span class="resume-entry-date">2025.10 – 2026.02</span></div>
         <ul>
           <li><strong>平台与框架设计</strong>：基于 Python/Pytest/Requests 搭建五层接口自动化框架，基于 OpenAPI 自动生成契约用例校验状态码、响应 Schema 与业务错误码；以 Vue.js + FastAPI + MySQL + Redis + Docker 构建轻量测试平台，统一管理项目与用例。</li>
           <li><strong>UI 自动化与性能压测</strong>：基于 Playwright 落地 PO 模式业务用例，集成 Trace、截图与录制支持回放；使用 JMeter/Locust 设计阶梯加压、稳定性与峰值压测，统计 QPS、P95、错误率并定位慢接口。</li>
           <li><strong>AI 增强与质量闭环</strong>：将 Pytest/Playwright/Locust 执行封装为平台任务，经 Redis 队列异步调度；引入 LLM 用例生成流水线（生成草稿、人工复核、留存 Bad Case）；报告页聚合通过率、失败原因与趋势，形成测试闭环。</li>
-        </ul>
-      </div>
-      <div class="resume-entry">
-        <div class="resume-entry-heading"><h3>腾讯地图 UI 自动化测试 Agent</h3><span class="resume-org">参与框架建设</span><span class="resume-entry-date">2026.06 – 2026.09</span></div>
-        <ul>
-          <li><strong>智能体编排与用例生成</strong>：构建智能体测试体系，编排 13 个 Skill 与 3 个自研 MCP 服务，打通需求理解到精准回归的全流程，覆盖 17 个业务域、600+ 用例；联动 TAPD/Figma 自动生成可执行 case.py，单用例生成约 10–15 分钟（手写需 1–2 小时）。</li>
-          <li><strong>MCP 工具开发与多模态感知</strong>：自研设备控制与失败诊断 MCP，接入地图 MCP 解析地点坐标；融合 UIAutomator、OCR、OmniParser、OpenCV 四层感知，链式降级解决自绘控件无 resource-id 的定位问题；scrcpy 投屏将截图耗时从 1s 降至 30–100ms。</li>
-          <li><strong>知识工程与语义检索</strong>：设计纯文件知识图谱（Page/Component/Pitfall/Operation 四类节点），基于 23 个研发仓库 UI 索引做静态推理，让 Agent 写用例前先读懂研发代码；以 AST 扫描 1500+ 私有 helper，结合 jieba + BM25 实现公共方法语义检索与经验复用。</li>
-          <li><strong>可靠性工程与自愈闭环</strong>：以意图锁定、九维度自审与人工接管等护栏保障生成质量；Lint 门禁与逐步断言保证代码稳定，health 回测通过率淘汰 flaky 用例；失败后基于证据包自动再生成补丁形成自愈闭环。</li>
         </ul>
       </div>
       </div>
@@ -106,7 +102,7 @@ import { brand, site } from '../data';
       <dt>身份</dt><dd>CS student / AI tooling builder</dd>
       <dt>位置</dt><dd>Chongqing, China</dd>
       <dt>展示重点</dt><dd>Projects · Articles · Notes</dd>
-      <dt>简历下载</dt><dd><a href="/resume.pdf" download>resume.pdf ↓</a></dd>
+      <dt>简历下载</dt><dd><a href="/resume.md" download>resume.md ↓</a></dd>
       <dt>个人定位</dt><dd>{brand.role}</dd>
       <dt>邮箱</dt><dd><a href={`mailto:${site.mail}`}>{site.mail}</a></dd>
       <dt>入口</dt><dd><a href="https://github.com/Dithob" target="_blank" rel="noreferrer">GitHub Profile ↗</a></dd>

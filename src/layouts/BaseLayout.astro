@@ -389,7 +389,7 @@ const personJsonLd = JSON.stringify({
   .hero-aside-list li { display: flex; align-items: baseline; gap: .5rem; padding: .1rem 0; }
   .hero-aside-list li::before { content: '→'; color: var(--pink); font-weight: 950; flex: 0 0 auto; }
   .hero-aside-code { font-size: .75rem; font-weight: 950; line-height: 1.7; }
-  .hero-corner { position: absolute; right: 0; bottom: .8rem; color: var(--pink); font-size: .7rem; font-weight: 950; letter-spacing: .12em; transform: rotate(-90deg) translateX(100%); transform-origin: right bottom; }
+  .hero-corner { position: absolute; right: 0; bottom: .9rem; color: var(--bg); background: var(--pink); border: 3px solid var(--line); padding: .45rem .3rem; font-size: .64rem; font-weight: 950; letter-spacing: .12em; white-space: nowrap; transform: rotate(-90deg) translateX(100%); transform-origin: right bottom; z-index: 2; box-shadow: var(--shadow-small); }
   .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
   .button { display: inline-flex; align-items: center; gap: .5rem; padding: .78rem 1rem; border: 3px solid var(--line); text-decoration: none; font-weight: 950; background: var(--surface); box-shadow: var(--shadow-small); transition: transform 150ms ease-out, box-shadow 150ms ease-out, background-color 150ms ease-out; }
   .button:hover { background: var(--lime); color: var(--text); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--pink); }

@@ -21,7 +21,7 @@ const navItems = [
   { key: 'notes', href: lang === 'zh' ? '/notes/' : '/en/notes/', label: lang === 'zh' ? '文章' : 'Articles' },
   { key: 'about', href: lang === 'zh' ? '/about/' : '/en/about/', label: lang === 'zh' ? '关于' : 'About' },
 ];
-const isCurrent = (item) => (item.href === '/' || item.href === '/en/' ? path === item.href : path.startsWith(item.href));
+const isCurrent = (item: { href: string; key: string; label: string }) => (item.href === '/' || item.href === '/en/' ? path === item.href : path.startsWith(item.href));
 // Lucide icons (ISC license), stroke style matching the search/GitHub icons.
 const navIcons: Record<string, string> = {
   home: '<path d="M3 10.182a2 2 0 0 1 .708-1.536l6-5.364a2 2 0 0 1 2.584 0l6 5.364A2 2 0 0 1 19 10.182V18a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M12 13.5v3"/>',

@@ -43,6 +43,7 @@ const personJsonLd = JSON.stringify({
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title={lang === 'zh' ? 'wujue / Dithob — 文章 RSS' : 'wujue / Dithob — Articles RSS'} href="/rss.xml" />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang={lang === 'zh' ? 'en' : 'zh-CN'} href={alternate} />
     <meta property="og:type" content="website" />

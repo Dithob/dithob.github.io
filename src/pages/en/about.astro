@@ -12,72 +12,85 @@ import { brand, site } from '../../data';
       <a class="button" href={`mailto:${site.mail}`}>Email me ↗</a>
     </div>
   </div>
+
+  <section class="signal-strip shell" aria-label="Personal signals">
+    <div class="signal signal-pink"><strong>01</strong><span>CS / AI tooling</span><small>PROGRAMS</small></div>
+    <div class="signal signal-lime"><strong>02</strong><span>Open source</span><small>OPEN SOURCE</small></div>
+    <div class="signal signal-blue"><strong>03</strong><span>Evidence-led</span><small>EVIDENCE</small></div>
+    <div class="signal signal-orange"><strong>04</strong><span>Limits shown</span><small>LIMITS</small></div>
+  </section>
+
+  <section class="section shell">
+    <div class="section-heading"><div><div class="section-code">01 / FOCUS AREAS</div><h2>Focus</h2></div><p>Capability groups backed by public projects, not a wall of badges.</p></div>
+    <div class="capability-grid">
+      <article class="capability capability-pink"><span class="capability-number">01</span><h3>AI applications</h3><p>Structured understanding of documents, papers, and long-form material — RAG / OCR in practice.</p></article>
+      <article class="capability capability-lime"><span class="capability-number">02</span><h3>Agent tooling</h3><p>Orchestration and workflow engineering with Skills, MCP, and subagents.</p></article>
+      <article class="capability capability-blue"><span class="capability-number">03</span><h3>Testing engineering</h3><p>Case generation, evaluation, and self-healing loops that make systems verifiable.</p></article>
+    </div>
+  </section>
+
+  <section class="section shell">
+    <div class="section-heading"><div><div class="section-code">02 / PRINCIPLES</div><h2>Engineering principles</h2></div><p>Standards applied to code, docs, and this site alike.</p></div>
+    <ul class="focus-list">
+      <li><span class="focus-index">01</span><div><strong>Layer the facts</strong>Separate verified facts, inference, and unknown state.</div></li>
+      <li><span class="focus-index">02</span><div><strong>Evidence at the entrance</strong>Put quick-start steps, evidence, and limitations at the project entrance.</div></li>
+      <li><span class="focus-index">03</span><div><strong>No inflated claims</strong>Do not describe static checks as live-service success, or forks as original work.</div></li>
+      <li><span class="focus-index">04</span><div><strong>Credentials out of artifacts</strong>Keep credentials out of code, logs, repositories, build artifacts, and public profiles.</div></li>
+    </ul>
+  </section>
+
+  <section class="section shell">
+    <div class="section-heading"><div><div class="section-code">03 / RESUME</div><h2>Resume</h2></div><p>CS student working on AI applications, agent tooling, and test engineering, focused on RAG, OCR, and document understanding — with hands-on experience shipping AI test agents from case generation to self-healing loops.</p></div>
+    <div class="workflow-grid">
+      <article class="workflow-step workflow-pink"><span class="workflow-number">01</span><h3>Internship</h3><p>Test Development Intern at Tencent Cloud &amp; Smart Industries (2026.06 – 2026.09): Maps UI automation agent, multi-agent cross-checking &amp; Skill evaluation, release requirement testing.</p></article>
+      <article class="workflow-step workflow-lime"><span class="workflow-number">02</span><h3>Projects</h3><p>Intelligent Continuous Testing Platform (solo design &amp; development); Tencent Maps UI Automation Testing Agent (framework team contributor).</p></article>
+      <article class="workflow-step workflow-blue"><span class="workflow-number">03</span><h3>Academic highlights</h3><p>Silver in "Internet+" provincial competition, university second prize, provincial third prize in the Chongqing AI model competition; SCI Q1 paper under review.</p></article>
+      <article class="workflow-step workflow-blue"><span class="workflow-number">04</span><h3>Skills</h3><p>Python / Pytest / Playwright / FastAPI / MySQL / Docker / Git / Linux; agent mechanics and evaluation methodology.</p></article>
+    </div>
+  </section>
+
   <section class="section shell content-grid">
     <div class="prose">
-      <h2>Focus</h2>
-      <p>AI applications, agent tools, RAG/OCR, document and paper understanding, testing engineering, and developer productivity.</p>
-      <h2>Engineering principles</h2>
-      <ul>
-        <li>Separate verified facts, inference, and unknown state.</li>
-        <li>Put quick-start steps, evidence, and limitations at the project entrance.</li>
-        <li>Do not describe static checks as live-service success, or forks as original work.</li>
-        <li>Keep credentials out of code, logs, repositories, build artifacts, and public profiles.</li>
-      </ul>
-      <h2>Resume</h2>
-      <p>CS student working on AI applications, agent tooling, and test engineering, with a focus on RAG, OCR, and document understanding. I like turning ideas into tools that run, can be checked, and state their boundaries honestly — with hands-on experience shipping AI test agents from case generation to self-healing loops.</p>
-
-      <h3>Internship</h3>
+      <h2>Details</h2>
       <div class="resume-entry">
-        <div class="resume-entry-heading"><h3>Test Development Intern</h3><span class="resume-org">Tencent Cloud & Smart Industries</span><span class="resume-entry-date">2026.06 – 2026.09</span></div>
+        <div class="resume-entry-heading"><h3>Test Development Intern</h3><span class="resume-org">Tencent Cloud &amp; Smart Industries</span><span class="resume-entry-date">2026.06 – 2026.09</span></div>
         <ul>
           <li><strong>Mobile Maps UI Automation Testing Agent</strong>: contributed to the Tencent Maps UI automation platform, owning agent orchestration plus Skill and MCP tool rollout across 17 business domains and 600+ test cases.</li>
-          <li><strong>Multi-agent cross-checking & Skill evaluation</strong>: produced 85 graded cases via independent multi-agent generation, cross-comparison, and merge, closed with human review in an "AI-generated + human-judged" loop; planned 120 evaluation cases for map-query and map-rendering Skills and codified the Agent/Skill evaluation methodology.</li>
+          <li><strong>Multi-agent cross-checking &amp; Skill evaluation</strong>: produced 85 graded cases via independent multi-agent generation, cross-comparison, and merge, closed with human review in an "AI-generated + human-judged" loop; planned 120 evaluation cases for map-query and map-rendering Skills and codified the Agent/Skill evaluation methodology.</li>
           <li><strong>Release requirement testing</strong>: drove test analysis for the "You use, we compensate" H5 release, identifying cross-day state machines, re-entry, out-of-app sharing, analytics, and compatibility risks into an R1–R8 risk register aligned with product and developers; authored cases per internal platform standards and built self-test plans for developers.</li>
         </ul>
       </div>
 
-      <h3>Projects</h3>
       <div class="resume-entry">
-        <div class="resume-entry-heading"><h3>Intelligent Continuous Testing Platform</h3><span class="resume-org">Solo design & development</span><span class="resume-entry-date">2025.10 – 2026.02</span></div>
+        <div class="resume-entry-heading"><h3>Intelligent Continuous Testing Platform</h3><span class="resume-org">Solo design &amp; development</span><span class="resume-entry-date">2025.10 – 2026.02</span></div>
         <ul>
-          <li><strong>Platform & framework design</strong>: built a five-layer API automation framework with Python/Pytest/Requests, auto-generated contract cases from OpenAPI validating status codes, response schemas, and business error codes; assembled a lightweight platform on Vue.js + FastAPI + MySQL + Redis + Docker to manage projects and cases.</li>
-          <li><strong>UI automation & performance testing</strong>: implemented Playwright PO-pattern business cases with Trace, screenshots, and recording for replay; designed ramp-up, stability, and peak load tests with JMeter/Locust, reporting QPS, P95, and error rates while locating slow endpoints.</li>
-          <li><strong>AI enhancement & quality loop</strong>: wrapped Pytest/Playwright/Locust execution as async Redis-queued platform tasks; introduced an LLM case-generation pipeline (draft → human review → Bad Case retention); report pages aggregate pass rates, failure reasons, and trends into a closed loop.</li>
+          <li><strong>Platform &amp; framework design</strong>: built a five-layer API automation framework with Python/Pytest/Requests, auto-generated contract cases from OpenAPI validating status codes, response schemas, and business error codes; assembled a lightweight platform on Vue.js + FastAPI + MySQL + Redis + Docker to manage projects and cases.</li>
+          <li><strong>UI automation &amp; performance testing</strong>: implemented Playwright PO-pattern business cases with Trace, screenshots, and recording for replay; designed ramp-up, stability, and peak load tests with JMeter/Locust, reporting QPS, P95, and error rates while locating slow endpoints.</li>
+          <li><strong>AI enhancement &amp; quality loop</strong>: wrapped Pytest/Playwright/Locust execution as async Redis-queued platform tasks; introduced an LLM case-generation pipeline (draft → human review → Bad Case retention); report pages aggregate pass rates, failure reasons, and trends into a closed loop.</li>
         </ul>
       </div>
       <div class="resume-entry">
         <div class="resume-entry-heading"><h3>Tencent Maps UI Automation Testing Agent</h3><span class="resume-org">Framework team contributor</span><span class="resume-entry-date">2026.06 – 2026.09</span></div>
         <ul>
-          <li><strong>Agent orchestration & case generation</strong>: co-built the agentic test system orchestrating 13 Skills and 3 in-house MCP services from requirement understanding to targeted regression across 17 business domains and 600+ cases; linked TAPD/Figma to auto-generate executable case.py, ~10–15 min per case versus 1–2 hours handwritten.</li>
-          <li><strong>MCP tooling & multimodal perception</strong>: developed device-control and failure-diagnosis MCP tools and integrated a maps MCP resolving coordinates; fused UIAutomator, OCR, OmniParser, and OpenCV with chained fallback for self-drawn widgets lacking resource-id; scrcpy projection cut screenshot latency from 1s to 30–100ms.</li>
-          <li><strong>Knowledge engineering & semantic retrieval</strong>: designed a file-based knowledge graph (Page/Component/Pitfall/Operation nodes) with static reasoning over UI indexes from 23 developer repos so the agent reads dev code before writing cases; AST-scanned 1500+ private helpers and reused them via jieba + BM25 semantic retrieval.</li>
-          <li><strong>Reliability & self-healing loop</strong>: guarded generation with intent locking, nine-dimension self-review, and human takeover; enforced Lint gates and step-wise assertions, pruned flaky cases via health backtest pass rates, and auto-regenerated patches from evidence packages after failures.</li>
+          <li><strong>Agent orchestration &amp; case generation</strong>: co-built the agentic test system orchestrating 13 Skills and 3 in-house MCP services from requirement understanding to targeted regression across 17 business domains and 600+ cases; linked TAPD/Figma to auto-generate executable case.py, ~10–15 min per case versus 1–2 hours handwritten.</li>
+          <li><strong>MCP tooling &amp; multimodal perception</strong>: developed device-control and failure-diagnosis MCP tools and integrated a maps MCP resolving coordinates; fused UIAutomator, OCR, OmniParser, and OpenCV with chained fallback for self-drawn widgets lacking resource-id; scrcpy projection cut screenshot latency from 1s to 30–100ms.</li>
+          <li><strong>Knowledge engineering &amp; semantic retrieval</strong>: designed a file-based knowledge graph (Page/Component/Pitfall/Operation nodes) with static reasoning over UI indexes from 23 developer repos so the agent reads dev code before writing cases; AST-scanned 1500+ private helpers and reused them via jieba + BM25 semantic retrieval.</li>
+          <li><strong>Reliability &amp; self-healing loop</strong>: guarded generation with intent locking, nine-dimension self-review, and human takeover; enforced Lint gates and step-wise assertions, pruned flaky cases via health backtest pass rates, and auto-regenerated patches from evidence packages after failures.</li>
         </ul>
       </div>
 
       <h3>Academic highlights</h3>
       <ul>
-        <li><strong>Competitions</strong>: Silver, 2025 "Internet+" Innovation & Entrepreneurship Competition; university second prize, China International College Students' Innovation Competition; provincial third prize, Chongqing AI Large Model Innovation Application Competition.</li>
+        <li><strong>Competitions</strong>: Silver, 2025 "Internet+" Innovation &amp; Entrepreneurship Competition; university second prize, China International College Students' Innovation Competition; provincial third prize, Chongqing AI Large Model Innovation Application Competition.</li>
         <li><strong>Paper</strong>: "LHAF: A Lightweight Hierarchical Adaptive Framework for LLM-based Multimodal Emotion Recognition in Conversations" (submitted to SCI Q1).</li>
       </ul>
 
       <h3>Skills</h3>
       <ul>
         <li><strong>Test development</strong>: equivalence partitioning, boundary value, scenario, state-machine, and decision-table design; full test lifecycle from requirement review through regression; TAPD and internal case/defect platforms.</li>
-        <li><strong>Engineering & tooling</strong>: API automation with Python/Pytest/Requests; UI/mobile automation with Playwright, Selenium, uiautomator2, and ADB; load testing with JMeter and Locust; Linux, FastAPI, MySQL, Docker, Git.</li>
-        <li><strong>AI application & testing</strong>: understands RAG, Harness, and Memory agent mechanics; fluent in MCP, Skill, and Subagent frameworks; builds Golden Dataset and Bad Case feedback loops with hallucination, refusal, formatting, and multi-turn regression suites validated by keyword, JSON Schema, similarity, and rule assertions; production experience in auto-updating agent cases with human review.</li>
+        <li><strong>Engineering &amp; tooling</strong>: API automation with Python/Pytest/Requests; UI/mobile automation with Playwright, Selenium, uiautomator2, and ADB; load testing with JMeter and Locust; Linux, FastAPI, MySQL, Docker, Git.</li>
+        <li><strong>AI application &amp; testing</strong>: understands RAG, Harness, and Memory agent mechanics; fluent in MCP, Skill, and Subagent frameworks; builds Golden Dataset and Bad Case feedback loops with hallucination, refusal, formatting, and multi-turn regression suites validated by keyword, JSON Schema, similarity, and rule assertions; production experience in auto-updating agent cases with human review.</li>
       </ul>
-
-      <h3>Education</h3>
-      <div class="resume-entry">
-        <div class="resume-entry-heading"><h3>Chongqing University of Posts and Telecommunications · Computer Technology (M.Sc.)</h3><span class="resume-entry-date">2024.09 – 2027.06</span></div>
-        <ul><li>Top-tier academic scholarship ×1; second-tier ×1.</li></ul>
-        <div class="resume-entry-heading"><h3>Chongqing University of Posts and Telecommunications · Computer Science (B.Sc.)</h3><span class="resume-entry-date">2020.09 – 2024.07</span></div>
-        <ul><li>Third-tier academic scholarship; GPA 3.28/4.0 (top 25% of major).</li></ul>
-      </div>
-
-      <h2>How to read this site</h2>
-      <p>The same project data, capability groups, and engineering principles are expressed through five visual themes. The theme changes the presentation, not the project facts or evidence.</p>
     </div>
     <dl class="facts">
       <dt>Identity</dt><dd>CS student / AI tooling builder</dd>

@@ -19,7 +19,7 @@ const latestNotes = (await getCollection('notes', ({ data }) => !data.draft))
     <aside class="hero-aside">
       <div class="hero-stamp" aria-hidden="true">D/</div>
       <div class="hero-aside-block"><span class="mini-label">NAME</span><p>{site.name}</p></div>
-      <div class="hero-aside-block"><span class="mini-label">NOW BUILDING</span><p>PaperQAAgent · DeepResume · reusable agent skills</p></div>
+      <div class="hero-aside-block"><span class="mini-label">NOW BUILDING</span><ul class="hero-aside-list"><li>PaperQAAgent</li><li>DeepResume</li><li>reusable agent skills</li></ul></div>
       <div class="hero-aside-block"><span class="mini-label">HOW I WORK</span><p>{brand.tagline}</p></div>
       <div class="hero-aside-code">OPEN SOURCE<br />LOCAL FIRST<br />EVIDENCE LED</div>
     </aside>
